@@ -14,6 +14,7 @@ All notable changes follow [Keep a Changelog](https://keepachangelog.com/) conve
 - T-M3-001..004 / T-M3-012: Expert skills SK-00..SK-16 deepened (v0.2 Draft) with role-specific procedures, non-clone evals, and reference packs for SK-06/07/08/09/10/11/12/13/14/15; agent defs AG-01..16 finalised; gap analysis confirms no new agents.
 
 ### Added
+- T-M0-008: CI step `scripts/check_pr_dod.sh` fails non-draft PRs with a missing or incomplete Definition of Done (re-runs on PR edit); weekly report template `weekly-reports/TEMPLATE.md`. Approved by Project Lead 2026-10-20 (PR #7, in place of AG-16).
 - T-M0-009: G0 gate pack draft (`gates/G0.md`) — exit criteria with evidence; recommendation Not ready until T-M0-006.
 - T-M0-001: GitHub repository `musam8831/BCSR` (private) created; initial commit pushed to `main`; folder structure verified against README map (`check_repo.py` OK). Branch protection deferred per D-008 (Free plan, private repo); risk R-14.
 - T-M3-012: Git repo init, GitNexus index for BCSR, lean `.cursor/rules/`, `bcsr-orchestrate` Cursor skill wrapper, `docs/11-agent-system/tooling-efficiency.md` (AGS-05).
