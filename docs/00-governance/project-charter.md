@@ -3,9 +3,9 @@
 | Field | Value |
 |---|---|
 | Project | Behavioral & Contextual Stress Releaser (BCSR) |
-| Document ID | GOV-01 · v1.0-rc (T-M0-004, for Gate G0) |
+| Document ID | GOV-01 · v1.0 (T-M0-004, for Gate G0) |
 | Sponsor / Project Lead | Muhammad Usman |
-| Status | Pending Project Lead signature |
+| Status | Signed by Project Lead 2026-10-20 |
 
 ## 1. Purpose
 Build an Android app that understands, privately and on the device, the user's likely **context of mind**, **behavioural patterns** and **feelings** from how they use their phone. At the right moments it recommends authentic, context-appropriate supplications and adhkar from the Qur'an and Sahih Hadith, grounded in Qur'an 13:28: hearts find rest in the remembrance of Allah.
@@ -63,4 +63,4 @@ No paid LLMs; open-source licences only; Android-only MVP; Google Play policy co
 ## 10. Approval
 | Gate G0 | Name | Date | Decision |
 |---|---|---|---|
-| Sponsor | Muhammad Usman | | Pending (T-M0-004) |
+| Sponsor | Muhammad Usman | 2026-10-20 | Charter approved via PR #2 (T-M0-004) |
