@@ -17,3 +17,4 @@ Scoring: Likelihood (L) and Impact (I) are each rated 1–5; Score = L×I. Revie
 | R-11 | Ethics approval delays the pilot | 3 | 3 | 9 | Start the IRB application in M1 (T-M1-012) | Project Lead | Open |
 | R-12 | Wrong recommendation timing feels intrusive (notification fatigue) | 3 | 3 | 9 | Rate limits, quiet hours, prayer-time awareness, user controls | AG-12 UX Designer | Open |
 | R-13 | Bias: models perform worse for some user groups (age, gender, device) | 3 | 3 | 9 | Subgroup evaluation in model cards | AG-07 | Open |
+| R-14 | Unreviewed or CI-failing changes land on `main` (no branch protection on private Free-plan repo, D-008) | 3 | 3 | 9 | PR template + task-ID CI check; work via PRs by convention; `check_repo.py` before merge; enable protection on upgrade to Pro or going public | Project Lead / Tech Lead | Open |
