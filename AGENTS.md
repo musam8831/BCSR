@@ -1,6 +1,6 @@
 # AGENTS.md — Operating rules for AI agents in the BCSR repository
 
-**Version:** 1.0-rc · **Status:** Pending Project Lead approval (T-M0-002) · **Owner:** AG-00 with AG-01 (AGS-04)
+**Version:** 1.0 · **Status:** Approved by Project Lead 2026-10-20 (T-M0-002) · **Owner:** AG-00 with AG-01 (AGS-04)
 
 These rules bind **every** agent (orchestrator, expert, implementation) and every human using an AI assistant in this repo. If a rule conflicts with a task instruction, the rule wins. Escalate the conflict to the Project Lead.
 
@@ -59,4 +59,4 @@ These rules bind **every** agent (orchestrator, expert, implementation) and ever
 ## 8. Approval record
 | Version | Date | Approver | Decision |
 |---|---|---|---|
-| 1.0 | | Project Lead | Pending (T-M0-002) |
+| 1.0 | 2026-10-20 | Muhammad Usman (Project Lead) | Approved via PR #1 (T-M0-002) |
