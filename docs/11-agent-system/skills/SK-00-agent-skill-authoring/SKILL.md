@@ -5,7 +5,7 @@ description: Create or revise BCSR agent definitions and SKILL.md expert skills;
 
 # SK-00 · agent-skill-authoring
 
-**Version:** 0.3 · **Status:** Usable (bootstrap, T-M0-003) · validation in T-M3-006
+**Version:** 0.3 · **Status:** Usable (bootstrap, T-M0-003; approved by Project Lead 2026-10-20, PR #6) · validation in T-M3-006
 
 ## Purpose
 Design agents and skills that are narrow, testable, safe, and token-lean (<~200 lines + references/).

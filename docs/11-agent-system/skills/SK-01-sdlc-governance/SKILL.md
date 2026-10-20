@@ -5,7 +5,7 @@ description: Produce and maintain governance artefacts and gate packs; support A
 
 # SK-01 · sdlc-governance
 
-**Version:** 0.3 · **Status:** Usable (bootstrap, T-M0-003) · validation in T-M3-006
+**Version:** 0.3 · **Status:** Usable (bootstrap, T-M0-003; approved by Project Lead 2026-10-20, PR #6) · validation in T-M3-006
 
 ## Purpose
 Keep scope, risks, decisions, and gates controlled and evidence-linked.

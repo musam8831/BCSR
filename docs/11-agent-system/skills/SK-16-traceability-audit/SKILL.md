@@ -5,7 +5,7 @@ description: Independent audit vs requirements/DoD; HC-04/HC-05 verdicts.
 
 # SK-16 · traceability-audit
 
-**Version:** 0.3 · **Status:** Usable (bootstrap, T-M0-003) · validation in T-M3-006
+**Version:** 0.3 · **Status:** Usable (bootstrap, T-M0-003; approved by Project Lead 2026-10-20, PR #6) · validation in T-M3-006
 
 ## Purpose
 Four-eyes assurance; trap violations never soft-pass.
