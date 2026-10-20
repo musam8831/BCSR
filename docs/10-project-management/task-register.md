@@ -9,7 +9,7 @@ Owner: AG-00. Status values: Backlog · Ready · In Progress · In Review · Don
 | T-M0-002 | Finalise AGENTS.md operating rules | AG-01 | SK-01 | P1 | 1 | T-M0-001 | AGENTS.md | Rules cover content, AI, privacy, gates; Lead approves | Project Lead | Done |
 | T-M0-003 | Bootstrap SK-00, SK-01, SK-16 skills (v0.1 → usable) | AG-00 | SK-00 | P1 | 2 | T-M0-002 | skills/SK-00, SK-01, SK-16 | Each passes its 3 evals | AG-16 + Lead | Backlog |
 | T-M0-004 | Finalise project charter and objectives | AG-01 | SK-01 | P1 | 2 | T-M0-002 | 00-governance/project-charter.md | SMART objectives; Lead signs | Project Lead | Done |
-| T-M0-005 | Finalise scope, context-state taxonomy draft, assumptions | AG-01 | SK-01 | P1 | 2 | T-M0-004 | scope-and-assumptions.md | Each assumption has a validating task | AG-16 | Backlog |
+| T-M0-005 | Finalise scope, context-state taxonomy draft, assumptions | AG-01 | SK-01 | P1 | 2 | T-M0-004 | scope-and-assumptions.md | Each assumption has a validating task | AG-16 | Done |
 | T-M0-006 | Identify and confirm scholar reviewer(s) and MH advisor | Human (Lead) | — | P1 | 5 | T-M0-004 | stakeholder table in charter | Named people with agreed availability | Project Lead | Backlog |
 | T-M0-007 | Initial risk register and decision log | AG-01 | SK-01 | P1 | 1 | T-M0-004 | risk-register.md, decision-log.md | All risks owned; scores ≥ 15 escalated | AG-16 | Backlog |
 | T-M0-008 | Create task register, PR template, weekly report template | AG-00 | SK-01 | P1 | 1 | T-M0-001 | task-register.md, .github/pull_request_template.md | Template enforces task ID + DoD | AG-16 | Backlog |

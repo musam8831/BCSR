@@ -5,6 +5,7 @@ All notable changes follow [Keep a Changelog](https://keepachangelog.com/) conve
 ## [Unreleased]
 
 ### Changed
+- T-M0-005: Scope & assumptions GOV-02 v1.0 — every assumption now cites a validating task ID; added A-08..A-12 (MH advisor, OEM background reliability, notification/activity access, IRB timing, pilot recruitment); taxonomy remains draft for T-M1-006; approved by Project Lead 2026-10-20.
 - T-M0-004: Project charter GOV-01 v1.0 — objectives made SMART (deadline + verifier per objective, tied to milestones); signed by Project Lead 2026-10-20.
 - T-M0-002: `AGENTS.md` v1.0 — version header, secrets rule (§4), branch/PR rule (§5.6, D-008), approval record (§8); approved by Project Lead 2026-10-20.
 - T-M3-011 / D-007: Orchestration redesign — AGS-02 v0.2 (process orchestrator) + new AGS-04 Owner/Collaborator/Gate collaboration matrix; HC-01 gains Mode/O/C/G; `AGENTS.md` §5 and agent defs aligned; skills honour Mode/O/C/G from HC-01.
