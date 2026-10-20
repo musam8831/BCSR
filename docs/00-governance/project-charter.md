@@ -3,9 +3,9 @@
 | Field | Value |
 |---|---|
 | Project | Behavioral & Contextual Stress Releaser (BCSR) |
-| Document ID | GOV-01 · v0.1 (draft for Gate G0) |
+| Document ID | GOV-01 · v1.0 (T-M0-004, for Gate G0) |
 | Sponsor / Project Lead | Muhammad Usman |
-| Status | Draft |
+| Status | Signed by Project Lead 2026-10-20 |
 
 ## 1. Purpose
 Build an Android app that understands, privately and on the device, the user's likely **context of mind**, **behavioural patterns** and **feelings** from how they use their phone. At the right moments it recommends authentic, context-appropriate supplications and adhkar from the Qur'an and Sahih Hadith, grounded in Qur'an 13:28: hearts find rest in the remembrance of Allah.
@@ -13,14 +13,16 @@ Build an Android app that understands, privately and on the device, the user's l
 ## 2. Problem statement
 Mobile users experience stress, worry, restlessness and disturbed sleep that is often visible in their phone behaviour: compulsive switching between apps, late-night scrolling, bursts of notifications, social withdrawal. Existing Islamic apps are passive libraries that the user must remember to open. Existing wellbeing apps are secular and do not draw on the user's faith as a source of calm. BCSR closes this gap by being a *timely, respectful reminder*, not another library.
 
-## 3. Objectives (SMART, to be confirmed at G0)
-| ID | Objective | Measure |
-|---|---|---|
-| OBJ-1 | Infer a small set of context states from passive on-device signals | Macro-F1 above the personal-baseline heuristic on held-out user-weeks (target set in the M2 evaluation plan) |
-| OBJ-2 | Recommend contextually appropriate verified du'a | ≥ 70% of recommendations rated "relevant" by users in the pilot |
-| OBJ-3 | Respect privacy | 0 raw behavioural records leave the device without research consent; passes the M2 threat model review |
-| OBJ-4 | Deliver an MVP to a closed pilot | Pilot build to ≥ 30 consenting users by M9 |
-| OBJ-5 | 100% content traceability | Every shown item has an approved scholar review record |
+## 3. Objectives (SMART)
+Each objective is specific to one outcome, measured as stated, time-bound to a milestone in `docs/10-project-management/milestones.md`, and relevant to the purpose in §1. Achievability is re-checked at G2 (feasibility) and on every gate.
+
+| ID | Objective | Measure | By | Verified by |
+|---|---|---|---|---|
+| OBJ-1 | Infer a small set of context states from passive on-device signals | Macro-F1 above the personal-baseline heuristic on held-out user-weeks; the numeric target is set in EP-001 (T-M2-010, due M2) | M6 exit | EP-001 ship criteria; AG-07 + Tech Lead |
+| OBJ-2 | Recommend contextually appropriate verified du'a | ≥ 70% of recommendations rated "relevant" by users | M9 closed pilot | Pilot exit report; AG-07 |
+| OBJ-3 | Respect privacy | 0 raw behavioural records leave the device without research consent (PR-03) | From M5 (first data-collecting build), continuously | Threat model review at G2; privacy audit at M9; AG-09 |
+| OBJ-4 | Deliver an MVP to a closed pilot | Pilot build installed by ≥ 30 consenting users | M9 | Pilot exit report; Project Lead |
+| OBJ-5 | 100% content traceability | Every item shown in the app has an approved scholar review record | From M4 (catalogue v1), every build | Catalogue CI (T-M3-005); Scholar reviewer |
 
 ## 4. In scope (MVP)
 - Android app (min SDK to be fixed by ADR-0001; Kotlin, Jetpack Compose).
@@ -61,4 +63,4 @@ No paid LLMs; open-source licences only; Android-only MVP; Google Play policy co
 ## 10. Approval
 | Gate G0 | Name | Date | Decision |
 |---|---|---|---|
-| Sponsor | | | |
+| Sponsor | Muhammad Usman | 2026-10-20 | Charter approved via PR #2 (T-M0-004) |
