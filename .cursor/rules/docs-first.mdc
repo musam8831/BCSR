@@ -1,0 +1,12 @@
+---
+description: Docs-first work, Task IDs, AGS-04 Mode/O/C/G, minimal context load
+alwaysApply: true
+---
+
+# Docs-first (token-lean)
+
+- Read `AGENTS.md` first. Cite a Task ID from `docs/10-project-management/task-register.md` on every change.
+- Load only the `docs/` paths named in the HC-01 packet (or explicitly cited). Do not dump the docs tree into context.
+- AG-00 selects Mode / Owner / Collaborators / Gates from `docs/11-agent-system/agent-collaboration.md` (AGS-04). Honour those fields on HC-01.
+- Domain procedures live in one skill: `docs/11-agent-system/skills/SK-NN-*/SKILL.md`. Open `references/` only when the procedure says so.
+- Prefer GitNexus `context` / `impact` / `query` over broad codebase reads once the repo is indexed. See `.cursor/rules/gitnexus-usage.mdc`.

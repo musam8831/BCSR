@@ -1,0 +1,12 @@
+---
+description: On-device ML constraints and evaluation hygiene
+globs: ml/**,docs/04-ai-ml/**
+alwaysApply: false
+---
+
+# ML
+
+- Owners: AG-06 (runtime/models), AG-07 (eval/model cards). Skills SK-06 / SK-07.
+- No paid LLM APIs in product or training pipeline (ADR-0003). Outputs are context-state probabilities, never diagnoses.
+- Model card required before merge. Ask-not-assert UI copy.
+- Prefer SKILL.md + `references/` over loading all of `docs/04-ai-ml/`.

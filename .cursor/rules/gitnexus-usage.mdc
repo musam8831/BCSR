@@ -1,0 +1,26 @@
+---
+description: GitNexus code intelligence for BCSR (token-saving; keep out of AGENTS.md)
+alwaysApply: false
+---
+
+# GitNexus — BCSR
+
+Repo is indexed as **BCSR**. Full tooling notes: `docs/11-agent-system/tooling-efficiency.md`.
+
+## When editing code (`app/`, `ml/`, `scripts/`, `.github/`)
+
+- Run MCP `impact` (or CLI `gitnexus impact`) before non-trivial symbol edits; report callers and risk.
+- Treat `risk: UNKNOWN` as unresolved — confirm with search before deleting symbols.
+- Use `detect_changes` before commit when graph-aware review is needed.
+- Prefer `query` / `context` over dumping large trees into the prompt.
+- Warn the user on HIGH/CRITICAL impact before proceeding.
+
+## Refresh index
+
+```powershell
+cd C:\xampp-updated\htdocs\BCSR
+gitnexus analyze
+gitnexus status
+```
+
+Do **not** re-append GitNexus blocks into root `AGENTS.md` (token budget / SoT hygiene). Keep navigation tips here.

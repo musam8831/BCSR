@@ -1,0 +1,50 @@
+ID,Task,Agent,Skills,Priority,Est. days,Depends on,Outputs,Acceptance,Reviewer,Status
+T-M0-001,"Create repository, branch protection, folder structure",AG-15/Human,SK-15,P1,1,,Repo per README map,main protected; structure matches README,Tech Lead,Backlog
+T-M0-002,Finalise AGENTS.md operating rules,AG-01,SK-01,P1,1,T-M0-001,AGENTS.md,"Rules cover content, AI, privacy, gates; Lead approves",Project Lead,Backlog
+T-M0-003,"Bootstrap SK-00, SK-01, SK-16 skills (v0.1 → usable)",AG-00,SK-00,P1,2,T-M0-002,"skills/SK-00, SK-01, SK-16",Each passes its 3 evals,AG-16 + Lead,Backlog
+T-M0-004,Finalise project charter and objectives,AG-01,SK-01,P1,2,T-M0-002,00-governance/project-charter.md,SMART objectives; Lead signs,Project Lead,Backlog
+T-M0-005,"Finalise scope, context-state taxonomy draft, assumptions",AG-01,SK-01,P1,2,T-M0-004,scope-and-assumptions.md,Each assumption has a validating task,AG-16,Backlog
+T-M0-006,Identify and confirm scholar reviewer(s) and MH advisor,Human (Lead),—,P1,5,T-M0-004,stakeholder table in charter,Named people with agreed availability,Project Lead,Backlog
+T-M0-007,Initial risk register and decision log,AG-01,SK-01,P1,1,T-M0-004,"risk-register.md, decision-log.md",All risks owned; scores ≥ 15 escalated,AG-16,Backlog
+T-M0-008,"Create task register, PR template, weekly report template",AG-00,SK-01,P1,1,T-M0-001,"task-register.md, .github/pull_request_template.md",Template enforces task ID + DoD,AG-16,Backlog
+T-M0-009,G0 gate pack and review,AG-01,SK-01,P1,1,T-M0-004;T-M0-005;T-M0-006;T-M0-007,gates/G0.md,Lead decision recorded,Project Lead,Backlog
+T-M1-001,"Bootstrap SK-02, SK-04, SK-07, SK-08, SK-10, SK-12 skills for M1",AG-00,SK-00,P1,3,T-M0-009,skills folders,Evals pass incl. trap cases,AG-16,Backlog
+T-M1-002,SRS sections 1–2 and module descriptions,AG-02,SK-02,P1,3,T-M1-001,SRS.md,29148 structure; reviewed,AG-16,Backlog
+T-M1-003,User interviews (≥ 8) and persona validation,AG-12 + Human,SK-12,P1,8,T-M1-001,"personas.md, interview notes (anonymised)",≥ 8 interviews; personas updated,Project Lead,Backlog
+T-M1-004,Complete requirements catalogue (FR/NFR/PR/SR/CR),AG-02,SK-02,P1,5,T-M1-002;T-M1-003,SRS.md §5,All testable; MoSCoW set,AG-16,Backlog
+T-M1-005,Acceptance criteria for all Must requirements,AG-02,SK-02,P1,4,T-M1-004,acceptance-criteria.md,100% Musts covered,AG-14 + AG-16,Backlog
+T-M1-006,Validate context-state taxonomy with evidence + advisor,AG-07,SK-07,P1,3,T-M1-008,scope-and-assumptions.md §1,Advisor and scholar comments resolved,MH advisor,Backlog
+T-M1-007,Full traceability matrix,AG-02,SK-02;SK-16,P1,2,T-M1-005,traceability-matrix.md,Every Req has Story+AC rows,AG-16,Backlog
+T-M1-008,Scientific evidence brief (RQ1–RQ5),AG-04,SK-04,P1,8,T-M1-001,scientific-evidence.md,≥ 25 cited sources; evidence table,AG-07,Backlog
+T-M1-009,Open-source AI evaluation & licence register,AG-04,SK-04,P1,4,T-M1-001,open-source-ai-evaluation.md,All candidates' licences verified,Tech Lead,Backlog
+T-M1-010,"Content source policy, schema, verification workflow; approve with scholar",AG-08,SK-08,P1,5,T-M0-006;T-M1-001,05-spiritual-content/*,Scholar signs the policy,Scholar,Backlog
+T-M1-011,Safety pathway v1 and helpline directory (verified),AG-10,SK-10,P1,4,T-M0-006;T-M1-001,06-security-privacy-safety/safety/*,Advisor signs; helplines verified with date,MH advisor,Backlog
+T-M1-012,Ethics/IRB application for the pilot study,Human (Lead) + AG-07,SK-07,P1,5,T-M1-013,ethics application,Submitted,Project Lead,Backlog
+T-M1-013,Dataset strategy and EMA instrument selection,AG-07,SK-07,P1,3,T-M1-008,dataset-strategy.md,Licensed instruments; split rules,Tech Lead,Backlog
+T-M1-014,G1 gate pack and review,AG-01,SK-01,P1,1,T-M1-007;T-M1-010;T-M1-011;T-M1-012,gates/G1.md,Baseline frozen,Lead + Domain reviewers,Backlog
+T-M2-000,"Bootstrap SK-03, SK-05, SK-06, SK-09, SK-11, SK-14 skills for M2",AG-00,SK-00,P1,3,T-M1-014,skills folders,Evals pass,AG-16,Backlog
+T-M2-001,Spike: UsageStats events & screen/unlock events,AG-05,SK-05,P1,4,T-M2-000,spikes/SPK-01.md,Captured on ≥ 5 devices; verdict,AG-03,Backlog
+T-M2-002,Google Play policy review for all permissions,AG-05,SK-05,P1,2,T-M2-000,spikes/SPK-02-policy.md,Policy text quoted and dated,AG-09,Backlog
+T-M2-003,Spike: notification counts & activity recognition,AG-05,SK-05,P2,3,T-M2-001,spikes/SPK-03.md,Verdict per signal,AG-03,Backlog
+T-M2-004,Spike: background scheduling on top-5 OEMs,AG-05,SK-05,P1,4,T-M2-001,spikes/SPK-04.md,Gap rates per OEM,AG-03,Backlog
+T-M2-005,Battery & inference budget benchmark,AG-05 + AG-06,SK-05;SK-06,P1,3,T-M2-004,spikes/SPK-05.md,Meets or revises NFR-02/04,Tech Lead,Backlog
+T-M2-006,Baseline experiment on public dataset (cold-start rules vs LR/GBT),AG-06,SK-06,P2,5,T-M2-000;T-M1-013,EXP-0001..; FS-001 v1,Logged in registry; reviewed,AG-07,Backlog
+T-M2-007,"Threat model v1, data dictionary v1, retention & delete-all design",AG-09,SK-09,P1,4,T-M2-001,"threat-model.md, data-dictionary.md",Every flow has threats,Tech Lead,Backlog
+T-M2-008,Catalogue pipeline & approved-only recommender constraints design,AG-03 + AG-08,SK-03;SK-08,P1,2,T-M1-010,"ADR-0005, api-contracts §2",Signing + filter specified,AG-09,Backlog
+T-M2-009,"Architecture views, module map, interfaces; accept ADRs",AG-03,SK-03,P1,5,T-M2-001;T-M2-004;T-M2-007,03-architecture/*,Tech Lead approval,Tech Lead,Backlog
+T-M2-010,Evaluation plan EP-001 v1,AG-07,SK-07,P1,2,T-M1-013,EP-001,Ship criteria defined,Tech Lead,Backlog
+T-M2-011,"Low-fi UX flows (onboarding, check-in, recommendation, safety, privacy)",AG-12,SK-12,P2,5,T-M1-005,07-ux/flows/*,Trace to stories; AG-10 review,AG-10,Backlog
+T-M2-012,Test strategy and device matrix,AG-14,SK-14,P2,2,T-M1-005,08-testing/test-strategy.md,Entry/exit criteria,AG-16,Backlog
+T-M2-013,G2 gate pack and review,AG-01,SK-01,P1,1,T-M2-002;T-M2-005;T-M2-009;T-M2-010,gates/G2.md,Go/no-go per signal recorded,Lead + Tech Lead,Backlog
+T-M3-001,Skill gap analysis for M4–M10 work,AG-00,SK-00,P1,2,T-M2-013,skills/gap-analysis.md,Every M4–M10 task type maps to a skill; no new agents,AG-16,Done
+T-M3-002,Finalise agent definition files AG-00..AG-16 (aligned to AGS-04 O/C/G roles),AG-00,SK-00,P1,2,T-M3-001;T-M3-011,agents/AG-*.md,Paths non-overlapping; reviewers set; Owner/Gate roles match AGS-04,AG-16,Done
+T-M3-003,"Complete SK-11/SK-13/SK-15 with reference packs (Kotlin conventions, module templates, CI templates)",AG-03 + AG-15,SK-00,P1,4,T-M3-001,"skills/SK-11,13,15/references",Templates + conventions present,Tech Lead,Done
+T-M3-004,"Complete SK-06/SK-07 reference packs (feature→code templates, eval scripts)",AG-06 + AG-07,SK-00,P1,3,T-M3-001,"skills/SK-06,07/references",Templates + checklists present,Tech Lead,Done
+T-M3-005,"Content validator & catalogue CI (schema, refs, status rules)",AG-13,SK-13;SK-08,P1,3,T-M2-008,"content/validation/*, CI job",Rejects invalid/unapproved items in tests,AG-16,Backlog
+T-M3-006,Pilot dry-run: each implementation agent completes 1 real M4/M5 task,AG-00 (coordinating),all,P1,5,T-M3-002;T-M3-003;T-M3-004;T-M3-005,"pilot PRs, audit reports",All approved by AG-16; trap evals pass,AG-16 + Tech Lead,Backlog
+T-M3-007,"CI checks: task-ID in PR, docs links, traceability IDs",AG-15,SK-15,P1,2,T-M3-003,.github/workflows/*,Blocking checks active,AG-16,Backlog
+T-M3-008,Retrospective and skill v1.0 release,AG-00,SK-00;SK-01,P1,2,T-M3-006,"CHANGELOG, skills v1.0",All skills v1.0,Project Lead,Backlog
+T-M3-009,Decompose M4–M5 backlog into Ready tasks with HC-01 packets (Mode/O/C/G fields),AG-00,SK-01,P1,3,T-M3-008;T-M3-011,"task-register.md (M4, M5)",≥ 2 weeks of Ready work per active agent; each HC-01 has mode owner collaborators gates,AG-16,Backlog
+T-M3-010,G3 gate pack and review,AG-01,SK-01,P1,1,T-M3-007;T-M3-009,gates/G3.md,Lead + Tech Lead approve,Lead + Tech Lead,Backlog
+T-M3-011,"Orchestration redesign: AGS-02 v0.2 + AGS-04 collaboration matrix (D-007)",AG-00,SK-00;SK-01,P1,2,T-M0-002,"orchestration-policy.md, agent-collaboration.md, HC-01, AGENTS.md §5",Matrix is selection authority; AG-00 process-only; Mode/O/C/G on HC-01,AG-16,Done
+T-M3-012,"Cursor/GitNexus/MCP efficiency tooling (lean rules, index, orchestrate wrapper)",AG-00,SK-00,P1,2,T-M3-011,".cursor/rules, tooling-efficiency.md, .gitnexus index",BCSR in GitNexus registry; AGENTS.md stays lean,AG-16,Done

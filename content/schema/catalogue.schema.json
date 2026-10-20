@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://bcsr.local/schema/catalogue-item.json",
+  "title": "BCSR Catalogue Item",
+  "type": "object",
+  "required": ["id", "type", "title", "arabic", "transliteration", "translation", "reference", "context_note", "states", "verification"],
+  "properties": {
+    "id": {"type": "string", "pattern": "^DUA-[0-9]{4}$"},
+    "type": {"enum": ["quran", "hadith_dua", "dhikr"]},
+    "title": {"type": "object", "required": ["en", "ur"], "properties": {"en": {"type": "string"}, "ur": {"type": "string"}}},
+    "arabic": {"type": "string", "minLength": 1},
+    "transliteration": {"type": "object", "required": ["en"], "properties": {"en": {"type": "string"}}},
+    "translation": {
+      "type": "object",
+      "required": ["en", "ur", "source"],
+      "properties": {"en": {"type": "string"}, "ur": {"type": "string"}, "source": {"type": "string"}}
+    },
+    "reference": {
+      "oneOf": [
+        {"type": "object", "required": ["kind", "surah", "ayah_from", "ayah_to"],
+         "properties": {"kind": {"const": "quran"}, "surah": {"type": "integer", "minimum": 1, "maximum": 114},
+                        "ayah_from": {"type": "integer", "minimum": 1}, "ayah_to": {"type": "integer", "minimum": 1}}},
+        {"type": "object", "required": ["kind", "collection", "number", "numbering_system", "grading", "grader"],
+         "properties": {"kind": {"const": "hadith"}, "collection": {"type": "string"}, "number": {"type": "string"},
+                        "numbering_system": {"type": "string"}, "grading": {"enum": ["sahih", "hasan"]}, "grader": {"type": "string"}}}
+      ]
+    },
+    "context_note": {"type": "object", "required": ["en", "ur"]},
+    "states": {"type": "array", "minItems": 1, "items": {"type": "string", "pattern": "^CS-(0[1-9]|10)$"}},
+    "times": {"type": "array", "items": {"enum": ["morning", "evening", "sleep", "any"]}},
+    "repetitions": {"type": "integer", "minimum": 1},
+    "audio": {"type": "object", "required": ["file", "reciter", "licence"]},
+    "verification": {
+      "type": "object",
+      "required": ["status"],
+      "properties": {
+        "status": {"enum": ["draft", "in_review", "approved", "rejected"]},
+        "reviewer": {"type": "string"},
+        "date": {"type": "string", "format": "date"},
+        "record_id": {"type": "string", "pattern": "^RR-[0-9]{4}$"}
+      },
+      "if": {"properties": {"status": {"const": "approved"}}},
+      "then": {"required": ["status", "reviewer", "date", "record_id"]}
+    }
+  }
+}

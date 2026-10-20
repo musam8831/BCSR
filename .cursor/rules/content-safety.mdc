@@ -1,0 +1,12 @@
+---
+description: Religious content and safety fail-closed rules
+globs: content/**,docs/05-spiritual-content/**,docs/06-security-privacy-safety/**
+alwaysApply: false
+---
+
+# Content and safety
+
+- Never generate, paraphrase, translate, complete, or correct Qur'anic or Hadith text (`AGENTS.md` §2).
+- Catalogue items require scholar `approved` status; agents prepare HC-06 only.
+- Crisis / safety UX: AG-10 + MH advisor gate; never du'a-only for crisis indicators.
+- Skills: SK-08 (content), SK-10 (safety), SK-09 (privacy).

@@ -1,0 +1,46 @@
+# GitNexus local index (regenerate with `gitnexus analyze`)
+.gitnexus/
+
+# Secrets / env
+.env
+.env.*
+!.env.example
+*.pem
+*.keystore
+google-services.json
+local.properties
+
+# Android / Gradle
+app/android/.gradle/
+app/android/build/
+app/android/**/build/
+app/android/**/local.properties
+*.apk
+*.aab
+*.dex
+*.class
+
+# Python / ML
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+*.egg-info/
+.ipynb_checkpoints/
+ml/datasets/raw/
+ml/experiments/*/artifacts/
+
+# IDE / OS
+.idea/
+*.iml
+.vscode/
+.DS_Store
+Thumbs.db
+*.swp
+*~
+
+# Node (if tooling added later)
+node_modules/
+dist/

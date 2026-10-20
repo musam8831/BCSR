@@ -1,0 +1,12 @@
+---
+description: Android app conventions and ADR constraints
+globs: app/android/**
+alwaysApply: false
+---
+
+# Android
+
+- Owner path: AG-11 / SK-11. Specs from AG-03 before non-trivial builds.
+- No AccessibilityService or custom IME to observe other apps (ADR-0002).
+- Prefer Kotlin + Jetpack Compose; keep WorkManager/battery budgets in mind (NFR).
+- Load `docs/11-agent-system/skills/SK-11-android-development/SKILL.md` and its `references/` as needed — not the whole `docs/` tree.

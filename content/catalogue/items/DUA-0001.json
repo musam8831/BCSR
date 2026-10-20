@@ -1,0 +1,13 @@
+{
+  "id": "DUA-0001",
+  "type": "hadith_dua",
+  "title": {"en": "For worry and grief", "ur": "TO_BE_ENTERED_BY_EDITOR"},
+  "arabic": "TO_BE_ENTERED_FROM_SOURCE",
+  "transliteration": {"en": "TO_BE_ENTERED_FROM_SOURCE"},
+  "translation": {"en": "TO_BE_ENTERED_FROM_SOURCE", "ur": "TO_BE_ENTERED_FROM_SOURCE", "source": "TBD"},
+  "reference": {"kind": "hadith", "collection": "Sahih al-Bukhari", "number": "6369", "numbering_system": "TO_VERIFY", "grading": "sahih", "grader": "al-Bukhari (collection)"},
+  "context_note": {"en": "TO_BE_ENTERED_BY_EDITOR", "ur": "TO_BE_ENTERED_BY_EDITOR"},
+  "states": ["CS-02", "CS-04"],
+  "times": ["any"],
+  "verification": {"status": "draft"}
+}

@@ -1,0 +1,19 @@
+# Risk Register — GOV-03 v0.1
+
+Scoring: Likelihood (L) and Impact (I) are each rated 1–5; Score = L×I. Review weekly; any score ≥ 15 escalates to the Project Lead.
+
+| ID | Risk | L | I | Score | Mitigation | Owner (agent / human) | Status |
+|---|---|---|---|---|---|---|---|
+| R-01 | Inaccurate or misattributed religious content shown to users | 2 | 5 | 10 | Approved-only catalogue, scholar gate, schema validator, no generative text | AG-08 Content Curator / Scholar | Open |
+| R-02 | Google Play rejects the use of Usage Access or other sensitive permissions | 3 | 5 | 15 | Early policy spike (T-M2-002), prominent disclosure, fall-back to in-app EMA-only mode | AG-05 Platform Feasibility | Open |
+| R-03 | Passive signals are too weak to infer feelings reliably | 4 | 4 | 16 | Treat inference as a prompt to check in, EMA-led labels, personal baselines, honest model cards | AG-06 ML Engineer | Open |
+| R-04 | Privacy breach or perceived surveillance erodes trust | 2 | 5 | 10 | On-device processing, minimisation, threat model, transparency dashboard, delete-all | AG-09 Privacy & Security | Open |
+| R-05 | User in crisis receives only a du'a, with no human help | 2 | 5 | 10 | Safety pathway SR-01..05, advisor review, helplines verified per region | AG-10 Safety Reviewer / MH advisor | Open |
+| R-06 | Battery/performance drain causes uninstalls | 3 | 3 | 9 | WorkManager batching, budget tests (NFR-04) | AG-11 Android Dev | Open |
+| R-07 | Insufficient labelled data for training | 4 | 4 | 16 | Public datasets for pre-study, pilot with EMA, active learning, transfer from population to personal models | AG-07 Data & Evaluation | Open |
+| R-08 | Scholar reviewer bandwidth bottleneck | 3 | 4 | 12 | Small MVP catalogue (~60–100 items), batching, pre-validated metadata | Project Lead | Open |
+| R-09 | AI agents invent requirements or bypass reviews | 3 | 4 | 12 | AGENTS.md, task IDs, AGS-04 matrix, process-only AG-00, handoff contracts, human gates, GitNexus impact before code edits, lean skill load | AG-00 Process Orchestrator | Open |
+| R-10 | Licence conflict in open-source models/datasets/content | 2 | 4 | 8 | Licence register in the open-source AI evaluation | AG-04 Research Analyst | Open |
+| R-11 | Ethics approval delays the pilot | 3 | 3 | 9 | Start the IRB application in M1 (T-M1-012) | Project Lead | Open |
+| R-12 | Wrong recommendation timing feels intrusive (notification fatigue) | 3 | 3 | 9 | Rate limits, quiet hours, prayer-time awareness, user controls | AG-12 UX Designer | Open |
+| R-13 | Bias: models perform worse for some user groups (age, gender, device) | 3 | 3 | 9 | Subgroup evaluation in model cards | AG-07 | Open |
