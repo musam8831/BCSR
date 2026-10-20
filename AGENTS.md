@@ -1,5 +1,7 @@
 # AGENTS.md — Operating rules for AI agents in the BCSR repository
 
+**Version:** 1.0 · **Status:** Approved by Project Lead 2026-10-20 (T-M0-002) · **Owner:** AG-00 with AG-01 (AGS-04)
+
 These rules bind **every** agent (orchestrator, expert, implementation) and every human using an AI assistant in this repo. If a rule conflicts with a task instruction, the rule wins. Escalate the conflict to the Project Lead.
 
 ## 1. Source of truth
@@ -25,6 +27,7 @@ These rules bind **every** agent (orchestrator, expert, implementation) and ever
 - Data leaving the device requires explicit opt-in research consent (PR-03) and must be pseudonymised and minimised first.
 - Never use Android AccessibilityService or a custom keyboard to observe other apps (see ADR-0002).
 - Crisis indicators trigger the safety pathway (SR-01..SR-05), not a du'a recommendation alone.
+- Never commit secrets, keys, keystores or personal data; `.gitignore` covers the known patterns. A leaked secret is revoked first, then removed.
 
 ## 5. Workflow
 1. AG-00 (process orchestrator) selects Mode, Owner, Collaborators, Gates, and Informed from `docs/11-agent-system/agent-collaboration.md` (AGS-04), then assigns work with an HC-01 packet that includes those fields.
@@ -32,6 +35,7 @@ These rules bind **every** agent (orchestrator, expert, implementation) and ever
 3. The Implementer (or Owner-as-writer) produces outputs in the paths named by the task, and fills the Definition of Done checklist.
 4. Gates review: AG-16 and/or named reviewers, plus a human where `AGENTS.md` §7 or the Content/Safety mode requires one. Authors never approve their own work.
 5. Task status is updated in the task register, and progress is logged in the weekly report.
+6. Work happens on a branch `T-Mx-NNN-short-name` and lands on `main` only through a PR that cites the task and passes `governance-checks`. Never push directly to or force-push `main`; this holds even while branch protection is deferred (D-008, R-14).
 
 ## 6. Definition of Done (all tasks)
 - [ ] Output exists at the specified path and follows the relevant template
@@ -51,3 +55,8 @@ These rules bind **every** agent (orchestrator, expert, implementation) and ever
 | Content approval (every item) | Qualified scholar reviewer |
 | Research data collection start | Ethics/IRB approval + Project Lead |
 | Release | Project Lead + Safety reviewer |
+
+## 8. Approval record
+| Version | Date | Approver | Decision |
+|---|---|---|---|
+| 1.0 | 2026-10-20 | Muhammad Usman (Project Lead) | Approved via PR #1 (T-M0-002) |

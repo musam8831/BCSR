@@ -1,6 +1,6 @@
 ID,Task,Agent,Skills,Priority,Est. days,Depends on,Outputs,Acceptance,Reviewer,Status
 T-M0-001,"Create repository, branch protection, folder structure",AG-15/Human,SK-15,P1,1,,Repo per README map,main protected; structure matches README,Tech Lead,In Review
-T-M0-002,Finalise AGENTS.md operating rules,AG-01,SK-01,P1,1,T-M0-001,AGENTS.md,"Rules cover content, AI, privacy, gates; Lead approves",Project Lead,Backlog
+T-M0-002,Finalise AGENTS.md operating rules,AG-01,SK-01,P1,1,T-M0-001,AGENTS.md,"Rules cover content, AI, privacy, gates; Lead approves",Project Lead,Done
 T-M0-003,"Bootstrap SK-00, SK-01, SK-16 skills (v0.1 → usable)",AG-00,SK-00,P1,2,T-M0-002,"skills/SK-00, SK-01, SK-16",Each passes its 3 evals,AG-16 + Lead,Backlog
 T-M0-004,Finalise project charter and objectives,AG-01,SK-01,P1,2,T-M0-002,00-governance/project-charter.md,SMART objectives; Lead signs,Project Lead,Backlog
 T-M0-005,"Finalise scope, context-state taxonomy draft, assumptions",AG-01,SK-01,P1,2,T-M0-004,scope-and-assumptions.md,Each assumption has a validating task,AG-16,Backlog

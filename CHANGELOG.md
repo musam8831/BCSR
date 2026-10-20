@@ -5,6 +5,7 @@ All notable changes follow [Keep a Changelog](https://keepachangelog.com/) conve
 ## [Unreleased]
 
 ### Changed
+- T-M0-002: `AGENTS.md` v1.0 — version header, secrets rule (§4), branch/PR rule (§5.6, D-008), approval record (§8); approved by Project Lead 2026-10-20.
 - T-M3-011 / D-007: Orchestration redesign — AGS-02 v0.2 (process orchestrator) + new AGS-04 Owner/Collaborator/Gate collaboration matrix; HC-01 gains Mode/O/C/G; `AGENTS.md` §5 and agent defs aligned; skills honour Mode/O/C/G from HC-01.
 - T-M3-001..004 / T-M3-012: Expert skills SK-00..SK-16 deepened (v0.2 Draft) with role-specific procedures, non-clone evals, and reference packs for SK-06/07/08/09/10/11/12/13/14/15; agent defs AG-01..16 finalised; gap analysis confirms no new agents.
 
