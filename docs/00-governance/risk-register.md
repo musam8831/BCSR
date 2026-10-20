@@ -1,6 +1,6 @@
-# Risk Register — GOV-03 v1.0-rc
+# Risk Register — GOV-03 v1.0
 
-Task: T-M0-007 · Last reviewed: 2026-10-20 (AG-01) · Next review: weekly report, week of 2026-10-26
+Task: T-M0-007 · Last reviewed: 2026-10-20 (AG-01; approved by Project Lead via PR #4, in place of the AG-16 review) · Next review: weekly report, week of 2026-10-26
 
 Scoring: Likelihood (L) and Impact (I) are each rated 1–5; Score = L×I. Review weekly; any score ≥ 15 escalates to the Project Lead.
 
@@ -23,12 +23,12 @@ Scoring: Likelihood (L) and Impact (I) are each rated 1–5; Score = L×I. Revie
 | R-15 | No mental-health advisor or scholar reviewer confirmed in time, blocking the safety pathway, content policy and G1 (A-04, A-08) | 3 | 5 | 15 | Recruit in T-M0-006; dated recruitment plan accepted at G0 if names are not confirmed | Project Lead | Open |
 | R-16 | OEM battery optimisation kills background collection, leaving data gaps that weaken inference (A-09) | 4 | 3 | 12 | OEM spike T-M2-004 with gap rates; WorkManager; in-app guidance to exempt the app; gap-aware features in FS-001 | AG-05 Platform Feasibility | Open |
 
-R-15 and R-16 scores are proposed by AG-01 for Project Lead confirmation.
+R-15 and R-16 scores proposed by AG-01; confirmed by Project Lead 2026-10-20.
 
 ## Escalations (score ≥ 15)
-| Risk | Score | Escalated to | Date | Decision requested |
-|---|---|---|---|---|
-| R-02 | 15 | Project Lead | 2026-10-20 | Accept mitigation; go/no-go on Usage Access at G2 after T-M2-002 |
-| R-03 | 16 | Project Lead | 2026-10-20 | Accept "ask, don't assert" framing and EMA-led labels; review after T-M2-006 |
-| R-07 | 16 | Project Lead | 2026-10-20 | Accept public-dataset pre-study plus EMA pilot; review after T-M1-013 |
-| R-15 | 15 | Project Lead | 2026-10-20 | Own T-M0-006 recruitment; confirm names or a dated plan before G0 (T-M0-009) |
+| Risk | Score | Escalated to | Date | Decision requested | Lead decision |
+|---|---|---|---|---|---|
+| R-02 | 15 | Project Lead | 2026-10-20 | Accept mitigation; go/no-go on Usage Access at G2 after T-M2-002 | Accepted 2026-10-20 |
+| R-03 | 16 | Project Lead | 2026-10-20 | Accept "ask, don't assert" framing and EMA-led labels; review after T-M2-006 | Accepted 2026-10-20 |
+| R-07 | 16 | Project Lead | 2026-10-20 | Accept public-dataset pre-study plus EMA pilot; review after T-M1-013 | Accepted 2026-10-20 |
+| R-15 | 15 | Project Lead | 2026-10-20 | Own T-M0-006 recruitment; confirm names or a dated plan before G0 (T-M0-009) | Accepted 2026-10-20 |
