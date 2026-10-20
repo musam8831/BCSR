@@ -11,7 +11,7 @@ Owner: AG-00. Status values: Backlog · Ready · In Progress · In Review · Don
 | T-M0-004 | Finalise project charter and objectives | AG-01 | SK-01 | P1 | 2 | T-M0-002 | 00-governance/project-charter.md | SMART objectives; Lead signs | Project Lead | Done |
 | T-M0-005 | Finalise scope, context-state taxonomy draft, assumptions | AG-01 | SK-01 | P1 | 2 | T-M0-004 | scope-and-assumptions.md | Each assumption has a validating task | AG-16 | Done |
 | T-M0-006 | Identify and confirm scholar reviewer(s) and MH advisor | Human (Lead) | — | P1 | 5 | T-M0-004 | stakeholder table in charter | Named people with agreed availability | Project Lead | Backlog |
-| T-M0-007 | Initial risk register and decision log | AG-01 | SK-01 | P1 | 1 | T-M0-004 | risk-register.md, decision-log.md | All risks owned; scores ≥ 15 escalated | AG-16 | Backlog |
+| T-M0-007 | Initial risk register and decision log | AG-01 | SK-01 | P1 | 1 | T-M0-004 | risk-register.md, decision-log.md | All risks owned; scores ≥ 15 escalated | AG-16 | Done |
 | T-M0-008 | Create task register, PR template, weekly report template | AG-00 | SK-01 | P1 | 1 | T-M0-001 | task-register.md, .github/pull_request_template.md | Template enforces task ID + DoD | AG-16 | Backlog |
 | T-M0-009 | G0 gate pack and review | AG-01 | SK-01 | P1 | 1 | T-M0-004;T-M0-005;T-M0-006;T-M0-007 | gates/G0.md | Lead decision recorded | Project Lead | Backlog |
 | **M1** | | | | | | | | | | |
