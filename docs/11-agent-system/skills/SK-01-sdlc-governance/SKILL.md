@@ -5,7 +5,7 @@ description: Produce and maintain governance artefacts and gate packs; support A
 
 # SK-01 · sdlc-governance
 
-**Version:** 0.2 · **Status:** Draft (pilot validation in T-M3-006)
+**Version:** 0.3 · **Status:** Usable (bootstrap, T-M0-003) · validation in T-M3-006
 
 ## Purpose
 Keep scope, risks, decisions, and gates controlled and evidence-linked.
@@ -16,7 +16,7 @@ HC-01 task packet; documents it lists; `AGENTS.md`; AGS-04 Mode/O/C/G fields.
 ## Procedure
 1. When supporting orchestration: read AGS-04; select Mode/Owner/C/G; record considered-but-not-needed always-on items; emit HC-01 fields.
 2. Draft or update charter/scope from Project Lead input; mark unknowns as assumptions with validating tasks.
-3. Maintain risk register weekly (L×I); escalate scores ≥ 15.
+3. Maintain risk register weekly (L×I). A score ≥ 15 is escalated to the Project Lead the same day it appears, not at the next weekly review, and logged in the register's Escalations table.
 4. Record decisions in decision-log.md; ADR stubs to AG-03 when architectural.
 5. Assemble gate packs with exit criteria, evidence links, open risks, go/no-go/conditional.
 6. Run milestone retrospectives; feed skill improvements to SK-00.
@@ -32,7 +32,7 @@ HC-01 task packet; documents it lists; `AGENTS.md`; AGS-04 Mode/O/C/G fields.
 - [ ] Gate pack links evidence
 
 ## Prohibitions
-Do not invent scope. Do not approve your own gate recommendation as final human approval.
+Do not invent scope. Do not approve your own gate recommendation as final human approval. If a human approver is unavailable, the gate waits with status Pending; no agent stands in.
 
 ## Always
 - Read `AGENTS.md` first. Work only on the task in your HC-01 packet. Honour `mode`, `owner`, `collaborators`, and `gates` from that packet (AGS-04).

@@ -5,6 +5,7 @@ All notable changes follow [Keep a Changelog](https://keepachangelog.com/) conve
 ## [Unreleased]
 
 ### Changed
+- T-M0-003: SK-00, SK-01, SK-16 bootstrapped to v0.3 (Usable) — 9/9 evals pass on desk run (4 after closing gaps: trap escalation in SK-00 and SK-16, same-day escalation in SK-01, broken-evidence rule in SK-16). Validation still in T-M3-006.
 - T-M0-007: Risk register GOV-03 v1.0 — reviewed and approved by Project Lead 2026-10-20; all risks owned; R-15 (advisor/scholar availability) and R-16 (OEM background gaps) added; escalations of R-02, R-03, R-07, R-15 (score ≥ 15) recorded and accepted. Decision log GOV-04 v1.0 reviewed.
 - T-M0-005: Scope & assumptions GOV-02 v1.0 — every assumption now cites a validating task ID; added A-08..A-12 (MH advisor, OEM background reliability, notification/activity access, IRB timing, pilot recruitment); taxonomy remains draft for T-M1-006; approved by Project Lead 2026-10-20.
 - T-M0-004: Project charter GOV-01 v1.0 — objectives made SMART (deadline + verifier per objective, tied to milestones); signed by Project Lead 2026-10-20.

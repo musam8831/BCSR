@@ -5,7 +5,7 @@ description: Create or revise BCSR agent definitions and SKILL.md expert skills;
 
 # SK-00 · agent-skill-authoring
 
-**Version:** 0.2 · **Status:** Draft (pilot validation in T-M3-006)
+**Version:** 0.3 · **Status:** Usable (bootstrap, T-M0-003) · validation in T-M3-006
 
 ## Purpose
 Design agents and skills that are narrow, testable, safe, and token-lean (<~200 lines + references/).
@@ -19,7 +19,7 @@ HC-01 task packet; documents it lists; `AGENTS.md`; AGS-04 Mode/O/C/G fields.
 3. Define or revise the agent file: mission, collab_role, inputs, outputs, may_write, must_not, reviewers, handoffs.
 4. Write SKILL.md: YAML name/description (when to use), Purpose, Inputs, Procedure, Outputs, Quality checklist, Prohibitions, References.
 5. Keep SKILL.md under ~200 lines; put long templates in `references/`.
-6. Write three role-specific evals (normal / edge / trap); leave Result blank until T-M3-006.
+6. Write three role-specific evals (normal / edge / trap). Bootstrap runs (e.g. T-M0-003) may record a desk-run result; validation results are recorded only in T-M3-006.
 7. Align path ownership with AGS-04; register version notes in CHANGELOG when user-visible.
 8. Point Cursor wrappers (if any) at docs skills — never duplicate full bodies into `.cursor/skills/`.
 
@@ -36,6 +36,7 @@ HC-01 task packet; documents it lists; `AGENTS.md`; AGS-04 Mode/O/C/G fields.
 
 ## Prohibitions
 Do not mark skills validated before T-M3-006. Do not weaken human gates. Do not bloat AGENTS.md.
+Reject any agent or skill text that would permit generating, paraphrasing or translating Qur'an/Hadith, paid LLMs in the product, or a gate bypass: cite AGENTS.md §2–§4 and escalate to AG-00.
 
 ## Always
 - Read `AGENTS.md` first. Work only on the task in your HC-01 packet. Honour `mode`, `owner`, `collaborators`, and `gates` from that packet (AGS-04).

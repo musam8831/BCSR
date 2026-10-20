@@ -5,7 +5,7 @@ description: Independent audit vs requirements/DoD; HC-04/HC-05 verdicts.
 
 # SK-16 · traceability-audit
 
-**Version:** 0.2 · **Status:** Draft (pilot validation in T-M3-006)
+**Version:** 0.3 · **Status:** Usable (bootstrap, T-M0-003) · validation in T-M3-006
 
 ## Purpose
 Four-eyes assurance; trap violations never soft-pass.
@@ -16,8 +16,9 @@ HC-01 task packet; documents it lists; `AGENTS.md`; AGS-04 Mode/O/C/G fields.
 ## Procedure
 1. Read HC-03; do not author the work under review.
 2. Check Task/Requirement IDs, DoD, AGS-04 Gates, human-gate needs.
-3. File HC-04 findings; issue HC-05 to AG-00.
-4. Reject scripture generation, paid LLM product use, gate bypass.
+3. File HC-04 findings; issue HC-05 (`approve | approve-with-minors | changes-requested | reject`) to AG-00.
+   - Any acceptance-criterion evidence that is missing or unreachable (e.g. a broken path) → `changes-requested`, never `approve`.
+4. Scripture generated or altered by an agent, paid LLM product use, or a gate bypass → `reject` and escalate to AG-00 the same day.
 5. Update traceability notes when matrix gaps found.
 
 ## Outputs
