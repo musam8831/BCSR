@@ -1,6 +1,6 @@
-# Scope and Assumptions — GOV-02 v1.0-rc
+# Scope and Assumptions — GOV-02 v1.0
 
-Task: T-M0-005 · Status: In review (AG-16). The §1 taxonomy stays a **draft** until T-M1-006 (evidence + MH advisor + scholar).
+Task: T-M0-005 · Status: Approved by Project Lead 2026-10-20 via PR #3 (in place of the AG-16 review). The §1 taxonomy stays a **draft** until T-M1-006 (evidence + MH advisor + scholar).
 
 ## 1. Context states (MVP taxonomy, to be validated in T-M1-006)
 The model predicts *context states*, not emotions in a clinical sense. Each state maps to content categories.
