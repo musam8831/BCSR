@@ -1,4 +1,6 @@
-# Decision Log — GOV-04
+# Decision Log — GOV-04 v1.0-rc
+
+Task: T-M0-007 · Last reviewed: 2026-10-20 (AG-01). Proposed decisions D-002 and D-003 are confirmed at G2; D-008 awaits Tech Lead confirmation.
 
 Short index of decisions. Architectural decisions link to full ADRs in `docs/03-architecture/adr/`.
 

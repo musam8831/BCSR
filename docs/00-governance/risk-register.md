@@ -1,4 +1,6 @@
-# Risk Register — GOV-03 v0.1
+# Risk Register — GOV-03 v1.0-rc
+
+Task: T-M0-007 · Last reviewed: 2026-10-20 (AG-01) · Next review: weekly report, week of 2026-10-26
 
 Scoring: Likelihood (L) and Impact (I) are each rated 1–5; Score = L×I. Review weekly; any score ≥ 15 escalates to the Project Lead.
 
@@ -18,3 +20,15 @@ Scoring: Likelihood (L) and Impact (I) are each rated 1–5; Score = L×I. Revie
 | R-12 | Wrong recommendation timing feels intrusive (notification fatigue) | 3 | 3 | 9 | Rate limits, quiet hours, prayer-time awareness, user controls | AG-12 UX Designer | Open |
 | R-13 | Bias: models perform worse for some user groups (age, gender, device) | 3 | 3 | 9 | Subgroup evaluation in model cards | AG-07 | Open |
 | R-14 | Unreviewed or CI-failing changes land on `main` (no branch protection on private Free-plan repo, D-008) | 3 | 3 | 9 | PR template + task-ID CI check; work via PRs by convention; `check_repo.py` before merge; enable protection on upgrade to Pro or going public | Project Lead / Tech Lead | Open |
+| R-15 | No mental-health advisor or scholar reviewer confirmed in time, blocking the safety pathway, content policy and G1 (A-04, A-08) | 3 | 5 | 15 | Recruit in T-M0-006; dated recruitment plan accepted at G0 if names are not confirmed | Project Lead | Open |
+| R-16 | OEM battery optimisation kills background collection, leaving data gaps that weaken inference (A-09) | 4 | 3 | 12 | OEM spike T-M2-004 with gap rates; WorkManager; in-app guidance to exempt the app; gap-aware features in FS-001 | AG-05 Platform Feasibility | Open |
+
+R-15 and R-16 scores are proposed by AG-01 for Project Lead confirmation.
+
+## Escalations (score ≥ 15)
+| Risk | Score | Escalated to | Date | Decision requested |
+|---|---|---|---|---|
+| R-02 | 15 | Project Lead | 2026-10-20 | Accept mitigation; go/no-go on Usage Access at G2 after T-M2-002 |
+| R-03 | 16 | Project Lead | 2026-10-20 | Accept "ask, don't assert" framing and EMA-led labels; review after T-M2-006 |
+| R-07 | 16 | Project Lead | 2026-10-20 | Accept public-dataset pre-study plus EMA pilot; review after T-M1-013 |
+| R-15 | 15 | Project Lead | 2026-10-20 | Own T-M0-006 recruitment; confirm names or a dated plan before G0 (T-M0-009) |
