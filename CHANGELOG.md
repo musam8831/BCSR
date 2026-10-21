@@ -19,7 +19,7 @@ All notable changes follow [Keep a Changelog](https://keepachangelog.com/) conve
 - T-M0-001 / D-008: Tech Lead accepts deferred branch protection with compensating controls — Claude Code guard hook + deny rules (`.claude/settings.json`, `scripts/hooks/guard_git.py`), git pre-push hook (`.githooks/pre-push`), CI audit that every `main` commit comes from a merged PR. D-008 expires before M4. T-M0-001 Done.
 - D-009 / R-17: Muhammad Usman holds Project Lead and Tech Lead roles; charter GOV-01 v1.1 §6.
 - T-M0-008: CI step `scripts/check_pr_dod.sh` fails non-draft PRs with a missing or incomplete Definition of Done (re-runs on PR edit); weekly report template `weekly-reports/TEMPLATE.md`. Approved by Project Lead 2026-10-20 (PR #7, in place of AG-16).
-- T-M0-009: G0 gate pack draft (`gates/G0.md`) — exit criteria with evidence; recommendation Not ready until T-M0-006.
+- T-M0-009: G0 gate pack (`gates/G0.md`); **G0 decided Go by Project Lead 2026-10-21**. T-M0-006 recruitment plan recorded (Dr. Hafiz Hasan Madni + IIUI Hadith dept; approach by 2026-10-31, confirm by 2026-11-15).
 - T-M0-001: GitHub repository `musam8831/BCSR` (private) created; initial commit pushed to `main`; folder structure verified against README map (`check_repo.py` OK). Branch protection deferred per D-008 (Free plan, private repo); risk R-14.
 - T-M3-012: Git repo init, GitNexus index for BCSR, lean `.cursor/rules/`, `bcsr-orchestrate` Cursor skill wrapper, `docs/11-agent-system/tooling-efficiency.md` (AGS-05).
 - docs-v0.1: Initial M0–M3 execution package — governance, requirements catalogue, research briefs, architecture baseline, content policy, agent registry, 14 expert skills, milestones, task register and dependencies.
