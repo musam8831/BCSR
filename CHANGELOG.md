@@ -5,6 +5,7 @@ All notable changes follow [Keep a Changelog](https://keepachangelog.com/) conve
 ## [Unreleased]
 
 ### Changed
+- T-M1-006: Context-state taxonomy v1 (GOV-02 §1) — evidence level (RES-02) and detection mode per state; CS-02 renamed Worry / stress; CS-05 and CS-07 EMA-only; content mappings unchanged pending scholar (CR-05); FR-10 change proposed to AG-02 (HC-07).
 - T-M1-013: Dataset strategy RES-04 v1.0-rc — instrument table with licence status (project-authored EMA items; PSS-10 + Urdu PSS-10 selected, two free permissions pending); no clinical screeners (D-011); public datasets checked (GLOBEM credentialed DUA, ExtraSensory citation-only, StudentLife unverified); shipped model trained only on BCSR-consented data; actions list. Approved by Tech Lead 2026-10-21 (PR #14; dual role, D-009).
 - T-M1-002: SRS REQ-01 v0.2 — §1 Introduction and §2 Overall description written (ISO/IEC/IEEE 29148 structure); §3 module table gains inputs → outputs and requirement IDs for all 13 modules. No new requirements. Approved by Project Lead 2026-10-21 (PR #12, in place of AG-16).
 - T-M1-001: SK-02, SK-04, SK-07, SK-08, SK-10, SK-12 bootstrapped to v0.3 (Usable) — 18/18 evals pass on desk run (7 after fixes: out-of-scope rejection, paywalled sources, catalogue-only content, duplicate refs, translation refusal + escalation, locale without helpline, no paraphrase in mocks). SK-10 now gates on the Project Lead (D-011). Approved by Project Lead 2026-10-21 (PR #11, in place of AG-16).
