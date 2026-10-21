@@ -5,7 +5,7 @@ All notable changes follow [Keep a Changelog](https://keepachangelog.com/) conve
 ## [Unreleased]
 
 ### Changed
-- T-M1-001: SK-02, SK-04, SK-07, SK-08, SK-10, SK-12 bootstrapped to v0.3 (Usable) — 18/18 evals pass on desk run (7 after fixes: out-of-scope rejection, paywalled sources, catalogue-only content, duplicate refs, translation refusal + escalation, locale without helpline, no paraphrase in mocks). SK-10 now gates on the Project Lead (D-011).
+- T-M1-001: SK-02, SK-04, SK-07, SK-08, SK-10, SK-12 bootstrapped to v0.3 (Usable) — 18/18 evals pass on desk run (7 after fixes: out-of-scope rejection, paywalled sources, catalogue-only content, duplicate refs, translation refusal + escalation, locale without helpline, no paraphrase in mocks). SK-10 now gates on the Project Lead (D-011). Approved by Project Lead 2026-10-21 (PR #11, in place of AG-16).
 - T-M0-001: D-008 guard hook uses `$CLAUDE_PROJECT_DIR` so it works from any working directory.
 - D-010: content follows the Ahl-e-Hadith manhaj (Qur'an and Sahih Hadith only); named ulama recorded as reference authorities. T-M0-006 stays In Progress until a living reviewer agrees.
 - D-011: no mental-health advisor; Project Lead approves safety copy and pathway (SR-04, T-M1-006, T-M1-011, AG-10); safety pathway SR-01..05 unchanged; R-05 raised to 15 and accepted.

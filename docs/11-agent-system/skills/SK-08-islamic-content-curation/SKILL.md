@@ -5,7 +5,7 @@ description: Draft catalogue metadata, validate schema, prepare scholar HC-06 pa
 
 # SK-08 · islamic-content-curation
 
-**Version:** 0.3 · **Status:** Usable (bootstrap, T-M1-001) · validation in T-M3-006
+**Version:** 0.3 · **Status:** Usable (bootstrap, T-M1-001; approved by Project Lead 2026-10-21, PR #11) · validation in T-M3-006
 
 ## Purpose
 Curate verified catalogue entries for scholar approval only.

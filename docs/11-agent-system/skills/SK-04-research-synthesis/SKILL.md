@@ -5,7 +5,7 @@ description: Synthesise evidence and open-source/licence evaluation for M1–M2 
 
 # SK · research-synthesis
 
-**Version:** 0.3 · **Status:** Usable (bootstrap, T-M1-001) · validation in T-M3-006
+**Version:** 0.3 · **Status:** Usable (bootstrap, T-M1-001; approved by Project Lead 2026-10-21, PR #11) · validation in T-M3-006
 
 ## Purpose
 Ground choices in citations and compatible licences.

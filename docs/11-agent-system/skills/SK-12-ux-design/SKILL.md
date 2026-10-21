@@ -5,7 +5,7 @@ description: Flows, wireframes, RTL microcopy, accessibility; M2/M8 UX.
 
 # SK-12 · ux-design
 
-**Version:** 0.3 · **Status:** Usable (bootstrap, T-M1-001) · validation in T-M3-006
+**Version:** 0.3 · **Status:** Usable (bootstrap, T-M1-001; approved by Project Lead 2026-10-21, PR #11) · validation in T-M3-006
 
 ## Purpose
 Calm, accessible UX that asks rather than asserts; i18n Collaborator duties stay here.

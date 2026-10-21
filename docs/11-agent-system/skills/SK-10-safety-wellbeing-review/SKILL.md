@@ -5,7 +5,7 @@ description: Safety pathway, tone, helplines; HC-06 packs for the Project Lead (
 
 # SK-10 · safety-wellbeing-review
 
-**Version:** 0.3 · **Status:** Usable (bootstrap, T-M1-001) · validation in T-M3-006
+**Version:** 0.3 · **Status:** Usable (bootstrap, T-M1-001; approved by Project Lead 2026-10-21, PR #11) · validation in T-M3-006
 
 ## Purpose
 Crisis indicators trigger human-help pathways, not du'a-only.
