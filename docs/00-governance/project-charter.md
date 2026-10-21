@@ -45,8 +45,8 @@ Each objective is specific to one outcome, measured as stated, time-bound to a m
 |---|---|
 | Project Lead / Sponsor | Vision, gate approvals, prioritisation |
 | Tech Lead | Architecture, code quality, ML direction. Held by Muhammad Usman together with Project Lead (D-009, R-17) |
-| Scholar reviewer(s) | Approve every content item; source policy |
-| Mental-health advisor | Safety pathway, EMA instrument choice, wording |
+| Scholar reviewer(s) | Approve every content item; source policy. Manhaj: Ahl-e-Hadith, Qur'an and Sahih Hadith only (D-010). Named reviewer: **pending** (T-M0-006) |
+| Mental-health advisor | None (D-011). Project Lead approves safety pathway, EMA instrument and wording |
 | Ethics/IRB (e.g., institutional review board) | Approve research data collection |
 | Pilot users | Consenting participants |
 | AI agent workforce | Execute tasks under AGENTS.md |

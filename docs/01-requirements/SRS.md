@@ -93,7 +93,7 @@ Priority uses MoSCoW: M = Must, S = Should, C = Could, W = Won't (this release).
 | SR-01 | Crisis indicators show region-appropriate, verified helplines and an emergency option immediately. | M |
 | SR-02 | The app states clearly that it is not a medical or therapeutic service. | M |
 | SR-03 | Crisis detection relies on explicit user input, not passive inference alone. | M |
-| SR-04 | Safety copy and pathway are approved by a mental-health advisor. | M |
+| SR-04 | Safety copy and pathway are approved by the Project Lead (D-011; no mental-health advisor), with helplines checked against official sources. | M |
 | SR-05 | Helpline data is reviewed for accuracy at least quarterly. | M |
 
 ### 5.5 Content requirements
