@@ -5,7 +5,7 @@ description: Produce SRS, stories, ACs, and traceability; use for M1 baseline an
 
 # SK · requirements-engineering
 
-**Version:** 0.2 · **Status:** Draft (pilot validation in T-M3-006)
+**Version:** 0.3 · **Status:** Usable (bootstrap, T-M1-001; approved by Project Lead 2026-10-21, PR #11) · validation in T-M3-006
 
 ## Purpose
 Complete, testable, traceable requirements within charter.
@@ -17,7 +17,7 @@ HC-01 task packet; documents it lists; `AGENTS.md`; AGS-04 Mode/O/C/G fields.
 1. Read charter, scope, personas, research named in HC-01.
 2. Assign Requirement IDs (FR-/NFR-/PR-/SR-/CR-) to every Must/Should.
 3. Write stories and ACs; update traceability matrix.
-4. Open HC-07 for gaps; never invent scope.
+4. Open HC-07 for gaps; never invent scope. A requested feature that conflicts with the charter's out-of-scope list or an ADR (e.g. paid LLM chat vs ADR-0003) is rejected with the citation, not drafted.
 5. Align religious-content requirements to CR-* and scholar gate.
 6. Submit HC-03 for AG-16 / Project Lead.
 
