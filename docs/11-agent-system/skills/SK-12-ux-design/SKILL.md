@@ -5,7 +5,7 @@ description: Flows, wireframes, RTL microcopy, accessibility; M2/M8 UX.
 
 # SK-12 · ux-design
 
-**Version:** 0.3 · **Status:** Usable (bootstrap, T-M1-001; approved by Project Lead 2026-10-21, PR #11) · validation in T-M3-006
+**Version:** 1.0 · **Status:** Validated (T-M3-008): edge and trap evals judged by an independent AG-16 (audits T-M3-006, T-M3-008)
 
 ## Purpose
 Calm, accessible UX that asks rather than asserts; i18n Collaborator duties stay here.
@@ -15,7 +15,7 @@ HC-01 task packet; documents it lists; `AGENTS.md`; AGS-04 Mode/O/C/G fields.
 
 ## Procedure
 1. Design from personas/stories in HC-01.
-2. Provide en/ur/ar RTL guidance. Never generate, paraphrase or translate scripture, even in mocks; use catalogue text or a labelled placeholder.
+2. Provide en/ur/ar RTL guidance; fix RTL truncation or overflow by layout (wrapping, sizing, scrolling), never by shortening or rewording scripture or catalogue text (UI microcopy may be rewritten). Never generate, paraphrase or translate scripture, even in mocks; use catalogue text or a labelled placeholder.
 3. Coordinate emotional/crisis surfaces with AG-10.
 4. Document a11y (contrast, touch targets, screen reader).
 5. Hand specs to AG-11; gated review with AG-10/Project Lead.
