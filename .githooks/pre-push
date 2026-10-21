@@ -1,0 +1,10 @@
+#!/bin/sh
+# D-008 compensating control: refuse to push to main (AGENTS.md §5.6). Enable once per clone:
+#   git config core.hooksPath .githooks
+while read -r local_ref local_sha remote_ref remote_sha; do
+  if [ "$remote_ref" = "refs/heads/main" ]; then
+    echo "pre-push: pushing to main is blocked (D-008). Open a PR from a T-Mx-NNN branch." >&2
+    exit 1
+  fi
+done
+exit 0
