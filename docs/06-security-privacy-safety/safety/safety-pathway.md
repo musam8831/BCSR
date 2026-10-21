@@ -2,7 +2,7 @@
 
 Task: T-M1-011 · Owner: AG-10 (SK-10) · Approver: Project Lead (D-011, in place of a mental-health advisor) · Requirements: FR-24, SR-01..SR-05, AGENTS.md §4.
 
-**Status: pending Project Lead signature.** No mental-health professional has reviewed this pathway (D-011, risk R-05 accepted at 15).
+**Status: signed by the Project Lead 2026-10-21 (PR #18).** No mental-health professional has reviewed this pathway (D-011, risk R-05 accepted at 15).
 
 ## 1. Principles
 1. **Human help first.** In a crisis the app shows helplines and an emergency action before anything else. A du'a is offered only after, and never instead (AGENTS.md §4).
@@ -53,4 +53,4 @@ Not allowed in any safety copy: diagnosis ("you are depressed"), religious blame
 ## 6. Sign-off
 | Version | Date | Approver | Decision |
 |---|---|---|---|
-| 1.0 | | Project Lead (D-011) | Pending |
+| 1.0 | 2026-10-21 | Muhammad Usman, Project Lead (D-011) | Approved via PR #18 |
