@@ -33,6 +33,7 @@ All notable changes follow [Keep a Changelog](https://keepachangelog.com/) conve
 - T-M2-012: Test strategy TST-01 (levels, gate tests never skipped, entry/exit criteria) and device matrix TST-02.
 - T-M2-013: G2 gate pack draft — not ready (G1, spike runs, GLOBEM, Usage Access policy).
 - T-M2-006 blocked on GLOBEM credentials (EXP-0001 planned).
+- Approved by Tech Lead 2026-10-21 (PR #19; D-009, in place of AG-16 / AG-09 / AG-03 where named): T-M2-000, 002, 007, 008, 009, 010, 012 Done; EP-001 ship criteria S1–S7 approved. T-M2-011 stays In Review (independent AG-10 review); spikes In Progress; T-M2-006 Blocked; T-M2-013 In Progress.
 - T-M1-004: SRS REQ-01 v0.3 — catalogue complete for G1: FR-10 limited to passively detectable states (HC-07 from T-M1-006), FR-14/FR-17 made testable, PR-07 (shipped models trained only on BCSR-consented data), CR-06 (manhaj, D-010), CR-07 (source attributions); change log §5.6. Interview input pending.
 - T-M1-005: Acceptance criteria REQ-04 v1.0-rc — all 46 Must requirements, each with a verification method.
 - T-M1-007: User stories REQ-03 v0.2 (US-13..US-25) and traceability matrix REQ-05 v1.0-rc, generated with a coverage check (57 requirements; every requirement has a story, every Must an AC).

@@ -1,6 +1,6 @@
-# EP-001 State Inference Evaluation Plan v1.0-rc
+# EP-001 State Inference Evaluation Plan v1.0
 
-Task: T-M2-010 · Owner: AG-07 (SK-07) · Reviewer: Tech Lead · Sets the numeric target for charter OBJ-1. **Numbers in §5 are proposed by AG-07 for Tech Lead approval.**
+Task: T-M2-010 · Owner: AG-07 (SK-07) · Reviewer: Tech Lead · Sets the numeric target for charter OBJ-1. **Ship criteria in §5 approved by the Tech Lead 2026-10-21 (PR #19; D-009).**
 
 ## 1. What is evaluated
 - **State model (FR-10):** probabilities over the passively detectable states CS-01..CS-04, CS-06, CS-08 (taxonomy v1). CS-05, CS-07, CS-09 are EMA-only and not evaluated as model outputs.
@@ -21,7 +21,7 @@ Task: T-M2-010 · Owner: AG-07 (SK-07) · Reviewer: Tech Lead · Sets the numeri
 - **Metrics:** macro-F1; per-state recall; AUROC per state (one-vs-rest); Brier score and expected calibration error (ECE); **check-in precision** (share of triggered check-ins the user confirms); check-in **compliance** (share answered); prompts per day; 95% bootstrap CIs by user.
 - **Subgroups (R-13):** gender, age band, device tier, OEM, language.
 
-## 5. Ship criteria (G-M6) — proposed
+## 5. Ship criteria (G-M6) — approved 2026-10-21
 | # | Criterion | Threshold | Why |
 |---|---|---|---|
 | S1 | Beats baselines | Macro-F1 ≥ max(B1, B2) **+ 0.05**, with 95% CIs not overlapping | Evidence predicts weak signals (RES-02); a small but real gain is the honest bar |
