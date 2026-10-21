@@ -21,6 +21,14 @@ All notable changes follow [Keep a Changelog](https://keepachangelog.com/) conve
 - T-M3-001..004 / T-M3-012: Expert skills SK-00..SK-16 deepened (v0.2 Draft) with role-specific procedures, non-clone evals, and reference packs for SK-06/07/08/09/10/11/12/13/14/15; agent defs AG-01..16 finalised; gap analysis confirms no new agents.
 
 ### Added
+- T-M1-004: SRS REQ-01 v0.3 — catalogue complete for G1: FR-10 limited to passively detectable states (HC-07 from T-M1-006), FR-14/FR-17 made testable, PR-07 (shipped models trained only on BCSR-consented data), CR-06 (manhaj, D-010), CR-07 (source attributions); change log §5.6. Interview input pending.
+- T-M1-005: Acceptance criteria REQ-04 v1.0-rc — all 46 Must requirements, each with a verification method.
+- T-M1-007: User stories REQ-03 v0.2 (US-13..US-25) and traceability matrix REQ-05 v1.0-rc, generated with a coverage check (57 requirements; every requirement has a story, every Must an AC).
+- T-M1-010: Source policy CON-01 v0.2 drafted (manhaj, Tanzil terms, open questions for the scholar); scholar approval pending.
+- T-M1-011: Safety pathway SAF-01 and helpline directory SAF-02 — 1122 verified, 1166 partly verified, Umang and police 15 not verified; release blocked until a mental-health line is fully verified.
+- T-M1-012: Ethics application draft (committee not chosen; not submitted).
+- T-M1-014: G1 gate pack draft — not ready (interviews, scholar, ethics submission, 1166 hours).
+- Approved by Project Lead 2026-10-21 (PR #18, in place of AG-16 / AG-14): T-M1-005 and T-M1-007 Done; safety pathway SAF-01 signed (D-011). T-M1-004, T-M1-010, T-M1-011 stay In Review; T-M1-012, T-M1-014 In Progress.
 - T-M1-003: Interview kit in `docs/01-requirements/interviews/` — guide (15 questions, English + Urdu), consent script, anonymised notes template, sampling plan and tracker for ≥ 8 interviews. Interviews themselves pending (Project Lead). Kit approved by Project Lead 2026-10-21 (PR #17).
 - T-M1-009: Licence register RES-03 v1.0-rc — 13 software components verified from their repositories (all Apache-2.0, MIT or BSD-3; no copyleft), Tanzil Quran text (CC BY 3.0, verbatim only), datasets and instruments cross-referenced to RES-04; no pre-trained models used. Approved by Tech Lead 2026-10-21 (PR #15; D-009).
 - T-M1-008: Scientific evidence brief RES-02 v1.0-rc — 36 peer-reviewed sources, every DOI verified against OpenAlex; answers RQ1–RQ5 from abstracts with an evidence table and 8 design implications. Gaps: Urdu PSS-10 validation and instrument licences (T-M1-013). Approved by Project Lead 2026-10-21 (PR #13, in place of AG-07).

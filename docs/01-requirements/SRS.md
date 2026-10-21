@@ -1,4 +1,4 @@
-# Software Requirements Specification — REQ-01 v0.2 (§1–§3 complete; catalogue baseline)
+# Software Requirements Specification — REQ-01 v0.3 (§1–§3, §5 catalogue complete for G1; persona input pending)
 
 Structure follows ISO/IEC/IEEE 29148. Task: T-M1-002 (§1–§3), approved by Project Lead 2026-10-21 (PR #12). Sections marked **[M1]** or **[M2]** are completed later. The requirements catalogue in §5 is the **initial baseline**; it is frozen at Gate G1.
 
@@ -96,14 +96,14 @@ Priority uses MoSCoW: M = Must, S = Should, C = Could, W = Won't (this release).
 | FR-07 | MOD-SN | The system shall map app packages to categories using an on-device category table. | M |
 | FR-08 | MOD-FE | The system shall compute windowed features (e.g., 15 min, 1 h, daily) defined in the feature specifications. | M |
 | FR-09 | MOD-FE | The system shall maintain a rolling personal baseline (≥ 7 days) per feature. | M |
-| FR-10 | MOD-SI | The system shall estimate a probability distribution over context states CS-01..CS-09. | M |
+| FR-10 | MOD-SI | The system shall estimate a probability distribution over the passively detectable context states CS-01..CS-04, CS-06 and CS-08 (GOV-02 §1 v1). CS-05, CS-07 and CS-09 are taken only from check-ins. | M |
 | FR-11 | MOD-SI | The system shall operate with a rule-based cold-start model until enough personal data exists. | M |
 | FR-12 | MOD-SI | The system shall personalise the model on device using confirmed labels. | S |
 | FR-13 | MOD-EM | The system shall offer a check-in of ≤ 3 taps (mood, energy, optional context tags). | M |
-| FR-14 | MOD-EM | The system shall trigger a contextual check-in when inferred-state confidence exceeds a threshold. | M |
+| FR-14 | MOD-EM | The system shall trigger a contextual check-in when inferred-state confidence exceeds a configurable threshold (default set in EP-001). | M |
 | FR-15 | MOD-RE | The system shall recommend only items with `verification.status = approved`. | M |
 | FR-16 | MOD-RE | The system shall rank items using state, time of day, recent history and feedback (contextual bandit). | M |
-| FR-17 | MOD-RE | The system shall avoid repeating the same item within a configurable window. | S |
+| FR-17 | MOD-RE | The system shall avoid repeating the same item within a configurable window (default 24 h). | S |
 | FR-18 | MOD-CC | The system shall display each item with Arabic text, transliteration, translation (Urdu/English) and full source reference. | M |
 | FR-19 | MOD-CC | The system shall provide audio recitation where licensed audio exists. | C |
 | FR-20 | MOD-CC | The system shall allow browsing by situation, favourites and search. | M |
@@ -139,6 +139,7 @@ Priority uses MoSCoW: M = Must, S = Should, C = Could, W = Won't (this release).
 | PR-04 | Precise location is never stored; at most derived "home/away" flags. | M |
 | PR-05 | A privacy notice compliant with Play's prominent-disclosure rules is shown. | M |
 | PR-06 | Data retention limits are enforced automatically. | M |
+| PR-07 | Models shipped in the app are trained only on data BCSR collected with its own consent (D1–D3), never on public research datasets whose terms are research-only or unstated (RES-04 §1). | M |
 
 ### 5.4 Safety requirements
 | ID | Requirement | Priority |
@@ -157,6 +158,19 @@ Priority uses MoSCoW: M = Must, S = Should, C = Could, W = Won't (this release).
 | CR-03 | Arabic text is sourced from a verified digital mushaf/hadith source with its licence recorded. | M |
 | CR-04 | Translations are from licensed, attributed sources or are produced by qualified human translators. | M |
 | CR-05 | Content-to-state mappings are approved by the scholar reviewer. | M |
+| CR-06 | Every item follows the content manhaj: Qur'an and Sahih Hadith per the Ahl-e-Hadith tradition (D-010). | M |
+| CR-07 | The app shows every attribution its content sources require (e.g. Tanzil Project name and link, RES-03 §3.2). | M |
 
-## 6. Verification **[M1]**
-Each requirement maps to acceptance criteria (acceptance-criteria.md) and test cases (08-testing) via the traceability matrix.
+## 5.6 Catalogue change log (T-M1-004, 2026-10-21)
+| Change | Source |
+|---|---|
+| FR-10 limited to passively detectable states | HC-07 from T-M1-006 (taxonomy v1) |
+| FR-14 threshold and FR-17 window made testable (configurable, with stated defaults) | Testability pass |
+| PR-07 added | RES-04 §1 (approved 2026-10-21) |
+| CR-06 added | D-010 |
+| CR-07 added | RES-03 §3.2 (Tanzil terms) |
+
+Interview findings (T-M1-003) are not yet included; new needs from them arrive as HC-07 requests before the G1 freeze.
+
+## 6. Verification
+Each requirement maps to user stories (REQ-03), acceptance criteria (REQ-04) and, from M2, test cases (`docs/08-testing`) via the traceability matrix (REQ-05). Every Must requirement has at least one acceptance criterion. Methods: **T** test (unit, instrumented, property), **I** inspection (manifest, code, copy review), **A** analysis (benchmark, audit), **D** demonstration. The method for each AC is stated in REQ-04.
