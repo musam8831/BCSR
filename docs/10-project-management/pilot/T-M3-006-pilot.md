@@ -53,7 +53,7 @@ agent: AG-15   skills: [SK-15]
 objective: CI runs :core:policy tests, spike unit tests and ML feature tests on every PR
 inputs: [TST-01 §1, SK-15 CI templates, .github/workflows/governance.yml]
 outputs: [.github/workflows/governance.yml]
-requirements: [NFR-07]   acceptance_criteria: [jobs run and pass on this PR; no existing gate removed]
+requirements: [— (test infrastructure, TST-01 §1); NFR-07 coverage measurement deferred to M5]   acceptance_criteria: [jobs run and pass on this PR; wrapper jars validated; no existing gate removed]
 constraints: [do not disable blocking checks (SK-15)]   reviewer: AG-16
 ```
 
@@ -64,9 +64,31 @@ constraints: [do not disable blocking checks (SK-15)]   reviewer: AG-16
 | P2 AG-11 | `app/android/core/policy` (`decide`, `TimingSettings`, `Decision`) | 7/7 JVM tests incl. exhaustive minute-by-minute check | Salah times passed in; wiring to Adhan and WorkManager is M5 |
 | P3 AG-14 | `TC-FR-15-FR-21.md`, `tests/test_build_catalogue_bundle.py` | 6/6; 2,000-catalogue property test | Found AC-FR-21 ambiguity (when to drop vs defer) → HC-07 to AG-02 |
 | P4 AG-06 | `ml/features/fs001.py`, tests | 5/5 fixture tests | z-score uses unscaled MAD as FS-001 states; scaling question for AG-07 |
-| P5 AG-15 | `governance.yml`: ML step in `checks`, new `kotlin-tests` job | CI run on this PR | Spike tests need the runner's Android SDK |
+| P5 AG-15 | `governance.yml`: ML step in `checks`, new `kotlin-tests` job with Gradle wrapper validation | CI run on this PR | Spike tests need the runner's Android SDK; coverage (NFR-07) not measured yet |
 
 All five pilots were written in one session by the same model playing each role; that is why the gate is a **separate** AG-16 subagent.
+
+## Rework after the AG-16 audit (round 1: changes-requested)
+| Finding | Fix |
+|---|---|
+| P1 major: `items_sha256` input undefined | Canonical JSON specified in api-contracts §2 with a cross-language test vector; `test_digest_matches_api_contract_test_vector` |
+| P3 major: HC-07 claimed but not filed | Filed CR-REQ-0001 (drop vs defer) and CR-REQ-0002 (AC-FR-09 vs FS-001, checking-session definition) in `docs/10-project-management/change-requests/` |
+| P2 minor: chaining bound wrong for extreme settings | Loop until free, drop after 48 h (as CR-REQ-0001 proposes); new 3,000-case random test checks every deferral target is free; always-blocked case drops |
+| P3 minor: real-catalogue test trivial | Renamed to a smoke test, with the reason |
+| Traceability Test column empty | FR-08, FR-09, FR-15, FR-21 rows link the tests |
+| P5 minor: wrapper jar unvalidated; NFR-07 claimed | `gradle/actions/wrapper-validation@v4` step; NFR-07 claim removed, coverage deferred to M5 |
+| SK-13, SK-15 edge evals fail | Rules added (SK-13 step 4, SK-15 step 6); both skills v0.3 with results |
+
+## Gate record
+| Pilot | Gates in packet | Recorded |
+|---|---|---|
+| P1 | AG-16, AG-09 | AG-16: see audit. **AG-09: not run** in the pilot; the Tech Lead (D-009) takes this gate at merge |
+| P2 | AG-16, AG-14 | AG-16: see audit. AG-14: TC-FR-21 cases written against P2 (P3), the only AG-14 review |
+| P3 | AG-16 | AG-16: see audit |
+| P4 | AG-16, AG-07 | AG-16: see audit. **AG-07: not run**; scaling question in CR-REQ-0002 |
+| P5 | AG-16, AG-09 | AG-16: see audit. **AG-09: not run**; Tech Lead at merge |
+
+Path-ownership deviations accepted by AG-00: the root `.gitignore` (`/build/`, P1) and the executable bit on both `gradlew` files (P5) sit outside the agents' write paths; both are repository configuration with no owner in the registry, recorded here rather than reassigned.
 
 ## AG-16 audit
 See `docs/10-project-management/audits/T-M3-006-audit.md` (written by the AG-16 subagent, not by the authors).

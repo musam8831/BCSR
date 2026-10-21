@@ -20,7 +20,7 @@ import validate_catalogue as vc  # noqa: E402
 
 
 def items_digest(items):
-    """SHA-256 over the canonical JSON of the items array (sorted keys, no spaces, UTF-8)."""
+    """SHA-256 over the canonical JSON of the items array, as specified in api-contracts §2 (test vector there)."""
     canon = json.dumps(items, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
     return hashlib.sha256(canon.encode("utf-8")).hexdigest()
 

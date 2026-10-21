@@ -13,20 +13,20 @@ Coverage: 57 requirements, 46 Must, all with stories and Must ACs.
 | FR-05 | S | US-13 | — | SRS §3 MOD-SN | T-M2-009 | — (from M2, T-M2-012) | Baseline |
 | FR-06 | S | US-13 | — | SRS §3 MOD-SN | T-M2-009 | — (from M2, T-M2-012) | Baseline |
 | FR-07 | M | US-13 | AC-FR-07 | SRS §3 MOD-SN | T-M2-009 | — (from M2, T-M2-012) | Baseline |
-| FR-08 | M | US-14 | AC-FR-08 | SRS §3 MOD-FE | T-M2-009 | — (from M2, T-M2-012) | Baseline |
-| FR-09 | M | US-14 | AC-FR-09 | SRS §3 MOD-FE | T-M2-009 | — (from M2, T-M2-012) | Baseline |
+| FR-08 | M | US-14 | AC-FR-08 | SRS §3 MOD-FE | T-M2-009 | `ml/features/test_fs001.py` (reference impl.; device side M5) | Baseline |
+| FR-09 | M | US-14 | AC-FR-09 | SRS §3 MOD-FE | T-M2-009 | `ml/features/test_fs001.py` (robust_z; CR-REQ-0002 open) | Baseline |
 | FR-10 | M | US-03 | AC-FR-10 | ADR-0003, data-flow §Inference | T-M2-006 | — (from M2, T-M2-012) | Baseline |
 | FR-11 | M | US-14 | AC-FR-11 | SRS §3 MOD-SI | T-M2-009 | — (from M2, T-M2-012) | Baseline |
 | FR-12 | S | US-14 | — | SRS §3 MOD-SI | T-M2-009 | — (from M2, T-M2-012) | Baseline |
 | FR-13 | M | US-15 | AC-FR-13 | SRS §3 MOD-EM | T-M2-009 | — (from M2, T-M2-012) | Baseline |
 | FR-14 | M | US-03, US-04 | AC-FR-14 | data-flow §Check-in | T-M1-005 | — (from M2, T-M2-012) | Baseline |
-| FR-15 | M | US-23 | AC-FR-15 | ADR-0004, content-schema | T-M2-008 | — (from M2, T-M2-012) | Baseline |
+| FR-15 | M | US-23 | AC-FR-15 | ADR-0004, content-schema | T-M2-008 | TC-FR-15-01..03 `tests/test_build_catalogue_bundle.py` (build side); TC-FR-15-04 M5 | Baseline |
 | FR-16 | M | US-03, US-07 | AC-FR-16 | SRS §3 MOD-RE | T-M2-009 | — (from M2, T-M2-012) | Baseline |
 | FR-17 | S | US-16 | — | SRS §3 MOD-RE | T-M2-009 | — (from M2, T-M2-012) | Baseline |
 | FR-18 | M | US-05 | AC-FR-18 | content-schema | T-M1-010 | — (from M2, T-M2-012) | Baseline |
 | FR-19 | C | US-06 | — | SRS §3 MOD-CC | T-M2-009 | — (from M2, T-M2-012) | Baseline |
 | FR-20 | M | US-16 | AC-FR-20 | SRS §3 MOD-CC | T-M2-009 | — (from M2, T-M2-012) | Baseline |
-| FR-21 | M | US-03, US-10 | AC-FR-21 | component-architecture §Notifier | T-M1-005 | — (from M2, T-M2-012) | Baseline |
+| FR-21 | M | US-03, US-10 | AC-FR-21 | component-architecture §Notifier | T-M1-005 | TC-FR-21-01..03 `:core:policy` tests; TC-FR-21-04 M5 | Baseline |
 | FR-22 | S | US-17 | — | SRS §3 MOD-NT | T-M2-009 | — (from M2, T-M2-012) | Baseline |
 | FR-23 | S | US-11 | — | SRS §3 MOD-IN | T-M2-009 | — (from M2, T-M2-012) | Baseline |
 | FR-24 | M | US-09 | AC-FR-24 | threat-model §Safety | T-M1-011 | — (from M2, T-M2-012) | Baseline |

@@ -28,21 +28,18 @@ sealed interface Decision {
 fun decide(now: LocalDateTime, sentToday: Int, salahTimes: List<LocalTime>, s: TimingSettings): Decision {
     require(s.dailyCap >= 0 && s.salahBufferMinutes >= 0) { "cap and buffer must be non-negative" }
     if (sentToday >= s.dailyCap) return Decision.Drop
-    val blockedUntil = blockedUntil(now, salahTimes, s) ?: return Decision.Allow
-    return Decision.Defer(blockedUntil)
+    var t = now
+    // Chain back-to-back windows (quiet hours, Salah buffers, across midnight) until a free minute.
+    while (true) {
+        val end = windowEndContaining(t, salahTimes, s) ?: break
+        t = end // always later than t, so the loop advances
+        if (Duration.between(now, t) > MAX_DEFER) return Decision.Drop // settings leave no free time soon
+    }
+    return if (t == now) Decision.Allow else Decision.Defer(t)
 }
 
-/** End of the blocking window that contains [now], or null if [now] is free. Chains overlapping windows. */
-private fun blockedUntil(now: LocalDateTime, salahTimes: List<LocalTime>, s: TimingSettings): LocalDateTime? {
-    var t = now
-    var moved = false
-    repeat(salahTimes.size + 2) { // each pass can only move past one window
-        val end = windowEndContaining(t, salahTimes, s) ?: return if (moved) t else null
-        t = end
-        moved = true
-    }
-    return t
-}
+/** Proposed in CR-REQ-0001: drop if no free minute exists in the next 48 h. */
+private val MAX_DEFER: Duration = Duration.ofHours(48)
 
 private fun windowEndContaining(t: LocalDateTime, salahTimes: List<LocalTime>, s: TimingSettings): LocalDateTime? {
     quietEnd(t, s)?.let { return it }

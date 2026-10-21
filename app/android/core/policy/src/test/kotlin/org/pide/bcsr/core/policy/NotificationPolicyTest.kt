@@ -48,6 +48,32 @@ class NotificationPolicyTest {
         assertEquals(Decision.Allow, decide(at(2, 0), 0, salah, none))
     }
 
+    /** AG-16 finding: across random (incl. extreme) settings, a deferral always lands on a free minute. */
+    @Test
+    fun deferralTargetIsAlwaysFree() {
+        val rng = java.util.Random(21)
+        repeat(3000) {
+            val s = TimingSettings(
+                LocalTime.of(rng.nextInt(24), rng.nextInt(60)), LocalTime.of(rng.nextInt(24), rng.nextInt(60)),
+                salahBufferMinutes = rng.nextInt(240).toLong(), dailyCap = 10,
+            )
+            val times = List(rng.nextInt(6)) { LocalTime.of(rng.nextInt(24), rng.nextInt(60)) }
+            val now = day.atTime(rng.nextInt(24), rng.nextInt(60))
+            val d = decide(now, 0, times, s)
+            if (d is Decision.Defer) {
+                assertTrue("deferral must move forward", d.until.isAfter(now))
+                assertEquals("deferral target must be free for $s $times at $now", Decision.Allow, decide(d.until, 0, times, s))
+            }
+        }
+    }
+
+    @Test
+    fun alwaysBlockedSettingsDrop() {
+        // Quiet 06:00–05:59 leaves one free minute; a 2-hour Salah buffer at 05:30 covers it → nothing free for 48 h.
+        val blocked = TimingSettings(LocalTime.of(6, 0), LocalTime.of(5, 59), salahBufferMinutes = 120, dailyCap = 4)
+        assertEquals(Decision.Drop, decide(at(10, 0), 0, listOf(LocalTime.of(5, 30)), blocked))
+    }
+
     /** AC-FR-21: for every minute of the day, an allowed time is never inside quiet hours or a Salah window. */
     @Test
     fun exhaustiveDayNeverAllowsBlockedMinutes() {

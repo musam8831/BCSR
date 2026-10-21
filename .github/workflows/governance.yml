@@ -54,6 +54,8 @@ jobs:
         with:
           distribution: temurin
           java-version: "17"
+      - name: Validate committed Gradle wrapper jars
+        uses: gradle/actions/wrapper-validation@v4
       - name: Product modules (:core:policy)
         working-directory: app/android
         run: bash ./gradlew --no-daemon :core:policy:test

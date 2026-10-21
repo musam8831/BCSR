@@ -13,4 +13,4 @@ Pilot P3 · Owner: AG-14 (SK-14) · Strategy: TST-01 · These are **gate tests**
 | TC-FR-21-03 | AC-FR-21 | Unit | Quiet hours ending inside a Salah window | One deferral to the end of the Salah window | `overlappingWindowsAreChained` | Pass |
 | TC-FR-21-04 | AC-FR-21 | Instrumented | Real notifications with computed Salah times on the device matrix | None shown inside windows | M5 (needs `:core:policy` wired to Adhan and WorkManager) | Not yet built |
 
-Gap found while writing these cases: AC-FR-21 says "deferred or dropped" but not **when** to drop instead of defer. The policy drops only when the daily cap is reached and defers otherwise. Recorded as a clarification for AG-02 (HC-07) before G1.
+Gap found while writing these cases: AC-FR-21 says "deferred or dropped" but not **when** to drop instead of defer. The policy drops only when the daily cap is reached and defers otherwise. Filed as [CR-REQ-0001](../../10-project-management/change-requests/CR-REQ-0001.md) (HC-07) for AG-02 before G1.

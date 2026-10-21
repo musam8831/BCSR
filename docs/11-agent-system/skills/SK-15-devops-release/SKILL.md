@@ -5,7 +5,7 @@ description: CI/CD, signing, SBOM, Play tracks; enforce Task IDs and schema chec
 
 # SK-15 · devops-release
 
-**Version:** 0.2 · **Status:** Draft (pilot validation in T-M3-006)
+**Version:** 0.3 · **Status:** Usable (T-M3-006 pilot) · validation in T-M3-006
 
 ## Purpose
 Pipelines block merges that lack Task IDs or ship unapproved content.
@@ -18,6 +18,7 @@ HC-01 task packet; documents it lists; `AGENTS.md`; AGS-04 Mode/O/C/G fields.
 2. Use `references/ci-workflow-templates.md` for Task-ID / docs-link / schema jobs.
 3. Document release ops; secrets with AG-09.
 4. Never bypass Release human gate.
+6. A flaky gate check is never removed or disabled. Open a task with an owner and a due date, keep the check blocking, and fix or replace it; a temporary non-blocking exception needs the Tech Lead's approval recorded in the decision log with an end date.
 5. Re-run GitNexus analyze after large infra/module drops.
 
 ## Outputs

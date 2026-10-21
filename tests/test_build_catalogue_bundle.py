@@ -45,6 +45,13 @@ class BundleTest(unittest.TestCase):
         edited[1]["title"] = {"en": "changed"}
         self.assertNotIn(b.build(edited, "t", "k")[0]["manifest"]["items_sha256"], digests)
 
+    def test_digest_matches_api_contract_test_vector(self):
+        # api-contracts §2: the Kotlin verifier must reproduce this exact value
+        items = [{"id": "DUA-0001", "title": {"en": "Ease", "ur": "آسانی"},
+                  "verification": {"status": "approved", "record_id": "RR-0001"}},
+                 {"id": "DUA-0002", "repetitions": 3, "note": 'line\nbreak "q"'}]
+        self.assertEqual(b.items_digest(items), "8fed260e4d68a9f7ff9263d63e9550a8aa0e2c8600db8fa16496cbf5ca036549")
+
     def test_manifest_fields(self):
         m = b.build([], "2026.1", "key-x", created="2026-01-01T00:00:00Z")[0]["manifest"]
         self.assertEqual(set(m), {"version", "created", "item_count", "items_sha256", "key_id"})
@@ -61,7 +68,8 @@ class BundleTest(unittest.TestCase):
         finally:
             b.vc.validate = orig
 
-    def test_real_catalogue_builds_with_drafts_excluded(self):
+    def test_real_catalogue_smoke(self):
+        # Smoke test only: today's catalogue has no approved items, so this mainly checks the build runs end to end.
         out = ROOT / "build" / "test-bundle"
         self.assertEqual(b.main(["--version", "y", "--out", str(out)]), 0)
         bundle = json.loads((out / "catalogue-y.json").read_text(encoding="utf-8"))
