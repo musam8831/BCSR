@@ -22,7 +22,7 @@ All notable changes follow [Keep a Changelog](https://keepachangelog.com/) conve
 
 ### Added
 - T-M3-005: Catalogue validator `content/validation/validate_catalogue.py` (schema, Qur'an ayah ranges, type/reference agreement, approval records naming reviewer and item, no placeholders in approved items, duplicates); wired into `check_repo.py`; 12 tests; review-record template.
-- T-M3-007: CI checks — `scripts/check_docs.py` (relative links resolve; cited requirement IDs exist in SRS; every requirement in the traceability matrix) with 4 tests; CI runs the unit tests and the docs check. With no branch protection (D-008), "blocking" means the merge guard hook refuses to merge on failing checks.
+- T-M3-007: CI checks — `scripts/check_docs.py` (relative links resolve; cited requirement IDs exist in SRS; every requirement in the traceability matrix) with 4 tests; CI runs the unit tests and the docs check. With no branch protection (D-008), "blocking" means the merge guard hook refuses to merge on failing checks. Approved by Project Lead 2026-10-21 (PR #20, in place of AG-16).
 - D-012 / R-18: M2 runs in parallel with G1 (scholar not yet confirmed); G1 still required before G2.
 - T-M2-000: SK-03, SK-05, SK-06, SK-09, SK-11, SK-14 bootstrapped to v0.3 — 18/18 evals pass on desk run (5 after fixes); SK-03 uses the Project Lead safety gate (D-011).
 - T-M2-001/003/004/005: spike app `app/android/spikes/` (Kotlin, Compose, WorkManager; records usage/screen/unlock events, notification counts without content, activity transitions, 15-min heartbeat with battery and standby state) — builds, 4/4 unit tests pass; not yet run on phones. Protocols SPK-01, SPK-03, SPK-04, SPK-05 with result templates and decision rules.
