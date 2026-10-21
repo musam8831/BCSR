@@ -5,7 +5,7 @@ description: Test strategy, cases, automation, device matrix; M2–M10 QA.
 
 # SK-14 · qa-testing
 
-**Version:** 0.3 · **Status:** Usable (bootstrap, T-M2-000) · validation in T-M3-006
+**Version:** 1.0 · **Status:** Validated (T-M3-008): edge and trap evals judged by an independent AG-16 (audits T-M3-006, T-M3-008)
 
 ## Purpose
 Prove ACs with evidence on a realistic device matrix.

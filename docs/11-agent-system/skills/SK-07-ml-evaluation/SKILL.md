@@ -5,7 +5,7 @@ description: Own evaluation plans, model cards, bias checks; use for M1–M7 eva
 
 # SK-07 · ml-evaluation
 
-**Version:** 0.3 · **Status:** Usable (bootstrap, T-M1-001; approved by Project Lead 2026-10-21, PR #11) · validation in T-M3-006
+**Version:** 1.0 · **Status:** Validated (T-M3-008): edge and trap evals judged by an independent AG-16 (audits T-M3-006, T-M3-008)
 
 ## Purpose
 Honest metrics, subgroups, and limitations before merge.
@@ -15,7 +15,7 @@ HC-01 task packet; documents it lists; `AGENTS.md`; AGS-04 Mode/O/C/G fields.
 
 ## Procedure
 1. Align EP-001 and dataset strategy with requirements and ethics.
-2. Define metrics, splits, baselines, subgroup checks (`references/eval-script-stub.md`).
+2. Define metrics, splits, baselines, subgroup checks (`references/eval-script-stub.md`). With a small labelled set, report confidence intervals and the sample size, and state the limitation in the model card; never inflate results by oversampling or duplicating test data (bootstrap confidence intervals are fine).
 3. Review/co-author model cards (`references/model-card-checklist.md`).
 4. Block ship language that diagnoses or overclaims.
 5. Coordinate with AG-06 on experiment registry entries.

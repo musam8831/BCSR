@@ -5,7 +5,7 @@ description: Produce C4 views, ADRs, API contracts, module boundaries; resolve O
 
 # SK · solution-architecture
 
-**Version:** 0.3 · **Status:** Usable (bootstrap, T-M2-000) · validation in T-M3-006
+**Version:** 1.0 · **Status:** Validated (T-M3-008): edge and trap evals judged by an independent AG-16 (audits T-M3-006, T-M3-008)
 
 ## Purpose
 Architecture stays feasible, private, and ADR-aligned.

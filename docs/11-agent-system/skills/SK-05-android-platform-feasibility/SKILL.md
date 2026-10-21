@@ -5,7 +5,7 @@ description: Run sensing/OEM/Play-policy spikes for M2 feasibility.
 
 # SK · android-platform-feasibility
 
-**Version:** 0.3 · **Status:** Usable (bootstrap, T-M2-000) · validation in T-M3-006
+**Version:** 1.0 · **Status:** Validated (T-M3-008): edge and trap evals judged by an independent AG-16 (audits T-M3-006, T-M3-008)
 
 ## Purpose
 Evidence-based go/no-go per signal.

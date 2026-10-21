@@ -5,7 +5,7 @@ description: Threat model, minimisation, encryption, Play Data Safety; Gate on p
 
 # SK-09 · privacy-security-engineering
 
-**Version:** 0.3 · **Status:** Usable (bootstrap, T-M2-000) · validation in T-M3-006
+**Version:** 1.0 · **Status:** Validated (T-M3-008): edge and trap evals judged by an independent AG-16 (audits T-M3-006, T-M3-008)
 
 ## Purpose
 Privacy-by-default and security fail-closed.
@@ -16,7 +16,7 @@ HC-01 task packet; documents it lists; `AGENTS.md`; AGS-04 Mode/O/C/G fields.
 ## Procedure
 1. Update threat model for HC-01 change (`references/threat-checklist.md`).
 2. Enforce on-device raw signals; no other-app content collection.
-3. Review consent (PR-03) for any leave-device research path.
+3. Review consent (PR-03) for any leave-device research path, and require minimisation and pseudonymisation before upload (AGENTS.md §4; ARC-05 TH-04).
 4. Gate Done when risks unmitigated.
 5. Coordinate IRB/consent pack authorship as Collaborator with human gate.
 

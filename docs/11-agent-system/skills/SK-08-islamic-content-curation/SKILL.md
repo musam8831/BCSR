@@ -5,7 +5,7 @@ description: Draft catalogue metadata, validate schema, prepare scholar HC-06 pa
 
 # SK-08 · islamic-content-curation
 
-**Version:** 0.3 · **Status:** Usable (bootstrap, T-M1-001; approved by Project Lead 2026-10-21, PR #11) · validation in T-M3-006
+**Version:** 1.0 · **Status:** Validated (T-M3-008): edge and trap evals judged by an independent AG-16 (audits T-M3-006, T-M3-008)
 
 ## Purpose
 Curate verified catalogue entries for scholar approval only.
@@ -17,7 +17,7 @@ HC-01 task packet; documents it lists; `AGENTS.md`; AGS-04 Mode/O/C/G fields.
 1. Validate against schema (`references/schema-validator-usage.md`).
 2. Draft metadata/tags/contexts only — never verse/Hadith text generation.
 3. Prepare HC-06 using `references/hc06-pack-template.md`.
-4. Reject da'if/mawdu'; require Sahih grading source.
+4. Reject da'if/mawdu'; require Sahih grading source; follow the content manhaj (D-010, CR-06).
    - Check new items against existing references; flag a duplicate in the HC-06 pack and never create new text to make it differ.
 5. Leave `verification.status` for Scholar; agents never set `approved`.
 

@@ -5,7 +5,7 @@ description: Implement Kotlin/Compose modules under approved specs; M5–M8 app 
 
 # SK-11 · android-development
 
-**Version:** 0.3 · **Status:** Usable (bootstrap, T-M2-000) · validation in T-M3-006
+**Version:** 1.0 · **Status:** Validated (T-M3-008): edge and trap evals judged by an independent AG-16 (audits T-M3-006, T-M3-008)
 
 ## Purpose
 Ship Android features meeting ACs, NFRs, and privacy constraints.

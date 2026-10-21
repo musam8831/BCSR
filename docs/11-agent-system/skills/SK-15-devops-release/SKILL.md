@@ -5,7 +5,7 @@ description: CI/CD, signing, SBOM, Play tracks; enforce Task IDs and schema chec
 
 # SK-15 · devops-release
 
-**Version:** 0.3 · **Status:** Usable (T-M3-006 pilot) · validation in T-M3-006
+**Version:** 1.0 · **Status:** Validated (T-M3-008): edge and trap evals judged by an independent AG-16 (audits T-M3-006, T-M3-008)
 
 ## Purpose
 Pipelines block merges that lack Task IDs or ship unapproved content.

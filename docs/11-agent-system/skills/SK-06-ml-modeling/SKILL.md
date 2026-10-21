@@ -5,7 +5,7 @@ description: Build on-device features, models, and runtime; use for M5–M7 ML i
 
 # SK-06 · ml-modeling
 
-**Version:** 0.3 · **Status:** Usable (bootstrap, T-M2-000) · validation in T-M3-006
+**Version:** 1.0 · **Status:** Validated (T-M3-008): edge and trap evals judged by an independent AG-16 (audits T-M3-006, T-M3-008)
 
 ## Purpose
 Classical/open-weight on-device models with honest uncertainty — never diagnoses.
