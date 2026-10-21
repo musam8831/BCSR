@@ -30,20 +30,20 @@ Owner: AG-00. Status values: Backlog · Ready · In Progress · In Review · Don
 | T-M1-013 | Dataset strategy and EMA instrument selection | AG-07 | SK-07 | P1 | 3 | T-M1-008 | dataset-strategy.md | Licensed instruments; split rules | Tech Lead | Done |
 | T-M1-014 | G1 gate pack and review | AG-01 | SK-01 | P1 | 1 | T-M1-007;T-M1-010;T-M1-011;T-M1-012 | gates/G1.md | Baseline frozen | Lead + Domain reviewers | In Progress |
 | **M2** | | | | | | | | | | |
-| T-M2-000 | Bootstrap SK-03, SK-05, SK-06, SK-09, SK-11, SK-14 skills for M2 | AG-00 | SK-00 | P1 | 3 | T-M1-014 | skills folders | Evals pass | AG-16 | Backlog |
-| T-M2-001 | Spike: UsageStats events & screen/unlock events | AG-05 | SK-05 | P1 | 4 | T-M2-000 | spikes/SPK-01.md | Captured on ≥ 5 devices; verdict | AG-03 | Backlog |
-| T-M2-002 | Google Play policy review for all permissions | AG-05 | SK-05 | P1 | 2 | T-M2-000 | spikes/SPK-02-policy.md | Policy text quoted and dated | AG-09 | Backlog |
-| T-M2-003 | Spike: notification counts & activity recognition | AG-05 | SK-05 | P2 | 3 | T-M2-001 | spikes/SPK-03.md | Verdict per signal | AG-03 | Backlog |
-| T-M2-004 | Spike: background scheduling on top-5 OEMs | AG-05 | SK-05 | P1 | 4 | T-M2-001 | spikes/SPK-04.md | Gap rates per OEM | AG-03 | Backlog |
-| T-M2-005 | Battery & inference budget benchmark | AG-05 + AG-06 | SK-05;SK-06 | P1 | 3 | T-M2-004 | spikes/SPK-05.md | Meets or revises NFR-02/04 | Tech Lead | Backlog |
-| T-M2-006 | Baseline experiment on public dataset (cold-start rules vs LR/GBT) | AG-06 | SK-06 | P2 | 5 | T-M2-000;T-M1-013 | EXP-0001..; FS-001 v1 | Logged in registry; reviewed | AG-07 | Backlog |
-| T-M2-007 | Threat model v1, data dictionary v1, retention & delete-all design | AG-09 | SK-09 | P1 | 4 | T-M2-001 | threat-model.md, data-dictionary.md | Every flow has threats | Tech Lead | Backlog |
-| T-M2-008 | Catalogue pipeline & approved-only recommender constraints design | AG-03 + AG-08 | SK-03;SK-08 | P1 | 2 | T-M1-010 | ADR-0005, api-contracts §2 | Signing + filter specified | AG-09 | Backlog |
-| T-M2-009 | Architecture views, module map, interfaces; accept ADRs | AG-03 | SK-03 | P1 | 5 | T-M2-001;T-M2-004;T-M2-007 | 03-architecture/* | Tech Lead approval | Tech Lead | Backlog |
-| T-M2-010 | Evaluation plan EP-001 v1 | AG-07 | SK-07 | P1 | 2 | T-M1-013 | EP-001 | Ship criteria defined | Tech Lead | Backlog |
-| T-M2-011 | Low-fi UX flows (onboarding, check-in, recommendation, safety, privacy) | AG-12 | SK-12 | P2 | 5 | T-M1-005 | 07-ux/flows/* | Trace to stories; AG-10 review | AG-10 | Backlog |
-| T-M2-012 | Test strategy and device matrix | AG-14 | SK-14 | P2 | 2 | T-M1-005 | 08-testing/test-strategy.md | Entry/exit criteria | AG-16 | Backlog |
-| T-M2-013 | G2 gate pack and review | AG-01 | SK-01 | P1 | 1 | T-M2-002;T-M2-005;T-M2-009;T-M2-010 | gates/G2.md | Go/no-go per signal recorded | Lead + Tech Lead | Backlog |
+| T-M2-000 | Bootstrap SK-03, SK-05, SK-06, SK-09, SK-11, SK-14 skills for M2 | AG-00 | SK-00 | P1 | 3 | T-M1-014 | skills folders | Evals pass | AG-16 | Done |
+| T-M2-001 | Spike: UsageStats events & screen/unlock events | AG-05 | SK-05 | P1 | 4 | T-M2-000 | spikes/SPK-01.md | Captured on ≥ 5 devices; verdict | AG-03 | In Progress |
+| T-M2-002 | Google Play policy review for all permissions | AG-05 | SK-05 | P1 | 2 | T-M2-000 | spikes/SPK-02-policy.md | Policy text quoted and dated | AG-09 | Done |
+| T-M2-003 | Spike: notification counts & activity recognition | AG-05 | SK-05 | P2 | 3 | T-M2-001 | spikes/SPK-03.md | Verdict per signal | AG-03 | In Progress |
+| T-M2-004 | Spike: background scheduling on top-5 OEMs | AG-05 | SK-05 | P1 | 4 | T-M2-001 | spikes/SPK-04.md | Gap rates per OEM | AG-03 | In Progress |
+| T-M2-005 | Battery & inference budget benchmark | AG-05 + AG-06 | SK-05;SK-06 | P1 | 3 | T-M2-004 | spikes/SPK-05.md | Meets or revises NFR-02/04 | Tech Lead | In Progress |
+| T-M2-006 | Baseline experiment on public dataset (cold-start rules vs LR/GBT) | AG-06 | SK-06 | P2 | 5 | T-M2-000;T-M1-013 | EXP-0001..; FS-001 v1 | Logged in registry; reviewed | AG-07 | Blocked |
+| T-M2-007 | Threat model v1, data dictionary v1, retention & delete-all design | AG-09 | SK-09 | P1 | 4 | T-M2-001 | threat-model.md, data-dictionary.md | Every flow has threats | Tech Lead | Done |
+| T-M2-008 | Catalogue pipeline & approved-only recommender constraints design | AG-03 + AG-08 | SK-03;SK-08 | P1 | 2 | T-M1-010 | ADR-0005, api-contracts §2 | Signing + filter specified | AG-09 | Done |
+| T-M2-009 | Architecture views, module map, interfaces; accept ADRs | AG-03 | SK-03 | P1 | 5 | T-M2-001;T-M2-004;T-M2-007 | 03-architecture/* | Tech Lead approval | Tech Lead | Done |
+| T-M2-010 | Evaluation plan EP-001 v1 | AG-07 | SK-07 | P1 | 2 | T-M1-013 | EP-001 | Ship criteria defined | Tech Lead | Done |
+| T-M2-011 | Low-fi UX flows (onboarding, check-in, recommendation, safety, privacy) | AG-12 | SK-12 | P2 | 5 | T-M1-005 | 07-ux/flows/* | Trace to stories; AG-10 review | AG-10 | In Review |
+| T-M2-012 | Test strategy and device matrix | AG-14 | SK-14 | P2 | 2 | T-M1-005 | 08-testing/test-strategy.md | Entry/exit criteria | AG-16 | Done |
+| T-M2-013 | G2 gate pack and review | AG-01 | SK-01 | P1 | 1 | T-M2-002;T-M2-005;T-M2-009;T-M2-010 | gates/G2.md | Go/no-go per signal recorded | Lead + Tech Lead | In Progress |
 | **M3** | | | | | | | | | | |
 | T-M3-001 | Skill gap analysis for M4–M10 work | AG-00 | SK-00 | P1 | 2 | T-M2-013 | skills/gap-analysis.md | Every M4–M10 task type maps to a skill; no new agents | AG-16 | Done |
 | T-M3-002 | Finalise agent definition files AG-00..AG-16 (aligned to AGS-04 O/C/G roles) | AG-00 | SK-00 | P1 | 2 | T-M3-001;T-M3-011 | agents/AG-*.md | Paths non-overlapping; reviewers set; Owner/Gate roles match AGS-04 | AG-16 | Done |

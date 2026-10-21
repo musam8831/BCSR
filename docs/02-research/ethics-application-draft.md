@@ -39,7 +39,7 @@ Not an aim: diagnosing or treating any mental-health condition.
 | Research upload | Only with separate opt-in (PR-03): pseudonymised feature aggregates and check-in labels, over TLS 1.3 to the research store |
 | Identifiers | Participant code only; the code-to-contact key is kept separately by the PI, encrypted |
 | Storage | Encrypted, access-controlled store outside Git (RES-04 §4); access limited to named researchers |
-| Retention | On-device 90 days rolling (NFR-03, PR-06); research store: (PI to set, e.g. until publication + N years) |
+| Retention | On-device: raw events 30 days, derived data 90 days (ARC-04, PR-06); research store: (PI to set, e.g. until publication + N years) |
 | Withdrawal | At any time in the app; uploads stop at once, and the participant may ask for deletion of uploaded data |
 | Use of data | Research and model training for BCSR only (PR-07); no sale or sharing |
 

@@ -102,7 +102,7 @@ Given any build, when the manifest and stored data are inspected, then no precis
 Given onboarding, when it is reviewed against Google Play's prominent-disclosure policy (T-M2-002), then the disclosure screen appears before the Usage Access request and contains every element the policy requires.
 
 **AC-PR-06 (retention)** [T]
-Given events older than the retention period (default 90 days), when the daily maintenance job runs, then they are deleted.
+Given raw events older than 30 days and derived data older than 90 days (ARC-04 §1), when the daily maintenance job runs, then they are deleted, and the store stays ≤ 50 MB (NFR-03).
 
 **AC-PR-07 (training data source)** [I]
 Given any model shipped in a release, when its model card and experiment-registry entry are inspected, then the training data lists only D1–D3 datasets collected with BCSR consent.

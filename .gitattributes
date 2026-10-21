@@ -1,3 +1,5 @@
-# shell scripts must keep LF or sh fails on  (Windows checkouts)
+# shell scripts must keep LF or sh fails on CR (Windows checkouts)
 *.sh text eol=lf
 .githooks/* text eol=lf
+gradlew text eol=lf
+*.bat text eol=crlf

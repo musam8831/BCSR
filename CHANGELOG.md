@@ -21,6 +21,19 @@ All notable changes follow [Keep a Changelog](https://keepachangelog.com/) conve
 - T-M3-001..004 / T-M3-012: Expert skills SK-00..SK-16 deepened (v0.2 Draft) with role-specific procedures, non-clone evals, and reference packs for SK-06/07/08/09/10/11/12/13/14/15; agent defs AG-01..16 finalised; gap analysis confirms no new agents.
 
 ### Added
+- D-012 / R-18: M2 runs in parallel with G1 (scholar not yet confirmed); G1 still required before G2.
+- T-M2-000: SK-03, SK-05, SK-06, SK-09, SK-11, SK-14 bootstrapped to v0.3 — 18/18 evals pass on desk run (5 after fixes); SK-03 uses the Project Lead safety gate (D-011).
+- T-M2-001/003/004/005: spike app `app/android/spikes/` (Kotlin, Compose, WorkManager; records usage/screen/unlock events, notification counts without content, activity transitions, 15-min heartbeat with battery and standby state) — builds, 4/4 unit tests pass; not yet run on phones. Protocols SPK-01, SPK-03, SPK-04, SPK-05 with result templates and decision rules.
+- T-M2-002: Play policy review SPK-02 (checked 2026-10-21): prominent disclosure rules, health apps declaration (Stress management, not Medical), QUERY_ALL_PACKAGES not needed; Usage Access declaration unconfirmed.
+- T-M2-007: Threat model ARC-05 v1.0-rc (TH-08..TH-17, all 13 flows covered); data dictionary ARC-04 v1.0-rc with retention job and delete-all design; retention reconciled (raw 30 d, derived 90 d).
+- T-M2-008: ADR-0005 signed, approved-only catalogue pipeline (Ed25519, offline key, runtime filter); api-contracts §2 manifest.
+- T-M2-009: Architecture ARC-02 v1.0-rc — module → requirement map, ADR status for G2; ARC-03/ARC-06 updated to the 6-state output.
+- T-M2-010: EP-001 v1.0-rc — ship criteria S1–S7 proposed (macro-F1 ≥ best baseline + 0.05, check-in precision ≥ 0.50, ECE ≤ 0.10, burden, fairness, latency, relevance).
+- T-M2-011: Low-fi UX flows UX-01..UX-05, traced to stories.
+- T-M2-012: Test strategy TST-01 (levels, gate tests never skipped, entry/exit criteria) and device matrix TST-02.
+- T-M2-013: G2 gate pack draft — not ready (G1, spike runs, GLOBEM, Usage Access policy).
+- T-M2-006 blocked on GLOBEM credentials (EXP-0001 planned).
+- Approved by Tech Lead 2026-10-21 (PR #19; D-009, in place of AG-16 / AG-09 / AG-03 where named): T-M2-000, 002, 007, 008, 009, 010, 012 Done; EP-001 ship criteria S1–S7 approved. T-M2-011 stays In Review (independent AG-10 review); spikes In Progress; T-M2-006 Blocked; T-M2-013 In Progress.
 - T-M1-004: SRS REQ-01 v0.3 — catalogue complete for G1: FR-10 limited to passively detectable states (HC-07 from T-M1-006), FR-14/FR-17 made testable, PR-07 (shipped models trained only on BCSR-consented data), CR-06 (manhaj, D-010), CR-07 (source attributions); change log §5.6. Interview input pending.
 - T-M1-005: Acceptance criteria REQ-04 v1.0-rc — all 46 Must requirements, each with a verification method.
 - T-M1-007: User stories REQ-03 v0.2 (US-13..US-25) and traceability matrix REQ-05 v1.0-rc, generated with a coverage check (57 requirements; every requirement has a story, every Must an AC).

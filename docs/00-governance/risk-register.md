@@ -23,6 +23,7 @@ Scoring: Likelihood (L) and Impact (I) are each rated 1–5; Score = L×I. Revie
 | R-15 | No living scholar reviewer agreed in time, blocking the content policy, catalogue and G1 (A-04) | 3 | 5 | 15 | Recruit in T-M0-006; dated recruitment plan accepted at G0 if names are not confirmed | Project Lead | Open |
 | R-16 | OEM battery optimisation kills background collection, leaving data gaps that weaken inference (A-09) | 4 | 3 | 12 | OEM spike T-M2-004 with gap rates; WorkManager; in-app guidance to exempt the app; gap-aware features in FS-001 | AG-05 Platform Feasibility | Open |
 | R-17 | One person holds Project Lead and Tech Lead roles (D-009), so G2/G3 and Tech Lead reviews lack a second human | 3 | 4 | 12 | Record each dual-role sign-off explicitly; AG-16 independent audit on gate packs; seek an external technical reviewer for G2 and G3 | Project Lead | Open |
+| R-18 | G1 changes requirements after M2 designs were made on them (D-012), causing rework | 3 | 2 | 6 | M2 outputs cite requirement IDs, so REQ-05 shows what a change touches; re-check M2 docs at G1 | AG-01 / Project Lead | Open |
 
 R-15 and R-16 scores proposed by AG-01; confirmed by Project Lead 2026-10-20.
 
