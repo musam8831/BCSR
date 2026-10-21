@@ -26,7 +26,7 @@ for part in re.split(r"&&|\|\||;|\|", cmd):
         pos = [a for a in args if not a.startswith("-")]
         refs = pos[1:]
         if any(r == "main" or r.endswith(":main") or r.endswith(":refs/heads/main") for r in refs) \
-                or (not refs and current_branch() == "main"):
+                or (not refs and current_branch() == "main"):  # shortcut: branch is read before the command runs, so `git switch` earlier in the same command is missed (pre-push hook still blocks main); upgrade if agents chain switch+push
             block("pushing to main is not allowed; open a PR from a T-Mx-NNN branch.")
     if w[:3] == ["gh", "pr", "merge"]:
         nums = [a for a in w[3:] if re.fullmatch(r"\d+|https://\S+/pull/\d+", a)]
