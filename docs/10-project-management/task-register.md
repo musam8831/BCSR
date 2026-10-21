@@ -17,7 +17,7 @@ Owner: AG-00. Status values: Backlog · Ready · In Progress · In Review · Don
 | **M1** | | | | | | | | | | |
 | T-M1-001 | Bootstrap SK-02, SK-04, SK-07, SK-08, SK-10, SK-12 skills for M1 | AG-00 | SK-00 | P1 | 3 | T-M0-009 | skills folders | Evals pass incl. trap cases | AG-16 | Done |
 | T-M1-002 | SRS sections 1–2 and module descriptions | AG-02 | SK-02 | P1 | 3 | T-M1-001 | SRS.md | 29148 structure; reviewed | AG-16 | Done |
-| T-M1-003 | User interviews (≥ 8) and persona validation | AG-12 + Human | SK-12 | P1 | 8 | T-M1-001 | personas.md, interview notes (anonymised) | ≥ 8 interviews; personas updated | Project Lead | Backlog |
+| T-M1-003 | User interviews (≥ 8) and persona validation | AG-12 + Human | SK-12 | P1 | 8 | T-M1-001 | personas.md, interview notes (anonymised) | ≥ 8 interviews; personas updated | Project Lead | In Progress |
 | T-M1-004 | Complete requirements catalogue (FR/NFR/PR/SR/CR) | AG-02 | SK-02 | P1 | 5 | T-M1-002;T-M1-003 | SRS.md §5 | All testable; MoSCoW set | AG-16 | Backlog |
 | T-M1-005 | Acceptance criteria for all Must requirements | AG-02 | SK-02 | P1 | 4 | T-M1-004 | acceptance-criteria.md | 100% Musts covered | AG-14 + AG-16 | Backlog |
 | T-M1-006 | Validate context-state taxonomy with evidence + advisor | AG-07 | SK-07 | P1 | 3 | T-M1-008 | scope-and-assumptions.md §1 | Project Lead and scholar comments resolved (D-011) | Project Lead | In Review |
