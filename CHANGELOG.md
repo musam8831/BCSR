@@ -5,6 +5,7 @@ All notable changes follow [Keep a Changelog](https://keepachangelog.com/) conve
 ## [Unreleased]
 
 ### Changed
+- T-M1-002: SRS REQ-01 v0.2 — §1 Introduction and §2 Overall description written (ISO/IEC/IEEE 29148 structure); §3 module table gains inputs → outputs and requirement IDs for all 13 modules. No new requirements.
 - T-M1-001: SK-02, SK-04, SK-07, SK-08, SK-10, SK-12 bootstrapped to v0.3 (Usable) — 18/18 evals pass on desk run (7 after fixes: out-of-scope rejection, paywalled sources, catalogue-only content, duplicate refs, translation refusal + escalation, locale without helpline, no paraphrase in mocks). SK-10 now gates on the Project Lead (D-011). Approved by Project Lead 2026-10-21 (PR #11, in place of AG-16).
 - T-M0-001: D-008 guard hook uses `$CLAUDE_PROJECT_DIR` so it works from any working directory.
 - D-010: content follows the Ahl-e-Hadith manhaj (Qur'an and Sahih Hadith only); named ulama recorded as reference authorities. T-M0-006 stays In Progress until a living reviewer agrees.
