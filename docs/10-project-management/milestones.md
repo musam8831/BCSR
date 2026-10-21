@@ -24,7 +24,7 @@ Indicative plan starting Monday 2026-10-19. Durations are estimates for a small 
 **Goal:** a controlled project start.
 **Deliverables:** charter, scope & assumptions, risk register, decision log, repository and conventions, agent rules (AGENTS.md), stakeholder confirmation (scholar, MH advisor), tooling choices.
 **Agents:** AG-00, AG-01, AG-16 (bootstrap versions of their skills; first job of SK-00).
-**Exit criteria (G0):** charter signed; scholar reviewer and MH advisor confirmed (or a dated plan to recruit them); repo live with branch protection; risk register reviewed; M1 plan Ready.
+**Exit criteria (G0):** charter signed; scholar reviewer confirmed (or a dated plan to recruit them); no MH advisor per D-011; repo live with branch protection; risk register reviewed; M1 plan Ready.
 
 ## M1 — Requirements & Research
 **Goal:** a frozen, testable requirements baseline grounded in evidence.

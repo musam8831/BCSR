@@ -10,7 +10,7 @@ Owner: AG-00. Status values: Backlog · Ready · In Progress · In Review · Don
 | T-M0-003 | Bootstrap SK-00, SK-01, SK-16 skills (v0.1 → usable) | AG-00 | SK-00 | P1 | 2 | T-M0-002 | skills/SK-00, SK-01, SK-16 | Each passes its 3 evals | AG-16 + Lead | Done |
 | T-M0-004 | Finalise project charter and objectives | AG-01 | SK-01 | P1 | 2 | T-M0-002 | 00-governance/project-charter.md | SMART objectives; Lead signs | Project Lead | Done |
 | T-M0-005 | Finalise scope, context-state taxonomy draft, assumptions | AG-01 | SK-01 | P1 | 2 | T-M0-004 | scope-and-assumptions.md | Each assumption has a validating task | AG-16 | Done |
-| T-M0-006 | Identify and confirm scholar reviewer(s) and MH advisor | Human (Lead) | — | P1 | 5 | T-M0-004 | stakeholder table in charter | Named people with agreed availability | Project Lead | Backlog |
+| T-M0-006 | Identify and confirm scholar reviewer(s) and MH advisor | Human (Lead) | — | P1 | 5 | T-M0-004 | stakeholder table in charter | Named people with agreed availability | Project Lead | In Progress |
 | T-M0-007 | Initial risk register and decision log | AG-01 | SK-01 | P1 | 1 | T-M0-004 | risk-register.md, decision-log.md | All risks owned; scores ≥ 15 escalated | AG-16 | Done |
 | T-M0-008 | Create task register, PR template, weekly report template | AG-00 | SK-01 | P1 | 1 | T-M0-001 | task-register.md, .github/pull_request_template.md | Template enforces task ID + DoD | AG-16 | Done |
 | T-M0-009 | G0 gate pack and review | AG-01 | SK-01 | P1 | 1 | T-M0-004;T-M0-005;T-M0-006;T-M0-007 | gates/G0.md | Lead decision recorded | Project Lead | In Progress |
@@ -20,12 +20,12 @@ Owner: AG-00. Status values: Backlog · Ready · In Progress · In Review · Don
 | T-M1-003 | User interviews (≥ 8) and persona validation | AG-12 + Human | SK-12 | P1 | 8 | T-M1-001 | personas.md, interview notes (anonymised) | ≥ 8 interviews; personas updated | Project Lead | Backlog |
 | T-M1-004 | Complete requirements catalogue (FR/NFR/PR/SR/CR) | AG-02 | SK-02 | P1 | 5 | T-M1-002;T-M1-003 | SRS.md §5 | All testable; MoSCoW set | AG-16 | Backlog |
 | T-M1-005 | Acceptance criteria for all Must requirements | AG-02 | SK-02 | P1 | 4 | T-M1-004 | acceptance-criteria.md | 100% Musts covered | AG-14 + AG-16 | Backlog |
-| T-M1-006 | Validate context-state taxonomy with evidence + advisor | AG-07 | SK-07 | P1 | 3 | T-M1-008 | scope-and-assumptions.md §1 | Advisor and scholar comments resolved | MH advisor | Backlog |
+| T-M1-006 | Validate context-state taxonomy with evidence + advisor | AG-07 | SK-07 | P1 | 3 | T-M1-008 | scope-and-assumptions.md §1 | Project Lead and scholar comments resolved (D-011) | Project Lead | Backlog |
 | T-M1-007 | Full traceability matrix | AG-02 | SK-02;SK-16 | P1 | 2 | T-M1-005 | traceability-matrix.md | Every Req has Story+AC rows | AG-16 | Backlog |
 | T-M1-008 | Scientific evidence brief (RQ1–RQ5) | AG-04 | SK-04 | P1 | 8 | T-M1-001 | scientific-evidence.md | ≥ 25 cited sources; evidence table | AG-07 | Backlog |
 | T-M1-009 | Open-source AI evaluation & licence register | AG-04 | SK-04 | P1 | 4 | T-M1-001 | open-source-ai-evaluation.md | All candidates' licences verified | Tech Lead | Backlog |
 | T-M1-010 | Content source policy, schema, verification workflow; approve with scholar | AG-08 | SK-08 | P1 | 5 | T-M0-006;T-M1-001 | 05-spiritual-content/* | Scholar signs the policy | Scholar | Backlog |
-| T-M1-011 | Safety pathway v1 and helpline directory (verified) | AG-10 | SK-10 | P1 | 4 | T-M0-006;T-M1-001 | 06-security-privacy-safety/safety/* | Advisor signs; helplines verified with date | MH advisor | Backlog |
+| T-M1-011 | Safety pathway v1 and helpline directory (verified) | AG-10 | SK-10 | P1 | 4 | T-M0-006;T-M1-001 | 06-security-privacy-safety/safety/* | Project Lead signs (D-011); helplines verified with date | Project Lead | Backlog |
 | T-M1-012 | Ethics/IRB application for the pilot study | Human (Lead) + AG-07 | SK-07 | P1 | 5 | T-M1-013 | ethics application | Submitted | Project Lead | Backlog |
 | T-M1-013 | Dataset strategy and EMA instrument selection | AG-07 | SK-07 | P1 | 3 | T-M1-008 | dataset-strategy.md | Licensed instruments; split rules | Tech Lead | Backlog |
 | T-M1-014 | G1 gate pack and review | AG-01 | SK-01 | P1 | 1 | T-M1-007;T-M1-010;T-M1-011;T-M1-012 | gates/G1.md | Baseline frozen | Lead + Domain reviewers | Backlog |
