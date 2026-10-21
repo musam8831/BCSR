@@ -5,7 +5,7 @@ description: Optional research ingestion and catalogue signing pipelines; M4–M
 
 # SK-13 · backend-development
 
-**Version:** 0.2 · **Status:** Draft (pilot validation in T-M3-006)
+**Version:** 0.3 · **Status:** Usable (T-M3-006 pilot) · validation in T-M3-006
 
 ## Purpose
 Minimal backend/scripts preserving privacy and catalogue integrity.
@@ -17,7 +17,7 @@ HC-01 task packet; documents it lists; `AGENTS.md`; AGS-04 Mode/O/C/G fields.
 1. Implement only HC-01/spec scope under `app/backend/` or `scripts/`.
 2. Follow `references/pipeline-template.md`.
 3. Never accept raw behavioural PII; research export needs consent path.
-4. Reject unapproved `verification.status` in signing.
+4. Reject unapproved `verification.status` in signing. Drafts and other non-approved items are simply left out of the bundle (ADR-0005 §3). An item is "unsigned" when it **claims** `approved` without a valid review record; that, or any other validation failure, fails the whole batch: build nothing and report every failing item ID (cf. `scripts/build_catalogue_bundle.py`).
 5. Security review with AG-09; HC-03.
 
 ## Outputs

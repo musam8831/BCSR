@@ -46,3 +46,6 @@ node_modules/
 dist/
 app/android/**/.gradle/
 app/android/**/.kotlin/
+
+# Catalogue bundles built locally (scripts/build_catalogue_bundle.py)
+/build/

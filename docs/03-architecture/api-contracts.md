@@ -32,6 +32,17 @@ interface CatalogueRepository {
   "items": [ /* approved items only, sorted by id */ ]
 }
 ```
+**`items_sha256` input (canonical JSON):** SHA-256 over the UTF-8 bytes of the `items` array serialised as JSON with: object keys sorted by Unicode code point at every level; no whitespace (separators `,` and `:`); non-ASCII characters written as themselves (not `\u` escapes); only `"`, `\` and the C0 control characters U+0000–U+001F escaped, using `\b \f \n \r \t` for those five and `\u00xx` (lowercase hex) for the rest of that range; every other character, including U+007F, U+0080–U+009F and U+2028/U+2029, is written as itself; integers only (the schema has no floats). The file's own layout (indentation) is irrelevant: verifiers re-serialise the parsed `items` array.
+
+Test vector (both the Python builder and the Kotlin verifier must reproduce it):
+```
+items   = [{"id":"DUA-0001","title":{"en":"Ease","ur":"آسانی"},"verification":{"status":"approved","record_id":"RR-0001"}},
+           {"id":"DUA-0002","repetitions":3,"note":"line<LF>break \"q\""}]
+canonical = [{"id":"DUA-0001","title":{"en":"Ease","ur":"آسانی"},"verification":{"record_id":"RR-0001","status":"approved"}},{"id":"DUA-0002","note":"line\nbreak \"q\"","repetitions":3}]
+sha256  = 8fed260e4d68a9f7ff9263d63e9550a8aa0e2c8600db8fa16496cbf5ca036549
+```
+Second vector (escaping edge cases): `items = [{"id":"DUA-0003","note":"a<U+0001>b<U+007F>c<U+0085>d<U+2028>e<TAB>f"}]` → canonical note value `a\u0001b<U+007F>c<U+0085>d<U+2028>e\tf` (only U+0001 and TAB escaped) → sha256 `85e786a052de2576949b0b6c49231c168361b4fdf2c5fcbdd6b3075dca774d38`.
+
 Load rules: verify the signature with the pinned public key for `key_id`; check `item_count` and `items_sha256`; on any failure keep the last good bundle. The runtime filter still drops non-approved items.
 
 ## 3. Research ingestion (optional, M5+)
