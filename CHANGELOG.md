@@ -21,6 +21,8 @@ All notable changes follow [Keep a Changelog](https://keepachangelog.com/) conve
 - T-M3-001..004 / T-M3-012: Expert skills SK-00..SK-16 deepened (v0.2 Draft) with role-specific procedures, non-clone evals, and reference packs for SK-06/07/08/09/10/11/12/13/14/15; agent defs AG-01..16 finalised; gap analysis confirms no new agents.
 
 ### Added
+- T-M4-006: Ed25519 bundle signing tool `scripts/sign_bundle.py` (keygen, sign, verify — verify mirrors the app's load rules: signature over exact bytes, key_id, item_count, items_sha256, approved-only); refuses a private-key path inside the repo; 7 tests; signing procedure REL-01 (`docs/09-release-operations/catalogue-signing.md`) with backup, rotation and loss steps.
+- T-M4-007: CI builds the catalogue bundle on every PR; hash test vectors and signing tests run in the unit tests.
 - T-M3-008: M0–M3 retrospective (`retrospectives/M0-M3-retro.md`); all 17 skills v1.0 after independent AG-16 edge/trap evals (T-M3-006, T-M3-008); wording fixes W-1..W-6 (SK-02 never infers missing IDs; SK-16 conflict-of-interest and gate-bypass definition; SK-09, SK-07, SK-12, SK-08) and SK-00 "desk run is not validation".
 - T-M3-009: M4/M5 backlog — 30 tasks (7 M4, 23 M5) with HC-01 packets (`packets/M4-M5.md`) generated with the register rows; 17 Ready. Two weeks of Ready work only for AG-11 and AG-15; the rest wait on the scholar, interviews, ethics or phone spikes.
 - T-M3-010: G3 decided **Go** by the Project Lead + Tech Lead 2026-10-21; SK-16 evals confirmed; D-014 makes the repo public with branch protection (supersedes D-008). T-M3-009 stays In Review (Ready-work criterion partly met).
