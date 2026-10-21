@@ -1,6 +1,6 @@
-# Dataset Strategy — RES-04 v1.0-rc
+# Dataset Strategy — RES-04 v1.0
 
-Task: T-M1-013 · Owner: AG-07 · Reviewer: Tech Lead · Date: 2026-10-21. Licence and access terms below were checked on 2026-10-21 against the sources named; re-check before use.
+Task: T-M1-013 · Owner: AG-07 · Reviewer: Tech Lead · Date: 2026-10-21 · Approved by Tech Lead 2026-10-21 (PR #14; D-009). Licence and access terms below were checked on 2026-10-21 against the sources named; re-check before use.
 
 ## 1. Phased approach
 | Phase | Data | Purpose | Gate |
