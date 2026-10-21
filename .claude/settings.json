@@ -14,7 +14,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python scripts/hooks/guard_git.py",
+            "command": "python \"$CLAUDE_PROJECT_DIR/scripts/hooks/guard_git.py\"",
             "timeout": 30,
             "statusMessage": "D-008 guard"
           }

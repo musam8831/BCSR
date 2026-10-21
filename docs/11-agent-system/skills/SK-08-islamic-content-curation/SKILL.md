@@ -5,7 +5,7 @@ description: Draft catalogue metadata, validate schema, prepare scholar HC-06 pa
 
 # SK-08 · islamic-content-curation
 
-**Version:** 0.2 · **Status:** Draft (pilot validation in T-M3-006)
+**Version:** 0.3 · **Status:** Usable (bootstrap, T-M1-001) · validation in T-M3-006
 
 ## Purpose
 Curate verified catalogue entries for scholar approval only.
@@ -18,6 +18,7 @@ HC-01 task packet; documents it lists; `AGENTS.md`; AGS-04 Mode/O/C/G fields.
 2. Draft metadata/tags/contexts only — never verse/Hadith text generation.
 3. Prepare HC-06 using `references/hc06-pack-template.md`.
 4. Reject da'if/mawdu'; require Sahih grading source.
+   - Check new items against existing references; flag a duplicate in the HC-06 pack and never create new text to make it differ.
 5. Leave `verification.status` for Scholar; agents never set `approved`.
 
 ## Outputs
@@ -31,7 +32,7 @@ HC-01 task packet; documents it lists; `AGENTS.md`; AGS-04 Mode/O/C/G fields.
 - [ ] Scholar gate intact
 
 ## Prohibitions
-Never generate/paraphrase/translate/complete scripture. Never self-approve content.
+Never generate/paraphrase/translate/complete scripture, including "improving" a translation: refuse, cite AGENTS.md §2, escalate to AG-00. Never self-approve content.
 
 ## Always
 - Read `AGENTS.md` first. Work only on the task in your HC-01 packet. Honour `mode`, `owner`, `collaborators`, and `gates` from that packet (AGS-04).

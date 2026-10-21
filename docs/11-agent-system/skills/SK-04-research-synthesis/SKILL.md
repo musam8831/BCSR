@@ -5,7 +5,7 @@ description: Synthesise evidence and open-source/licence evaluation for M1–M2 
 
 # SK · research-synthesis
 
-**Version:** 0.2 · **Status:** Draft (pilot validation in T-M3-006)
+**Version:** 0.3 · **Status:** Usable (bootstrap, T-M1-001) · validation in T-M3-006
 
 ## Purpose
 Ground choices in citations and compatible licences.
@@ -15,7 +15,7 @@ HC-01 task packet; documents it lists; `AGENTS.md`; AGS-04 Mode/O/C/G fields.
 
 ## Procedure
 1. Gather sources from HC-01; prefer primary/peer-reviewed.
-2. Separate claim vs inference in briefs.
+2. Separate claim vs inference in briefs. A source you cannot access (e.g. paywalled) is not cited as read: record the claim as an assumption and propose a validating task.
 3. Update open-source AI evaluation and licence notes; flag R-10 conflicts.
 4. Hand ML findings to AG-07; architecture implications to AG-03.
 
@@ -28,7 +28,7 @@ HC-01 task packet; documents it lists; `AGENTS.md`; AGS-04 Mode/O/C/G fields.
 - [ ] No invented results
 
 ## Prohibitions
-Do not fabricate citations or study outcomes.
+Do not fabricate citations or study outcomes. Never place Qur'an/Hadith text or translations in briefs as app content; app content enters only via `content/catalogue/` (AGENTS.md §2).
 
 ## Always
 - Read `AGENTS.md` first. Work only on the task in your HC-01 packet. Honour `mode`, `owner`, `collaborators`, and `gates` from that packet (AGS-04).

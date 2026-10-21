@@ -5,7 +5,7 @@ description: Own evaluation plans, model cards, bias checks; use for M1–M7 eva
 
 # SK-07 · ml-evaluation
 
-**Version:** 0.2 · **Status:** Draft (pilot validation in T-M3-006)
+**Version:** 0.3 · **Status:** Usable (bootstrap, T-M1-001) · validation in T-M3-006
 
 ## Purpose
 Honest metrics, subgroups, and limitations before merge.
