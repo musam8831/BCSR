@@ -20,7 +20,7 @@ T-M1-009,Open-source AI evaluation & licence register,AG-04,SK-04,P1,4,T-M1-001,
 T-M1-010,"Content source policy, schema, verification workflow; approve with scholar",AG-08,SK-08,P1,5,T-M0-006;T-M1-001,05-spiritual-content/*,Scholar signs the policy,Scholar,Backlog
 T-M1-011,Safety pathway v1 and helpline directory (verified),AG-10,SK-10,P1,4,T-M0-006;T-M1-001,06-security-privacy-safety/safety/*,Project Lead signs (D-011); helplines verified with date,Project Lead,Backlog
 T-M1-012,Ethics/IRB application for the pilot study,Human (Lead) + AG-07,SK-07,P1,5,T-M1-013,ethics application,Submitted,Project Lead,Backlog
-T-M1-013,Dataset strategy and EMA instrument selection,AG-07,SK-07,P1,3,T-M1-008,dataset-strategy.md,Licensed instruments; split rules,Tech Lead,Backlog
+T-M1-013,Dataset strategy and EMA instrument selection,AG-07,SK-07,P1,3,T-M1-008,dataset-strategy.md,Licensed instruments; split rules,Tech Lead,In Review
 T-M1-014,G1 gate pack and review,AG-01,SK-01,P1,1,T-M1-007;T-M1-010;T-M1-011;T-M1-012,gates/G1.md,Baseline frozen,Lead + Domain reviewers,Backlog
 T-M2-000,"Bootstrap SK-03, SK-05, SK-06, SK-09, SK-11, SK-14 skills for M2",AG-00,SK-00,P1,3,T-M1-014,skills folders,Evals pass,AG-16,Backlog
 T-M2-001,Spike: UsageStats events & screen/unlock events,AG-05,SK-05,P1,4,T-M2-000,spikes/SPK-01.md,Captured on ≥ 5 devices; verdict,AG-03,Backlog
