@@ -45,7 +45,7 @@ Each objective is specific to one outcome, measured as stated, time-bound to a m
 |---|---|
 | Project Lead / Sponsor | Vision, gate approvals, prioritisation |
 | Tech Lead | Architecture, code quality, ML direction. Held by Muhammad Usman together with Project Lead (D-009, R-17) |
-| Scholar reviewer(s) | Approve every content item; source policy. Manhaj: Ahl-e-Hadith, Qur'an and Sahih Hadith only (D-010). Named reviewer: **pending** (T-M0-006) |
+| Scholar reviewer(s) | Approve every content item; source policy. Manhaj: Ahl-e-Hadith, Qur'an and Sahih Hadith only (D-010). Named reviewer: **pending** (T-M0-006). Plan (Project Lead 2026-10-21): approach Dr. Hafiz Hasan Madni (Institute of Islamic Studies, University of the Punjab; PhD Hadith) via his official university email, and the Department of Hadith & Its Sciences, IIU Islamabad, by **2026-10-31**; reviewer confirmed by **2026-11-15** |
 | Mental-health advisor | None (D-011). Project Lead approves safety pathway, EMA instrument and wording |
 | Ethics/IRB (e.g., institutional review board) | Approve research data collection |
 | Pilot users | Consenting participants |
