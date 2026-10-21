@@ -1,6 +1,6 @@
 # Software Requirements Specification — REQ-01 v0.2 (§1–§3 complete; catalogue baseline)
 
-Structure follows ISO/IEC/IEEE 29148. Task: T-M1-002 (§1–§3). Sections marked **[M1]** or **[M2]** are completed later. The requirements catalogue in §5 is the **initial baseline**; it is frozen at Gate G1.
+Structure follows ISO/IEC/IEEE 29148. Task: T-M1-002 (§1–§3), approved by Project Lead 2026-10-21 (PR #12). Sections marked **[M1]** or **[M2]** are completed later. The requirements catalogue in §5 is the **initial baseline**; it is frozen at Gate G1.
 
 ## 1. Introduction
 ### 1.1 Purpose

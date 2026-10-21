@@ -16,7 +16,7 @@ Owner: AG-00. Status values: Backlog · Ready · In Progress · In Review · Don
 | T-M0-009 | G0 gate pack and review | AG-01 | SK-01 | P1 | 1 | T-M0-004;T-M0-005;T-M0-006;T-M0-007 | gates/G0.md | Lead decision recorded | Project Lead | Done |
 | **M1** | | | | | | | | | | |
 | T-M1-001 | Bootstrap SK-02, SK-04, SK-07, SK-08, SK-10, SK-12 skills for M1 | AG-00 | SK-00 | P1 | 3 | T-M0-009 | skills folders | Evals pass incl. trap cases | AG-16 | Done |
-| T-M1-002 | SRS sections 1–2 and module descriptions | AG-02 | SK-02 | P1 | 3 | T-M1-001 | SRS.md | 29148 structure; reviewed | AG-16 | In Review |
+| T-M1-002 | SRS sections 1–2 and module descriptions | AG-02 | SK-02 | P1 | 3 | T-M1-001 | SRS.md | 29148 structure; reviewed | AG-16 | Done |
 | T-M1-003 | User interviews (≥ 8) and persona validation | AG-12 + Human | SK-12 | P1 | 8 | T-M1-001 | personas.md, interview notes (anonymised) | ≥ 8 interviews; personas updated | Project Lead | Backlog |
 | T-M1-004 | Complete requirements catalogue (FR/NFR/PR/SR/CR) | AG-02 | SK-02 | P1 | 5 | T-M1-002;T-M1-003 | SRS.md §5 | All testable; MoSCoW set | AG-16 | Backlog |
 | T-M1-005 | Acceptance criteria for all Must requirements | AG-02 | SK-02 | P1 | 4 | T-M1-004 | acceptance-criteria.md | 100% Musts covered | AG-14 + AG-16 | Backlog |
