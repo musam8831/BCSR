@@ -28,7 +28,7 @@ The model predicts *context states*, not emotions in a clinical sense. Each stat
 | A-05 | Pilot users will complete 2–4 EMA prompts a day for at least 2–4 weeks | T-M1-013 EMA instrument selection; T-M1-003 interviews (confirmed in the M5 pilot) |
 | A-06 | On-device inference fits a mid-range phone budget (<1% battery/day for inference) | T-M2-005 |
 | A-07 | Open-source Qur'an text/translation and Hadith references can be licensed for app use | T-M1-010 (content licences); T-M1-009 (licence register) |
-| A-08 | A mental-health advisor is available to approve the safety pathway and EMA wording | T-M0-006 |
+| A-08 | ~~A mental-health advisor is available to approve the safety pathway and EMA wording~~ Dropped: no advisor (D-011) | — |
 | A-09 | Background collection stays reliable on the top-5 Android OEMs despite battery optimisation | T-M2-004 spike |
 | A-10 | Notification counts and physical-activity state can be read without content access | T-M2-003 spike |
 | A-11 | Ethics/IRB approval can be obtained before the M5 pilot starts (R-11) | T-M1-012 |
