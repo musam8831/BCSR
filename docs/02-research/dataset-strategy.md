@@ -52,4 +52,4 @@ Limitations: the project-authored EMA items are not psychometrically validated i
 | 2 | Request permission for the Urdu PSS-10 from its translator (contact per CMU scales page) | Project Lead | D1 (M5) |
 | 3 | Apply for PhysioNet credentials and the GLOBEM DUA (incl. CITI training) | Project Lead or named team member | T-M2-006 |
 | 4 | Verify StudentLife terms (site or Kaggle mirror) | AG-04 | Before any StudentLife use |
-| 5 | Add GLOBEM, ExtraSensory and PSS to the licence register | AG-04 | T-M1-009 |
+| 5 | Add GLOBEM, ExtraSensory and PSS to the licence register | AG-04 | Done in RES-03 §3.3 (T-M1-009) |

@@ -23,7 +23,7 @@ Owner: AG-00. Status values: Backlog · Ready · In Progress · In Review · Don
 | T-M1-006 | Validate context-state taxonomy with evidence + advisor | AG-07 | SK-07 | P1 | 3 | T-M1-008 | scope-and-assumptions.md §1 | Project Lead and scholar comments resolved (D-011) | Project Lead | Backlog |
 | T-M1-007 | Full traceability matrix | AG-02 | SK-02;SK-16 | P1 | 2 | T-M1-005 | traceability-matrix.md | Every Req has Story+AC rows | AG-16 | Backlog |
 | T-M1-008 | Scientific evidence brief (RQ1–RQ5) | AG-04 | SK-04 | P1 | 8 | T-M1-001 | scientific-evidence.md | ≥ 25 cited sources; evidence table | AG-07 | Done |
-| T-M1-009 | Open-source AI evaluation & licence register | AG-04 | SK-04 | P1 | 4 | T-M1-001 | open-source-ai-evaluation.md | All candidates' licences verified | Tech Lead | Backlog |
+| T-M1-009 | Open-source AI evaluation & licence register | AG-04 | SK-04 | P1 | 4 | T-M1-001 | open-source-ai-evaluation.md | All candidates' licences verified | Tech Lead | Done |
 | T-M1-010 | Content source policy, schema, verification workflow; approve with scholar | AG-08 | SK-08 | P1 | 5 | T-M0-006;T-M1-001 | 05-spiritual-content/* | Scholar signs the policy | Scholar | Backlog |
 | T-M1-011 | Safety pathway v1 and helpline directory (verified) | AG-10 | SK-10 | P1 | 4 | T-M0-006;T-M1-001 | 06-security-privacy-safety/safety/* | Project Lead signs (D-011); helplines verified with date | Project Lead | Backlog |
 | T-M1-012 | Ethics/IRB application for the pilot study | Human (Lead) + AG-07 | SK-07 | P1 | 5 | T-M1-013 | ethics application | Submitted | Project Lead | Backlog |
