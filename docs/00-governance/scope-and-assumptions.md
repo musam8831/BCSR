@@ -25,7 +25,7 @@ Changes from v0.1 (2026-10-21): CS-02 renamed "Worry / stress" (no anxiety-speci
 
 **Requirement impact (HC-07 change request to AG-02, for T-M1-004):** FR-10 says the model estimates a distribution over CS-01..CS-09. Proposed wording: "over the passively detectable states CS-01..CS-04, CS-06 and CS-08; CS-05, CS-07 and CS-09 come only from check-ins". Not applied here, because changing a requirement belongs to AG-02 with Project Lead approval.
 
-Sign-off: Project Lead (in place of the MH advisor, D-011): pending (this PR). Scholar reviewer, for the content mappings: **pending until a reviewer is confirmed (T-M0-006)**.
+Sign-off: Project Lead (in place of the MH advisor, D-011): **approved 2026-10-21 (PR #16)**. Scholar reviewer, for the content mappings: **pending until a reviewer is confirmed (T-M0-006)**.
 
 ## 2. Assumptions
 | ID | Assumption | Validated by |
