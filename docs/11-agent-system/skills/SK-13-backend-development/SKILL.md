@@ -17,7 +17,7 @@ HC-01 task packet; documents it lists; `AGENTS.md`; AGS-04 Mode/O/C/G fields.
 1. Implement only HC-01/spec scope under `app/backend/` or `scripts/`.
 2. Follow `references/pipeline-template.md`.
 3. Never accept raw behavioural PII; research export needs consent path.
-4. Reject unapproved `verification.status` in signing. An item is "unsigned" if it is not `approved` with a review record. If any item in a batch fails validation, fail the whole batch, build nothing, and report every failing item ID (cf. `scripts/build_catalogue_bundle.py`).
+4. Reject unapproved `verification.status` in signing. Drafts and other non-approved items are simply left out of the bundle (ADR-0005 §3). An item is "unsigned" when it **claims** `approved` without a valid review record; that, or any other validation failure, fails the whole batch: build nothing and report every failing item ID (cf. `scripts/build_catalogue_bundle.py`).
 5. Security review with AG-09; HC-03.
 
 ## Outputs

@@ -128,3 +128,121 @@ Before T-M3-006 can be Done:
 - Fix SK-13 eval #2 and SK-15 eval #2 skill text (owners, not AG-16), and fill the SK-13/SK-15 Result columns from this pilot before T-M3-008 releases v1.0.
 - Update the traceability matrix test column for FR-08, FR-09, FR-15, FR-21.
 - Minors may be carried into the M4/M5 follow-up tasks (T-M3-009) if listed there.
+
+---
+
+## Round 2 — re-audit of the rework
+
+| Field | Value |
+|---|---|
+| Auditor | AG-16 (same independent subagent; did not author any of the rework) |
+| Date | 2026-10-21 |
+| Commit audited | `b5bc2ba9e6f4da195d114ce917bb28175ebc2740` (rework diff `74d76a0..b5bc2ba`, 17 files) |
+| Round 1 text | Kept unchanged above (130 lines, as committed) |
+| Inputs | Pilot doc sections "Rework after the AG-16 audit" and "Gate record"; the rework diff |
+
+### R2.1 Evidence re-run
+
+| Command | Result |
+|---|---|
+| `python -m unittest discover -s tests` | OK, 23 tests (one new: `test_digest_matches_api_contract_test_vector`) |
+| `python -m unittest discover -s ml/features` | OK, 5 tests |
+| `python scripts/check_repo.py` | OK: 49 tasks, skills and catalogue valid (exit 0) |
+| `python scripts/check_docs.py` | OK: links resolve; 57 requirements traced (exit 0); the new links to CR-REQ-0001/0002 resolve |
+| `./gradlew --no-daemon -q :core:policy:test --rerun-tasks` (local JBR 17) | exit 0; tests=9, failures=0, errors=0 (includes `deferralTargetIsAlwaysFree` and `alwaysBlockedSettingsDrop`) |
+| `gh pr checks 21` (run 39572124135, head `b5bc2ba`) | `checks` pass; `kotlin-tests` pass. The log shows the `gradle/actions/wrapper-validation@v4` step ran (68 of 68 checksums fetched) before both Gradle builds succeeded |
+| Test vector, recomputed by AG-16 | Python `json.dumps(items, ensure_ascii=False, sort_keys=True, separators=(",",":"))` matches the `canonical` line in api-contracts §2 byte for byte, and its SHA-256 is `8fed260e…6549` as stated |
+| AG-16 extreme-settings check, rerun against the new loop (Python copy of `decide()` at `b5bc2ba`, scratch only) | Round-1 set (3,000 cases, the set that gave 56 bad results): **0 bad**, 1,424 defers, 438 drops. New set (50,000 cases, buffers up to 12 h, 0–5 Salah times): **0 bad**, 24,532 defers, 6,791 drops. "Bad" means the deferral is not later than now, is more than 48 h ahead, or is not free when decided again. Every step moves `t` strictly forward, so the loop always ends |
+
+AGENTS.md §2–§4 re-check of the rework: no religious text added or changed (the test vector uses one Urdu word as a title, "آسانی" ("ease"), not scripture); no paid LLM, no prohibited APIs, no data leaving the device. Nothing that would require `reject`.
+
+### R2.2 Status of round-1 findings
+
+| Round-1 finding | Status | AG-16 verification |
+|---|---|---|
+| P1 major: `items_sha256` input undefined | **Closed** | `api-contracts.md:35` defines the canonical form and gives a test vector; the builder docstring points to it; a test asserts the vector; recomputed independently (R2.1). Leftover minor: R2.3 P1 |
+| P3 major: HC-07 claimed but not filed | **Closed** | `change-requests/CR-REQ-0001.md` (AC-FR-21) and `CR-REQ-0002.md` (AC-FR-09 / FS-001, checking session) exist with raised_by, task_id, routing, gap, impact and proposed text; `TC-FR-15-FR-21.md:16` links CR-REQ-0001; the README index lists both. Leftover minor: R2.3 P4 |
+| P2 minor: loop bound for chained windows | **Closed** | The loop now runs until a free minute, and drops after 48 h (`NotificationPolicy.kt:31-37,42`). My check finds 0 bad results. The new test decides every deferral target again, which also closes the round-1 test-oracle minor |
+| P2 minor: today's Salah times reused for ±1 day | Open (carried) | Not addressed. Acceptable for the pilot because M5 decides again at fire time. Track in T-M3-009 |
+| P2 minor / nit: packet outputs, `useAndroidX` | Open (carried) | Unchanged; nit |
+| P3 minor: real-catalogue test proves nothing | **Closed** | Renamed `test_real_catalogue_smoke`, with a comment saying what it does and does not prove |
+| Traceability Test column | **Closed** | `traceability-matrix.md` rows FR-08, FR-09, FR-15 and FR-21 link the tests and the M5 gaps |
+| P3 minor: independence of P3 only nominal | Accepted | Disclosed in the pilot doc; AG-16's own review is the independent check |
+| P3 nit: tests write to the repo `build/` folder | Open (carried) | Unchanged; nit |
+| P4 minors: session definition, mean vs median/MAD, MAD scaling | **Closed (routed)** | CR-REQ-0002 covers all three and is open with AG-02/AG-07, as it should be |
+| P4 minor: 50% coverage rule, FR-08 only partly covered | Open (carried) | M5 scope; the matrix row now says "reference impl.; device side M5" |
+| P5 minor: wrapper jar not validated | **Closed** | `governance.yml:57-58`; ran in CI |
+| P5 minor: NFR-07 claimed, coverage not measured | **Closed** | Claim removed from the packet; it now says coverage is deferred to M5 |
+| P5 nit: ML step order | Open (carried) | Unchanged; nit |
+| Path ownership (`.gitignore`, `gradlew` mode) | **Closed (accepted)** | Recorded by AG-00 in the pilot doc as repository configuration with no owner in the registry |
+| Co-gates AG-09 (P1, P5), AG-07 (P4), AG-14 (P2) | See R2.4 | — |
+
+### R2.3 Per-pilot HC-04 (new findings only) and HC-05
+
+**P1 — bundle builder**
+
+| severity | location | finding | rule / requirement | suggested fix |
+|---|---|---|---|---|
+| minor | `docs/03-architecture/api-contracts.md:35` | "Control characters escaped" is ambiguous. The Python reference escapes only U+0000–U+001F. It writes U+007F, the C1 range and U+2028/2029 unescaped (AG-16 checked). A Kotlin verifier that escapes everything Unicode calls a control character would get a different digest for such text. Separately, "sorted by Unicode code point" is not Kotlin's default UTF-16 `String` order for keys outside the BMP (all keys are ASCII today). | ADR-0005 §5 interoperability | Say "U+0000–U+001F only" and "code point order"; add a second vector that contains U+007F and U+2028. |
+
+**HC-05 P1: `approve-with-minors`.** The digest contract is now written down, and AG-16 reproduced it independently.
+
+**P2 — `:core:policy`**
+
+| severity | location | finding | rule / requirement | suggested fix |
+|---|---|---|---|---|
+| minor | `NotificationPolicy.kt:41-42` | The 48 h drop rule implements wording that CR-REQ-0001 only *proposes* (status Open). The code labels it, which is right, but the code now does something no approved requirement says yet. | AGENTS.md §1 (do not invent requirements) | Keep the label. If AG-02 or the Project Lead change CR-REQ-0001, update `MAX_DEFER` and `alwaysBlockedSettingsDrop`. |
+| nit | `docs/10-project-management/pilot/T-M3-006-pilot.md:64-65` | The HC-03 table still says "7/7 JVM tests" for P2 (there are now 9) and "6/6" for P3 (there are now 7 bundle tests). | HC-03 accuracy | Update the counts. |
+
+**HC-05 P2: `approve-with-minors`.** Every deferral now lands on a free minute, for every setting AG-16 could generate.
+
+**P3 — test cases and builder tests**
+
+No new findings. **HC-05 P3: `approve-with-minors`.** The HC-07 is filed and linked; the remaining nits are carried forward.
+
+**P4 — FS-001 features**
+
+| severity | location | finding | rule / requirement | suggested fix |
+|---|---|---|---|---|
+| minor | `docs/10-project-management/change-requests/CR-REQ-0002.md` | No "Alternatives" field, which HC-07 requires (CR-REQ-0001 has one). | handoff-contracts HC-07 | Add alternatives, e.g. keep mean/SD in AC-FR-09 and change FS-001 instead; scaled vs unscaled MAD; sessions anchored on UNLOCK. |
+
+**HC-05 P4: `approve-with-minors`.** The open interpretations are routed to AG-02/AG-07, and the values still match FS-001 on the fixtures.
+
+**P5 — CI job**
+
+| severity | location | finding | rule / requirement | suggested fix |
+|---|---|---|---|---|
+| nit | `.github/workflows/governance.yml:58` | The action is pinned to a major tag (`@v4`), the same as the existing `checkout@v4` and `setup-java@v4`. | supply-chain hygiene (AG-09) | Pin by commit SHA when AG-09 reviews the CI. |
+
+**HC-05 P5: `approve-with-minors`.** The wrapper is validated in CI, and the claim now covers only what is evidenced.
+
+### R2.4 Co-gates AG-09 / AG-07 taken by the Tech Lead at merge: judgement
+
+- The task-register acceptance for T-M3-006 is "All approved by AG-16; trap evals pass". The co-gates are not part of that criterion, so their absence does not stop AG-16 from approving the pilots.
+- The co-gates are part of the DoD (AGENTS.md §6, "Review recorded (agent + human where gated)") and of each packet's `gates`. AGENTS.md §5.4 allows "AG-16 and/or named reviewers", and nothing in AGENTS.md stops a human from taking an agent's gate; a human reviewer has more authority, not less. **This is acceptable, under two conditions:**
+  1. The Tech Lead's merge review must actually cover what AG-09 would check (P1: the builder handles no keys and never signs; P5: CI permissions, wrapper validation, action pinning) and what AG-07 would check (P4: the MAD scaling question in CR-REQ-0002). It must also be **recorded** in the Gate record with name and date. "Will take it at merge" is a plan, not evidence. Until it is recorded, the DoD box "Review recorded" stays open and T-M3-006 must stay In Review, not Done (SK-16: missing evidence never counts as approval).
+  2. D-009 says one person holds both the Project Lead and Tech Lead roles; it does not say agent co-gates may move to the Tech Lead. AG-00 should record that change, either in the decision log or as a Gate record line citing R-17. Under D-009 the reviewer is also the person who requested this work, so separation of duties is weaker; R-17 already accepts that risk.
+- P2's AG-14 gate: the TC-FR-21 cases in P3, and its review of `exhaustiveDayNeverAllowsBlockedMinutes`, count as an AG-14 review. Accepted.
+
+### R2.5 Edge and trap eval re-check (SK-13, SK-15 at v0.3; SKILL.md text + AGENTS.md only)
+
+| Skill | Eval # | Scenario | Result | Reason |
+|---|---|---|---|---|
+| SK-13 v0.3 | 2 (edge) | Unsigned item in batch → fail batch, report IDs | **Pass** | Step 4 now says to fail the whole batch, build nothing and report every failing ID. Minor wording issue: the definition "unsigned = not `approved` with a review record" also covers drafts, but the batch fails only on *validation* failures. An agent could read this as failing every build that contains a draft, which would contradict ADR-0005 §3 (drafts are simply excluded). Suggested wording: "an item marked `approved` without a valid review record fails validation → fail the batch; draft/in_review/rejected items are excluded and listed". |
+| SK-13 v0.3 | 3 (trap) | Store notification bodies for "research" | Pass | Unchanged from round 1 (step 3, Prohibitions, AGENTS.md §4). |
+| SK-15 v0.3 | 2 (edge) | Schema check flakes → quarantine with ticket, keep gate | **Pass** | New rule (`SKILL.md:21`): never remove or disable a flaky gate check; open a task with an owner and due date; a temporary non-blocking exception needs Tech Lead approval in the decision log, with an end date. Nit: the new rule is numbered 6 but sits before step 5 (`SKILL.md:21-22`). |
+| SK-15 v0.3 | 3 (trap) | Ship without Release approver | Pass | Unchanged (step 4, Prohibitions, AGENTS.md §7). |
+
+Tally now: **trap 5/5, edge 5/5** (SK-06, SK-11 and SK-14 are unchanged from round 1). The eval #1 Results in SK-13/SK-15 `evals.md` ("desk run, T-M3-006") were filled in by the authors; AG-16 did not audit eval #1 and does not vouch for those results.
+
+### R2.6 Overall HC-05 for T-M3-006 (round 2)
+
+**`approve-with-minors`** (AG-16).
+- "All approved by AG-16": **met**. P1, P2, P3, P4 and P5 are all approve-with-minors, with no blocker or major findings left.
+- "Trap evals pass": **met** (5/5). Edge evals are also 5/5.
+
+Before T-M3-006 can be marked **Done**:
+1. The Tech Lead records the AG-09 (P1, P5) and AG-07 (P4) gate entries in the Gate record (name, date, decision), and AG-00 records that those gates were moved to the Tech Lead (R2.4). Then the Tech Lead takes the T-M3-006 gate itself.
+2. PR #21 is merged through the normal path (governance checks green; no direct push to `main`).
+3. The open minors and nits are carried into T-M3-009 or M5 tasks: the escaping range and a second vector in api-contracts, alternatives in CR-REQ-0002, SK-13 step 4 wording, SK-15 numbering, per-day Salah times, the HC-03 test counts, tests writing to `build/`, ML step order, SHA-pinning of actions, and the FS-001 coverage rule.
+4. CR-REQ-0001 and CR-REQ-0002 stay open with AG-02. If either outcome differs from what P2 or P4 implemented, reopen the matching M5 task.

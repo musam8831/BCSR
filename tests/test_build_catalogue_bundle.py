@@ -51,6 +51,9 @@ class BundleTest(unittest.TestCase):
                   "verification": {"status": "approved", "record_id": "RR-0001"}},
                  {"id": "DUA-0002", "repetitions": 3, "note": 'line\nbreak "q"'}]
         self.assertEqual(b.items_digest(items), "8fed260e4d68a9f7ff9263d63e9550a8aa0e2c8600db8fa16496cbf5ca036549")
+        # second vector: only C0 controls are escaped; U+007F, U+0085, U+2028 stay as themselves
+        edge = [{"id": "DUA-0003", "note": "a\u0001b\u007fc\u0085d\u2028e\tf"}]
+        self.assertEqual(b.items_digest(edge), "85e786a052de2576949b0b6c49231c168361b4fdf2c5fcbdd6b3075dca774d38")
 
     def test_manifest_fields(self):
         m = b.build([], "2026.1", "key-x", created="2026-01-01T00:00:00Z")[0]["manifest"]

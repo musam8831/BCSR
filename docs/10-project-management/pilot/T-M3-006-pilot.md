@@ -61,8 +61,8 @@ constraints: [do not disable blocking checks (SK-15)]   reviewer: AG-16
 | Pilot | Outputs | Evidence | Known limitations |
 |---|---|---|---|
 | P1 AG-13 | `scripts/build_catalogue_bundle.py` | Real catalogue: 0 approved, DUA-0001 excluded; P3 tests 6/6 | No signing (by design, ADR-0005 §4); `/build/` ignored in Git |
-| P2 AG-11 | `app/android/core/policy` (`decide`, `TimingSettings`, `Decision`) | 7/7 JVM tests incl. exhaustive minute-by-minute check | Salah times passed in; wiring to Adhan and WorkManager is M5 |
-| P3 AG-14 | `TC-FR-15-FR-21.md`, `tests/test_build_catalogue_bundle.py` | 6/6; 2,000-catalogue property test | Found AC-FR-21 ambiguity (when to drop vs defer) → HC-07 to AG-02 |
+| P2 AG-11 | `app/android/core/policy` (`decide`, `TimingSettings`, `Decision`) | 9/9 JVM tests incl. minute-by-minute check and 3,000 random settings | Salah times passed in; wiring to Adhan and WorkManager is M5 |
+| P3 AG-14 | `TC-FR-15-FR-21.md`, `tests/test_build_catalogue_bundle.py` | 7/7; 2,000-catalogue property test; two hash test vectors | Found AC-FR-21 ambiguity (when to drop vs defer) → HC-07 to AG-02 |
 | P4 AG-06 | `ml/features/fs001.py`, tests | 5/5 fixture tests | z-score uses unscaled MAD as FS-001 states; scaling question for AG-07 |
 | P5 AG-15 | `governance.yml`: ML step in `checks`, new `kotlin-tests` job with Gradle wrapper validation | CI run on this PR | Spike tests need the runner's Android SDK; coverage (NFR-07) not measured yet |
 
@@ -82,11 +82,22 @@ All five pilots were written in one session by the same model playing each role;
 ## Gate record
 | Pilot | Gates in packet | Recorded |
 |---|---|---|
-| P1 | AG-16, AG-09 | AG-16: see audit. **AG-09: not run** in the pilot; the Tech Lead (D-009) takes this gate at merge |
-| P2 | AG-16, AG-14 | AG-16: see audit. AG-14: TC-FR-21 cases written against P2 (P3), the only AG-14 review |
-| P3 | AG-16 | AG-16: see audit |
-| P4 | AG-16, AG-07 | AG-16: see audit. **AG-07: not run**; scaling question in CR-REQ-0002 |
-| P5 | AG-16, AG-09 | AG-16: see audit. **AG-09: not run**; Tech Lead at merge |
+| P1 | AG-16, AG-09 | AG-16: approve-with-minors (round 2). AG-09 scope → **Tech Lead under D-013: pending** (checklist below) |
+| P2 | AG-16, AG-14 | AG-16: approve-with-minors (round 2). AG-14: TC-FR-21 cases written against P2 (P3) |
+| P3 | AG-16 | AG-16: approve-with-minors (round 2) |
+| P4 | AG-16, AG-07 | AG-16: approve-with-minors (round 2). AG-07 scope → **Tech Lead under D-013: pending** |
+| P5 | AG-16, AG-09 | AG-16: approve-with-minors (round 2). AG-09 scope → **Tech Lead under D-013: pending** |
+
+### Tech Lead co-gate checklist (D-013)
+- **AG-09 scope, P1 bundle builder:** reads only catalogue files, no behavioural data; never handles signing keys (ADR-0005 §4); writes only to the ignored `/build/` folder.
+- **AG-09 scope, P5 CI:** jobs have read-only `contents` permission; no secrets used; Gradle wrapper jars validated; third-party actions pinned by major tag, not SHA (AG-16 nit, carried to T-M3-009).
+- **AG-07 scope, P4 features:** z-score uses unscaled MAD as FS-001 states; decide whether to scale by 1.4826 (CR-REQ-0002, AG-07 question); checking-session definition proposed in CR-REQ-0002.
+Recorded decision: ______ (name, date)
+
+## Open minors carried forward (to T-M3-009 / M5)
+- P2: the 48 h drop rule implements CR-REQ-0001's *proposed* wording; change it if the CR is decided differently.
+- P5: pin GitHub Actions by commit SHA.
+- SK-13 and SK-15 eval #1 results were filled by the authors and not audited by AG-16.
 
 Path-ownership deviations accepted by AG-00: the root `.gitignore` (`/build/`, P1) and the executable bit on both `gradlew` files (P5) sit outside the agents' write paths; both are repository configuration with no owner in the registry, recorded here rather than reassigned.
 

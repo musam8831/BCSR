@@ -16,3 +16,5 @@
 **Proposed FS-001 text.** Adopt P4's definition as written in `ml/features/fs001.py`.
 
 **Impact.** Feature values and AC-FR-09 tests; no scope change.
+
+**Alternatives.** (a) Change FS-001 to mean and standard deviation to match AC-FR-09 (less robust to outlier days). (b) Keep median/MAD but scale MAD by 1.4826. (c) For checking sessions, count unlock-to-lock instead of screen-on-to-off.

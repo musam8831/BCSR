@@ -18,8 +18,8 @@ HC-01 task packet; documents it lists; `AGENTS.md`; AGS-04 Mode/O/C/G fields.
 2. Use `references/ci-workflow-templates.md` for Task-ID / docs-link / schema jobs.
 3. Document release ops; secrets with AG-09.
 4. Never bypass Release human gate.
-6. A flaky gate check is never removed or disabled. Open a task with an owner and a due date, keep the check blocking, and fix or replace it; a temporary non-blocking exception needs the Tech Lead's approval recorded in the decision log with an end date.
 5. Re-run GitNexus analyze after large infra/module drops.
+6. A flaky gate check is never removed or disabled. Open a task with an owner and a due date, keep the check blocking, and fix or replace it; a temporary non-blocking exception needs the Tech Lead's approval recorded in the decision log with an end date.
 
 ## Outputs
 - `.github/workflows/`, `docs/09-release-operations/`
