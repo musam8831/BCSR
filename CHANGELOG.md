@@ -21,6 +21,7 @@ All notable changes follow [Keep a Changelog](https://keepachangelog.com/) conve
 - T-M3-001..004 / T-M3-012: Expert skills SK-00..SK-16 deepened (v0.2 Draft) with role-specific procedures, non-clone evals, and reference packs for SK-06/07/08/09/10/11/12/13/14/15; agent defs AG-01..16 finalised; gap analysis confirms no new agents.
 
 ### Added
+- T-M3-006 (pilot dry-run): P1 AG-13 catalogue bundle builder `scripts/build_catalogue_bundle.py` (approved only, manifest + SHA-256); P2 AG-11 `app/android/core/policy` notification timing rule (FR-21, 7 tests) and the product Gradle build; P3 AG-14 test cases TC-FR-15/FR-21 and independent bundle tests (6); P4 AG-06 FS-001 features `ml/features/fs001.py` (5 tests); P5 AG-15 CI: ML tests step and `kotlin-tests` job. AG-16 audit by a separate subagent.
 - T-M3-005: Catalogue validator `content/validation/validate_catalogue.py` (schema, Qur'an ayah ranges, type/reference agreement, approval records naming reviewer and item, no placeholders in approved items, duplicates); wired into `check_repo.py`; 12 tests; review-record template.
 - T-M3-007: CI checks — `scripts/check_docs.py` (relative links resolve; cited requirement IDs exist in SRS; every requirement in the traceability matrix) with 4 tests; CI runs the unit tests and the docs check. With no branch protection (D-008), "blocking" means the merge guard hook refuses to merge on failing checks. Approved by Project Lead 2026-10-21 (PR #20, in place of AG-16).
 - D-012 / R-18: M2 runs in parallel with G1 (scholar not yet confirmed); G1 still required before G2.
