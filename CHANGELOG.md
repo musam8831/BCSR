@@ -20,7 +20,7 @@ All notable changes follow [Keep a Changelog](https://keepachangelog.com/) conve
 - T-M3-001..004 / T-M3-012: Expert skills SK-00..SK-16 deepened (v0.2 Draft) with role-specific procedures, non-clone evals, and reference packs for SK-06/07/08/09/10/11/12/13/14/15; agent defs AG-01..16 finalised; gap analysis confirms no new agents.
 
 ### Added
-- T-M1-009: Licence register RES-03 v1.0-rc — 13 software components verified from their repositories (all Apache-2.0, MIT or BSD-3; no copyleft), Tanzil Quran text (CC BY 3.0, verbatim only), datasets and instruments cross-referenced to RES-04; no pre-trained models used.
+- T-M1-009: Licence register RES-03 v1.0-rc — 13 software components verified from their repositories (all Apache-2.0, MIT or BSD-3; no copyleft), Tanzil Quran text (CC BY 3.0, verbatim only), datasets and instruments cross-referenced to RES-04; no pre-trained models used. Approved by Tech Lead 2026-10-21 (PR #15; D-009).
 - T-M1-008: Scientific evidence brief RES-02 v1.0-rc — 36 peer-reviewed sources, every DOI verified against OpenAlex; answers RQ1–RQ5 from abstracts with an evidence table and 8 design implications. Gaps: Urdu PSS-10 validation and instrument licences (T-M1-013). Approved by Project Lead 2026-10-21 (PR #13, in place of AG-07).
 - T-M0-001 / D-008: Tech Lead accepts deferred branch protection with compensating controls — Claude Code guard hook + deny rules (`.claude/settings.json`, `scripts/hooks/guard_git.py`), git pre-push hook (`.githooks/pre-push`), CI audit that every `main` commit comes from a merged PR. D-008 expires before M4. T-M0-001 Done.
 - D-009 / R-17: Muhammad Usman holds Project Lead and Tech Lead roles; charter GOV-01 v1.1 §6.

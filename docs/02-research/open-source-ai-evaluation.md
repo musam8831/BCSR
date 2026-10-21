@@ -1,4 +1,4 @@
-# Open-Source AI Evaluation — RES-03 v1.0-rc
+# Open-Source AI Evaluation — RES-03 v1.0
 
 Constraint: **no paid LLM services**. All components must be open-source or self-built, with licences recorded. Owner: AG-04 with AG-06.
 
@@ -19,7 +19,7 @@ Constraint: **no paid LLM services**. All components must be open-source or self
 ## 2. On-device open-weight generative models
 Open-weight small LLMs (for example models runnable via MediaPipe LLM Inference) are *technically* free. They are **excluded from any religious-content path** by ADR-0004. They may be evaluated later only for non-religious UI microcopy, and only if their licence permits it. Default: not used in the MVP.
 
-## 3. Licence register (T-M1-009, verified 2026-10-21)
+## 3. Licence register (T-M1-009, verified 2026-10-21; approved by Tech Lead 2026-10-21, PR #15)
 Method: code licences are read from each project's GitHub repository (SPDX licence ID; the LICENSE file where GitHub reports none). Versions are the latest release on 2026-10-21; exact versions are pinned when the build is set up (M5) and re-checked then. All entries below allow commercial use and modification under their licence terms.
 
 ### 3.1 Software
