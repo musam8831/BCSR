@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Repository governance checks (run in CI).
 
-1. Validate every catalogue item against the JSON schema; only allow `approved`
-   status when a matching review record exists.
+1. Validate the catalogue with content/validation/validate_catalogue.py (schema, references,
+   approval records, placeholders, duplicates; T-M3-005).
 2. Ensure the task register has unique IDs and no dangling dependencies.
 3. Ensure every skill folder has SKILL.md with name + description frontmatter.
 """
@@ -13,17 +13,10 @@ errors = []
 
 # 1. Content catalogue
 try:
-    import jsonschema
-    schema = json.loads((ROOT / "content/schema/catalogue.schema.json").read_text())
-    for item_path in sorted((ROOT / "content/catalogue").rglob("*.json")):
-        item = json.loads(item_path.read_text())
-        for e in jsonschema.Draft202012Validator(schema).iter_errors(item):
-            errors.append(f"{item_path.name}: {e.message}")
-        v = item.get("verification", {})
-        if v.get("status") == "approved":
-            rr = ROOT / "docs/05-spiritual-content/review-records" / f"{v.get('record_id')}.md"
-            if not rr.exists():
-                errors.append(f"{item_path.name}: approved without review record {rr.name}")
+    sys.path.insert(0, str(ROOT / "content/validation"))
+    import validate_catalogue as vc
+    schema = json.loads(vc.SCHEMA.read_text(encoding="utf-8"))
+    errors += vc.validate(vc.load_items(), vc.RECORDS, schema)
 except ImportError:
     errors.append("jsonschema not installed (pip install jsonschema)")
 
