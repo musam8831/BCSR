@@ -17,6 +17,10 @@ jobs:
           python-version: "3.12"
       - run: pip install jsonschema
       - run: python scripts/check_repo.py
+      - name: Unit tests (catalogue validator, docs check)
+        run: python -m unittest discover -s tests -v
+      - name: Docs links and traceability IDs
+        run: python scripts/check_docs.py
       - name: PR must reference a task ID
         if: github.event_name == 'pull_request'
         env:
