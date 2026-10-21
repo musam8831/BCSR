@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | Project | Behavioral & Contextual Stress Releaser (BCSR) |
-| Document ID | GOV-01 · v1.0 (T-M0-004, for Gate G0) |
+| Document ID | GOV-01 · v1.1 (T-M0-004; §6 updated per D-009) |
 | Sponsor / Project Lead | Muhammad Usman |
 | Status | Signed by Project Lead 2026-10-20 |
 
@@ -44,7 +44,7 @@ Each objective is specific to one outcome, measured as stated, time-bound to a m
 | Role | Responsibility |
 |---|---|
 | Project Lead / Sponsor | Vision, gate approvals, prioritisation |
-| Tech Lead | Architecture, code quality, ML direction |
+| Tech Lead | Architecture, code quality, ML direction. Held by Muhammad Usman together with Project Lead (D-009, R-17) |
 | Scholar reviewer(s) | Approve every content item; source policy |
 | Mental-health advisor | Safety pathway, EMA instrument choice, wording |
 | Ethics/IRB (e.g., institutional review board) | Approve research data collection |

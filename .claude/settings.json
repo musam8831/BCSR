@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "deny": [
+      "Bash(git push --force*)",
+      "Bash(git push -f*)",
+      "Bash(git push origin main*)",
+      "Bash(git push origin HEAD:main*)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python scripts/hooks/guard_git.py",
+            "timeout": 30,
+            "statusMessage": "D-008 guard"
+          }
+        ]
+      }
+    ]
+  }
+}

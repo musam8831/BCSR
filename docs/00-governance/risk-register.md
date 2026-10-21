@@ -19,9 +19,10 @@ Scoring: Likelihood (L) and Impact (I) are each rated 1–5; Score = L×I. Revie
 | R-11 | Ethics approval delays the pilot | 3 | 3 | 9 | Start the IRB application in M1 (T-M1-012) | Project Lead | Open |
 | R-12 | Wrong recommendation timing feels intrusive (notification fatigue) | 3 | 3 | 9 | Rate limits, quiet hours, prayer-time awareness, user controls | AG-12 UX Designer | Open |
 | R-13 | Bias: models perform worse for some user groups (age, gender, device) | 3 | 3 | 9 | Subgroup evaluation in model cards | AG-07 | Open |
-| R-14 | Unreviewed or CI-failing changes land on `main` (no branch protection on private Free-plan repo, D-008) | 3 | 3 | 9 | PR template + task-ID CI check; work via PRs by convention; `check_repo.py` before merge; enable protection on upgrade to Pro or going public | Project Lead / Tech Lead | Open |
+| R-14 | Unreviewed or CI-failing changes land on `main` (no branch protection on private Free-plan repo, D-008) | 3 | 3 | 9 | AGENTS.md §5.6; Claude Code guard hook (blocks push to main, force-push, merge on non-passing checks); git pre-push hook; CI audit fails any `main` commit without a merged PR; D-008 revisited before M4 | Project Lead / Tech Lead | Open |
 | R-15 | No mental-health advisor or scholar reviewer confirmed in time, blocking the safety pathway, content policy and G1 (A-04, A-08) | 3 | 5 | 15 | Recruit in T-M0-006; dated recruitment plan accepted at G0 if names are not confirmed | Project Lead | Open |
 | R-16 | OEM battery optimisation kills background collection, leaving data gaps that weaken inference (A-09) | 4 | 3 | 12 | OEM spike T-M2-004 with gap rates; WorkManager; in-app guidance to exempt the app; gap-aware features in FS-001 | AG-05 Platform Feasibility | Open |
+| R-17 | One person holds Project Lead and Tech Lead roles (D-009), so G2/G3 and Tech Lead reviews lack a second human | 3 | 4 | 12 | Record each dual-role sign-off explicitly; AG-16 independent audit on gate packs; seek an external technical reviewer for G2 and G3 | Project Lead | Open |
 
 R-15 and R-16 scores proposed by AG-01; confirmed by Project Lead 2026-10-20.
 
