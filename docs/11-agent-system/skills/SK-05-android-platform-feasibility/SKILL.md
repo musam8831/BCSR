@@ -5,7 +5,7 @@ description: Run sensing/OEM/Play-policy spikes for M2 feasibility.
 
 # SK · android-platform-feasibility
 
-**Version:** 0.2 · **Status:** Draft (pilot validation in T-M3-006)
+**Version:** 0.3 · **Status:** Usable (bootstrap, T-M2-000) · validation in T-M3-006
 
 ## Purpose
 Evidence-based go/no-go per signal.
@@ -16,7 +16,7 @@ HC-01 task packet; documents it lists; `AGENTS.md`; AGS-04 Mode/O/C/G fields.
 ## Procedure
 1. Scope spike to HC-01 question.
 2. Code only under `app/android/spikes/` unless packet expands.
-3. Record OEM variance, permissions, battery, Play notes.
+3. Record OEM variance, permissions, battery, Play notes. Report observed failures (e.g. an OEM killing background work) as they are, with mitigation options; never mark a signal Go without device evidence.
 4. Recommend go/no-go/conditional for G2.
 5. No AccessibilityService/IME observation.
 

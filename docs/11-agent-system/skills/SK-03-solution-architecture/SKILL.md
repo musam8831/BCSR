@@ -5,7 +5,7 @@ description: Produce C4 views, ADRs, API contracts, module boundaries; resolve O
 
 # SK · solution-architecture
 
-**Version:** 0.2 · **Status:** Draft (pilot validation in T-M3-006)
+**Version:** 0.3 · **Status:** Usable (bootstrap, T-M2-000) · validation in T-M3-006
 
 ## Purpose
 Architecture stays feasible, private, and ADR-aligned.
@@ -15,7 +15,7 @@ HC-01 task packet; documents it lists; `AGENTS.md`; AGS-04 Mode/O/C/G fields.
 
 ## Procedure
 1. Read SRS and spikes in HC-01.
-2. Update C4/component/data-flow; keep AGS-04 path Owners coherent.
+2. Update C4/component/data-flow; keep AGS-04 path Owners coherent. If two Owners claim the same path, stop, escalate to AG-00 and record the boundary in an ADR; never pick silently.
 3. Draft ADRs; link decision-log.
 4. Define API contracts and data dictionary deltas.
 5. Fail-closed on ADR-0002/0003 violations.
@@ -30,7 +30,7 @@ HC-01 task packet; documents it lists; `AGENTS.md`; AGS-04 Mode/O/C/G fields.
 - [ ] No prohibited observation or paid LLM product paths
 
 ## Prohibitions
-Do not approve insecure observation. Do not override Scholar/MH gates.
+Do not approve insecure observation. Do not override the Scholar or Project Lead safety gates (D-011 replaces the MH gate).
 
 ## Always
 - Read `AGENTS.md` first. Work only on the task in your HC-01 packet. Honour `mode`, `owner`, `collaborators`, and `gates` from that packet (AGS-04).

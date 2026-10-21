@@ -5,7 +5,7 @@ description: Build on-device features, models, and runtime; use for M5–M7 ML i
 
 # SK-06 · ml-modeling
 
-**Version:** 0.2 · **Status:** Draft (pilot validation in T-M3-006)
+**Version:** 0.3 · **Status:** Usable (bootstrap, T-M2-000) · validation in T-M3-006
 
 ## Purpose
 Classical/open-weight on-device models with honest uncertainty — never diagnoses.
@@ -16,7 +16,7 @@ HC-01 task packet; documents it lists; `AGENTS.md`; AGS-04 Mode/O/C/G fields.
 ## Procedure
 1. Confirm HC-02 / FS-001 / EP-001 in HC-01; Mode/O/C/G set.
 2. Follow `references/feature-to-code-template.md` for feature pipelines.
-3. Train/export under `ml/`; no paid LLM APIs in product or training.
+3. Train/export under `ml/`; no paid LLM APIs in product or training. If a dataset's licence or terms are unclear or research-only, stop and ask AG-04/AG-07 before training, and never use it for a shipped model (PR-07).
 4. Keep raw behavioural signals on-device; document offline assumptions.
 5. Draft model card path; hand evaluation to AG-07 using SK-07.
 6. Run GitNexus impact before non-trivial symbol edits when index exists.

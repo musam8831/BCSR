@@ -1,4 +1,4 @@
-# Safety Pathway — SAF-01 v1.0-rc
+# Safety Pathway — SAF-01 v1.0
 
 Task: T-M1-011 · Owner: AG-10 (SK-10) · Approver: Project Lead (D-011, in place of a mental-health advisor) · Requirements: FR-24, SR-01..SR-05, AGENTS.md §4.
 

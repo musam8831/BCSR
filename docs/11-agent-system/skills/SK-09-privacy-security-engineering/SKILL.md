@@ -5,7 +5,7 @@ description: Threat model, minimisation, encryption, Play Data Safety; Gate on p
 
 # SK-09 · privacy-security-engineering
 
-**Version:** 0.2 · **Status:** Draft (pilot validation in T-M3-006)
+**Version:** 0.3 · **Status:** Usable (bootstrap, T-M2-000) · validation in T-M3-006
 
 ## Purpose
 Privacy-by-default and security fail-closed.

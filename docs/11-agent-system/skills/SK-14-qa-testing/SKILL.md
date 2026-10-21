@@ -5,7 +5,7 @@ description: Test strategy, cases, automation, device matrix; M2–M10 QA.
 
 # SK-14 · qa-testing
 
-**Version:** 0.2 · **Status:** Draft (pilot validation in T-M3-006)
+**Version:** 0.3 · **Status:** Usable (bootstrap, T-M2-000) · validation in T-M3-006
 
 ## Purpose
 Prove ACs with evidence on a realistic device matrix.
@@ -14,7 +14,7 @@ Prove ACs with evidence on a realistic device matrix.
 HC-01 task packet; documents it lists; `AGENTS.md`; AGS-04 Mode/O/C/G fields.
 
 ## Procedure
-1. Map ACs to cases; include privacy, safety, content gates.
+1. Map ACs to cases; include privacy, safety, content gates. Gate tests are never skipped or deferred "to save time"; a skipped gate test blocks Done.
 2. Maintain matrix using `references/device-matrix-template.md`.
 3. Automate where stable under `tests/`.
 4. Link evidence for HC-03/HC-05.

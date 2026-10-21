@@ -5,7 +5,7 @@ description: Implement Kotlin/Compose modules under approved specs; M5–M8 app 
 
 # SK-11 · android-development
 
-**Version:** 0.2 · **Status:** Draft (pilot validation in T-M3-006)
+**Version:** 0.3 · **Status:** Usable (bootstrap, T-M2-000) · validation in T-M3-006
 
 ## Purpose
 Ship Android features meeting ACs, NFRs, and privacy constraints.
@@ -16,7 +16,7 @@ HC-01 task packet; documents it lists; `AGENTS.md`; AGS-04 Mode/O/C/G fields.
 ## Procedure
 1. Confirm HC-02 and Mode/O/C/G before coding.
 2. Follow `references/kotlin-compose-conventions.md` and `references/module-layout.md`.
-3. Implement under `app/android/`; single-writer respect.
+3. Implement under `app/android/`; single-writer respect. When the platform blocks a behaviour (e.g. an OEM kills WorkManager), document the fallback and report the real result; never fake a passing check.
 4. No AccessibilityService/IME observation; no paid LLM in product.
 5. GitNexus impact before large refactors when indexed.
 6. Coordinate tests with AG-14; HC-03 submit.

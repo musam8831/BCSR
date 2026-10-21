@@ -67,7 +67,7 @@ Assumptions A-01..A-12 and their validating tasks are in GOV-02 §2 (A-08 droppe
 | Onboarding & Consent | MOD-ON | Explain purpose, request permissions one at a time, consent tiers | User choices → granted permissions, consent record, mode (full / check-in only) | FR-01, FR-02, PR-03, PR-05, SR-02 |
 | Context Sensing | MOD-SN | Collect passive metadata signals on device | Android usage, screen, notification-count and activity APIs → encrypted local event store | FR-03..FR-07, PR-01, PR-02, PR-04 |
 | Feature Engineering | MOD-FE | Windowed features, personal baselines | Event store → feature windows and baselines (FS-001) | FR-08, FR-09 |
-| State Inference | MOD-SI | ML models that estimate the context state | Features → probability over CS-01..CS-09 | FR-10..FR-12, NFR-02 |
+| State Inference | MOD-SI | ML models that estimate the context state | Features → probability over CS-01..CS-04, CS-06, CS-08 (taxonomy v1) | FR-10..FR-12, NFR-02 |
 | Check-in (EMA) | MOD-EM | Short mood check-ins; label capture | Inference confidence and user taps → confirmed labels; crisis input to MOD-SF | FR-13, FR-14, SR-03 |
 | Recommendation Engine | MOD-RE | Select the verified du'a for the state and context; contextual bandit | State, time, history, feedback, approved items → ranked item with a reason | FR-15..FR-17, FR-29, NFR-08, CR-05 |
 | Content Catalogue | MOD-CC | Verified du'a/adhkar store, search, favourites | Approved catalogue → item display, browse, search, recitation | FR-18..FR-20, CR-01..CR-04 |
