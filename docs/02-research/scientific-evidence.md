@@ -1,6 +1,6 @@
-# Scientific Evidence Brief — RES-02 v1.0-rc
+# Scientific Evidence Brief — RES-02 v1.0
 
-Owner: AG-04 Research Analyst · Task: T-M1-008 · Reviewer: AG-07 · Date: 2026-10-21
+Owner: AG-04 Research Analyst · Task: T-M1-008 · Reviewer: AG-07 · Date: 2026-10-21 · Approved by Project Lead 2026-10-21 (PR #13, in place of AG-07)
 
 ## 0. Method and limits (read first)
 - **36 peer-reviewed sources**, each with a DOI. Every DOI was checked against OpenAlex on 2026-10-21: the registered title, year and first author matched the intended paper. Two candidates were dropped because their DOI did not resolve to the expected paper.
