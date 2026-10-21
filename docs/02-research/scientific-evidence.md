@@ -110,8 +110,8 @@ Owner: AG-04 Research Analyst · Task: T-M1-008 · Reviewer: AG-07 · Date: 2026
 ## 5. Open items and validating tasks
 | Item | Status | Validating task |
 |---|---|---|
-| Urdu validation of PSS-10 | Not found; assumption | T-M1-013 |
-| Licence terms of PSS, Brief RCOPE, PMIR | Not verified | T-M1-013 |
+| Urdu validation of PSS-10 | Urdu PSS-10 (Mariam et al., IIU Islamabad) listed by the scale's authors; validation paper itself not read; permission pending | Resolved in RES-04 §2 (T-M1-013) |
+| Licence terms of PSS, Brief RCOPE, PMIR | PSS: free permission via MAPI ePROVIDE. Brief RCOPE, PMIR: not selected for MVP | Resolved in RES-04 §2 (T-M1-013) |
 | Anxiety-specific passive-sensing evidence | Not found in this search | T-M1-006 (taxonomy) |
 | Effect sizes for personalisation gain | Not in abstracts | Full-text read, T-M2-006 |
 | Evidence for phone-prompted du'a | None found | M5 pilot (EP-001) |
