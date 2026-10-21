@@ -5,7 +5,7 @@
 | raised_by | AG-06 (pilot P4) |
 | task_id | T-M3-006 |
 | routed | AG-00 → AG-02 (with AG-07) → Project Lead |
-| status | Open |
+| status | Partly decided: MAD scaling closed (plain MAD, Tech Lead 2026-10-21); AC-FR-09 wording and checking-session definition open with AG-02 |
 
 **Gap 1.** AC-FR-09 says the baseline has a "rolling mean and spread"; FS-001 defines z-scores with the **median** and **MAD** over 14 days. The two disagree. P4 follows FS-001 (unscaled MAD).
 

@@ -82,17 +82,17 @@ All five pilots were written in one session by the same model playing each role;
 ## Gate record
 | Pilot | Gates in packet | Recorded |
 |---|---|---|
-| P1 | AG-16, AG-09 | AG-16: approve-with-minors (round 2). AG-09 scope → **Tech Lead under D-013: pending** (checklist below) |
+| P1 | AG-16, AG-09 | AG-16: approve-with-minors (round 2). AG-09 scope → Tech Lead (D-013): **accepted** 2026-10-21 |
 | P2 | AG-16, AG-14 | AG-16: approve-with-minors (round 2). AG-14: TC-FR-21 cases written against P2 (P3) |
 | P3 | AG-16 | AG-16: approve-with-minors (round 2) |
-| P4 | AG-16, AG-07 | AG-16: approve-with-minors (round 2). AG-07 scope → **Tech Lead under D-013: pending** |
-| P5 | AG-16, AG-09 | AG-16: approve-with-minors (round 2). AG-09 scope → **Tech Lead under D-013: pending** |
+| P4 | AG-16, AG-07 | AG-16: approve-with-minors (round 2). AG-07 scope → Tech Lead (D-013): **accepted** 2026-10-21; plain MAD kept |
+| P5 | AG-16, AG-09 | AG-16: approve-with-minors (round 2). AG-09 scope → Tech Lead (D-013): **accepted** 2026-10-21; SHA pinning carried forward |
 
 ### Tech Lead co-gate checklist (D-013)
 - **AG-09 scope, P1 bundle builder:** reads only catalogue files, no behavioural data; never handles signing keys (ADR-0005 §4); writes only to the ignored `/build/` folder.
 - **AG-09 scope, P5 CI:** jobs have read-only `contents` permission; no secrets used; Gradle wrapper jars validated; third-party actions pinned by major tag, not SHA (AG-16 nit, carried to T-M3-009).
 - **AG-07 scope, P4 features:** z-score uses unscaled MAD as FS-001 states; decide whether to scale by 1.4826 (CR-REQ-0002, AG-07 question); checking-session definition proposed in CR-REQ-0002.
-Recorded decision: ______ (name, date)
+Recorded decision: **accepted** — Muhammad Usman (Tech Lead, D-009), 2026-10-21. AG-09 items for P1 and P5 accepted; SHA pinning carried to T-M3-009. AG-07: z-score keeps plain (unscaled) MAD as FS-001 states.
 
 ## Open minors carried forward (to T-M3-009 / M5)
 - P2: the 48 h drop rule implements CR-REQ-0001's *proposed* wording; change it if the CR is decided differently.
