@@ -35,7 +35,7 @@ These rules bind **every** agent (orchestrator, expert, implementation) and ever
 3. The Implementer (or Owner-as-writer) produces outputs in the paths named by the task, and fills the Definition of Done checklist.
 4. Gates review: AG-16 and/or named reviewers, plus a human where `AGENTS.md` §7 or the Content/Safety mode requires one. Authors never approve their own work.
 5. Task status is updated in the task register, and progress is logged in the weekly report.
-6. Work happens on a branch `T-Mx-NNN-short-name` and lands on `main` only through a PR that cites the task and passes `governance-checks`. Never push directly to or force-push `main`; this holds even while branch protection is deferred (D-008, R-14).
+6. Work happens on a branch `T-Mx-NNN-short-name` and lands on `main` only through a PR that cites the task and passes `governance-checks`. Never push directly to or force-push `main`; branch protection on `main` enforces this since D-014.
 
 ## 6. Definition of Done (all tasks)
 - [ ] Output exists at the specified path and follows the relevant template

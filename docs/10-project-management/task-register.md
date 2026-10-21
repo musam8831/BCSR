@@ -52,9 +52,9 @@ Owner: AG-00. Status values: Backlog · Ready · In Progress · In Review · Don
 | T-M3-005 | Content validator & catalogue CI (schema, refs, status rules) | AG-13 | SK-13;SK-08 | P1 | 3 | T-M2-008 | content/validation/*, CI job | Rejects invalid/unapproved items in tests | AG-16 | Done |
 | T-M3-006 | Pilot dry-run: each implementation agent completes 1 real M4/M5 task | AG-00 (coordinating) | all | P1 | 5 | T-M3-002;T-M3-003;T-M3-004;T-M3-005 | pilot PRs, audit reports | All approved by AG-16; trap evals pass | AG-16 + Tech Lead | Done |
 | T-M3-007 | CI checks: task-ID in PR, docs links, traceability IDs | AG-15 | SK-15 | P1 | 2 | T-M3-003 | .github/workflows/* | Blocking checks active | AG-16 | Done |
-| T-M3-008 | Retrospective and skill v1.0 release | AG-00 | SK-00;SK-01 | P1 | 2 | T-M3-006 | CHANGELOG, skills v1.0 | All skills v1.0 | Project Lead | In Review |
+| T-M3-008 | Retrospective and skill v1.0 release | AG-00 | SK-00;SK-01 | P1 | 2 | T-M3-006 | CHANGELOG, skills v1.0 | All skills v1.0 | Project Lead | Done |
 | T-M3-009 | Decompose M4–M5 backlog into Ready tasks with HC-01 packets (Mode/O/C/G fields) | AG-00 | SK-01 | P1 | 3 | T-M3-008;T-M3-011 | task-register.md (M4, M5) | ≥ 2 weeks of Ready work per active agent; each HC-01 has mode, owner, collaborators, gates | AG-16 | In Review |
-| T-M3-010 | G3 gate pack and review | AG-01 | SK-01 | P1 | 1 | T-M3-007;T-M3-009 | gates/G3.md | Lead + Tech Lead approve | Lead + Tech Lead | In Review |
+| T-M3-010 | G3 gate pack and review | AG-01 | SK-01 | P1 | 1 | T-M3-007;T-M3-009 | gates/G3.md | Lead + Tech Lead approve | Lead + Tech Lead | Done |
 | T-M3-011 | Orchestration redesign: AGS-02 v0.2 + AGS-04 collaboration matrix (D-007) | AG-00 | SK-00;SK-01 | P1 | 2 | T-M0-002 | orchestration-policy.md, agent-collaboration.md, HC-01, AGENTS.md §5 | Matrix is selection authority; AG-00 process-only; Mode/O/C/G on HC-01 | AG-16 | Done |
 | T-M3-012 | Cursor/GitNexus/MCP efficiency tooling (lean rules, index, orchestrate wrapper) | AG-00 | SK-00 | P1 | 2 | T-M3-011 | .cursor/rules, tooling-efficiency.md, .gitnexus index | BCSR in GitNexus registry; AGENTS.md stays lean | AG-16 | Done |
 | **M4** | | | | | | | | | | |

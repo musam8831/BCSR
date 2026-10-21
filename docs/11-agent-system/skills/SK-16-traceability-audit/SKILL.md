@@ -5,7 +5,7 @@ description: Independent audit vs requirements/DoD; HC-04/HC-05 verdicts.
 
 # SK-16 · traceability-audit
 
-**Version:** 1.0 · **Status:** Validated (T-M3-008): edge and trap evals judged by an independent AG-16 (audits T-M3-006, T-M3-008) · SK-16 rows advisory, Project Lead to confirm
+**Version:** 1.0 · **Status:** Validated (T-M3-008): edge and trap evals judged by an independent AG-16 (audits T-M3-006, T-M3-008) · SK-16 rows confirmed by the Project Lead 2026-10-21
 
 ## Purpose
 Four-eyes assurance; trap violations never soft-pass.
