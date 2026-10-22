@@ -44,8 +44,8 @@ EXPECTED_ELEMENTS = set(SAFETY_KEYS) | {"Helpline button"}
 # SHA-256 of the SAF-01 §4 copy table as signed in SAF-01 §6 (v1.0, Project Lead, PR #18).
 # If §4 changes, the safety copy needs a new signature (SAF-01 §5): re-sign, then update this value.
 SIGNED_COPY_SHA256 = "e01c11c8cf2ab269504cf8d4c062154fa6604b579c92669d54053de43a1814c6"
-# AC-SR-02: screens that must state "not a medical service". No About screen yet; Privacy stands in (CR-REQ-0003).
-NOT_MEDICAL_SCREENS = ("Onboarding", "SafetyScreen", "Privacy")
+# AC-SR-02: screens that must state "not a medical service" (onboarding, safety, about).
+NOT_MEDICAL_SCREENS = ("Onboarding", "SafetyScreen", "About")
 
 
 def strings(path):
@@ -143,7 +143,7 @@ def composable_body(src, name):
 
 def without_comments(src):
     src = re.sub(r"/\*.*?\*/", "", src, flags=re.S)  # Kotlin block comments (nesting not handled; none in this code)
-    return "\n".join(l.split("//", 1)[0] for l in src.splitlines())
+    return re.sub(r"(?<!:)//.*", "", src)  # line comments, but not the // in a URL like https://
 
 
 def ui_failures(en, ur, main_activity_src, checkins_src):
@@ -159,6 +159,10 @@ def ui_failures(en, ur, main_activity_src, checkins_src):
             fails.append(f"screen {screen} not found (AC-SR-02)")
         elif "R.string.not_medical" not in without_comments(body):
             fails.append(f"screen {screen} does not show not_medical (AC-SR-02)")
+    # AC-CR-07: the About screen names and links the Tanzil Project (RES-03 §3.2).
+    about = composable_body(main_activity_src, "About")
+    if "Tanzil" not in en.get("credit_tanzil", "") or about is None or "R.string.credit_tanzil" not in without_comments(about)             or "tanzil.net" not in without_comments(about):
+        fails.append("About screen must show the Tanzil attribution and link (AC-CR-07)")
     return fails
 
 

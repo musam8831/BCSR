@@ -92,6 +92,12 @@ class AndroidGatesTest(unittest.TestCase):
         block = SRC.replace(body, body.replace("Text(stringResource(R.string.not_medical)", "/* Text(stringResource(R.string.not_medical) */ Text(\"x\""))
         self.assertTrue(g.ui_failures(EN, UR, block, CHK))  # AG-16 round 2: block comments
 
+    def test_tanzil_attribution_required(self):
+        body = g.composable_body(SRC, "About")
+        self.assertIsNotNone(body)
+        self.assertTrue(g.ui_failures(EN, UR, SRC.replace(body, body.replace("R.string.credit_tanzil", "R.string.app_name")), CHK))
+        self.assertTrue(g.ui_failures(dict(EN, credit_tanzil="Thanks"), UR, SRC, CHK))
+
     def test_notification_rules(self):
         self.assertEqual(g.ui_failures(EN, UR, SRC, CHK), [])
         self.assertTrue(g.ui_failures(dict(EN, notif_text="Feeling stressed?"), UR, SRC, CHK))
