@@ -89,12 +89,17 @@ class AndroidGatesTest(unittest.TestCase):
         self.assertEqual(fails, ["screen SafetyScreen does not show not_medical (AC-SR-02)"])
         commented = SRC.replace(body, body.replace("Text(stringResource(R.string.not_medical)", "// Text(stringResource(R.string.not_medical)"))
         self.assertTrue(g.ui_failures(EN, UR, commented, CHK))
+        block = SRC.replace(body, body.replace("Text(stringResource(R.string.not_medical)", "/* Text(stringResource(R.string.not_medical) */ Text(\"x\""))
+        self.assertTrue(g.ui_failures(EN, UR, block, CHK))  # AG-16 round 2: block comments
 
     def test_notification_rules(self):
         self.assertEqual(g.ui_failures(EN, UR, SRC, CHK), [])
         self.assertTrue(g.ui_failures(dict(EN, notif_text="Feeling stressed?"), UR, SRC, CHK))
         self.assertTrue(g.ui_failures(EN, dict(UR, notif_text="کیا آپ پریشان ہیں؟"), SRC, CHK))
         self.assertTrue(g.ui_failures(EN, UR, SRC, CHK.replace("VISIBILITY_PRIVATE", "VISIBILITY_PUBLIC")))
+        # AG-16 round 2: a comment mentioning it must not count once the real call is gone
+        gone = CHK.replace(".setVisibility(NotificationCompat.VISIBILITY_PRIVATE)", "// .setVisibility(NotificationCompat.VISIBILITY_PRIVATE)")
+        self.assertTrue(g.ui_failures(EN, UR, SRC, gone))
 
 
 if __name__ == "__main__":

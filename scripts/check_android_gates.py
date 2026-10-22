@@ -44,7 +44,7 @@ EXPECTED_ELEMENTS = set(SAFETY_KEYS) | {"Helpline button"}
 # SHA-256 of the SAF-01 §4 copy table as signed in SAF-01 §6 (v1.0, Project Lead, PR #18).
 # If §4 changes, the safety copy needs a new signature (SAF-01 §5): re-sign, then update this value.
 SIGNED_COPY_SHA256 = "e01c11c8cf2ab269504cf8d4c062154fa6604b579c92669d54053de43a1814c6"
-# AC-SR-02: screens that must state "not a medical service". There is no About screen yet; Privacy stands in for it.
+# AC-SR-02: screens that must state "not a medical service". No About screen yet; Privacy stands in (CR-REQ-0003).
 NOT_MEDICAL_SCREENS = ("Onboarding", "SafetyScreen", "Privacy")
 
 
@@ -142,6 +142,7 @@ def composable_body(src, name):
 
 
 def without_comments(src):
+    src = re.sub(r"/\*.*?\*/", "", src, flags=re.S)  # Kotlin block comments (nesting not handled; none in this code)
     return "\n".join(l.split("//", 1)[0] for l in src.splitlines())
 
 
@@ -150,7 +151,7 @@ def ui_failures(en, ur, main_activity_src, checkins_src):
     for lang, table in (("en", en), ("ur", ur)):
         if FEELING_WORDS.search(table.get("notif_text", "")):
             fails.append(f"{lang}: notif_text names a feeling (TH-06)")
-    if "VISIBILITY_PRIVATE" not in checkins_src:
+    if not re.search(r"\.setVisibility\(\s*NotificationCompat\.VISIBILITY_PRIVATE\s*\)", without_comments(checkins_src)):
         fails.append("check-in notification must be VISIBILITY_PRIVATE (TH-06)")
     for screen in NOT_MEDICAL_SCREENS:
         body = composable_body(main_activity_src, screen)
