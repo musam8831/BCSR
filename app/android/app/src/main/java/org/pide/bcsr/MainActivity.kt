@@ -330,7 +330,11 @@ private fun About(go: (Screen) -> Unit) {
     Title(stringResource(R.string.credits))
     // CR-07 / RES-03 §3.2: the Tanzil Project must be named and linked. Opens the browser; the app itself has no network access.
     Text(stringResource(R.string.credit_tanzil))
-    TextButton({ ctx.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://tanzil.net"))) }) { Text("tanzil.net") }
+    Text(stringResource(R.string.tanzil_notice), style = MaterialTheme.typography.bodySmall) // RES-03 §3.2 copyright notice
+    TextButton({
+        // No browser (work profile, kiosk): the address stays visible as the button text.
+        runCatching { ctx.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://tanzil.net"))) }
+    }) { Text("https://tanzil.net") }
     Title(stringResource(R.string.licences))
     LICENCES.forEach { Text(it, style = MaterialTheme.typography.bodySmall) }
     TextButton({ go(Screen.Home) }) { Text(stringResource(R.string.back)) }

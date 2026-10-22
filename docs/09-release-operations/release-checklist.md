@@ -16,4 +16,6 @@ Task: T-M5-016 · Owner: AG-15 · Gates: AG-09, Project Lead, Safety reviewer (P
 - [ ] Safety copy matches SAF-01 (AC-SR-04); Project Lead safety sign-off recorded.
 - [ ] Privacy and safety gate tests pass on ≥ 5 matrix devices (TST-01, T-M5-013/014).
 - [ ] `./gradlew :app:bundleRelease` on the release machine; upload to the internal track.
+- [ ] Full open-source licence notices in the app (MIT and BSD-3 notices, Apache-2.0 licence + NOTICE), generated from the SBOM, including transitive dependencies (AG-16 finding on PR #26)
+- [ ] Tanzil notice on the About screen matches the header of the imported Tanzil file (T-M4-002)
 - [ ] G-Release decision recorded (AGENTS.md §7) before any production track.

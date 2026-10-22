@@ -72,6 +72,8 @@
     <string name="about_version">Version %1$s</string>
     <string name="credits">Credits</string>
     <string name="credit_tanzil">Qur\'an text: Tanzil Project (tanzil.net), used under its licence: verbatim, with attribution.</string>
+    <!-- Notice lines exactly as on tanzil.net/docs/text_license (checked 2026-10-22); re-check against the imported file header (T-M4-002). -->
+    <string name="tanzil_notice" translatable="false">Tanzil Quran Text\nCopyright (C) 2007-2021 Tanzil Project\nLicense: Creative Commons Attribution 3.0</string>
     <string name="licences">Open-source licences</string>
 
     <!-- UX-05 privacy -->

@@ -46,6 +46,8 @@ EXPECTED_ELEMENTS = set(SAFETY_KEYS) | {"Helpline button"}
 SIGNED_COPY_SHA256 = "e01c11c8cf2ab269504cf8d4c062154fa6604b579c92669d54053de43a1814c6"
 # AC-SR-02: screens that must state "not a medical service" (onboarding, safety, about).
 NOT_MEDICAL_SCREENS = ("Onboarding", "SafetyScreen", "About")
+# Tanzil notice lines (tanzil.net/docs/text_license, 2026-10-22) that must be shown verbatim (AC-CR-07, RES-03 §3.2).
+TANZIL_NOTICE = ("Tanzil Quran Text", "Copyright (C) 2007-2021 Tanzil Project", "License: Creative Commons Attribution 3.0")
 
 
 def strings(path):
@@ -161,8 +163,15 @@ def ui_failures(en, ur, main_activity_src, checkins_src):
             fails.append(f"screen {screen} does not show not_medical (AC-SR-02)")
     # AC-CR-07: the About screen names and links the Tanzil Project (RES-03 §3.2).
     about = composable_body(main_activity_src, "About")
-    if "Tanzil" not in en.get("credit_tanzil", "") or about is None or "R.string.credit_tanzil" not in without_comments(about)             or "tanzil.net" not in without_comments(about):
+    code = without_comments(about or "")
+    notice = en.get("tanzil_notice", "").replace("\\n", "\n")
+    if about is None or "Tanzil" not in en.get("credit_tanzil", "") or "R.string.credit_tanzil" not in code \
+            or 'Uri.parse("https://tanzil.net")' not in code:
         fails.append("About screen must show the Tanzil attribution and link (AC-CR-07)")
+    if not all(line in notice.splitlines() for line in TANZIL_NOTICE) or "R.string.tanzil_notice" not in code:
+        fails.append("About screen must show the Tanzil copyright notice and CC BY 3.0 licence (RES-03 §3.2)")
+    if "go(Screen.About)" not in without_comments(composable_body(main_activity_src, "Home") or ""):
+        fails.append("About screen must be reachable from Home (AC-SR-02, AC-CR-07)")
     return fails
 
 
