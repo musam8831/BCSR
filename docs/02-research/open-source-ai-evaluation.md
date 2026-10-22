@@ -37,6 +37,9 @@ Method: code licences are read from each project's GitHub repository (SPDX licen
 | Flower (adap/flower) | Federated learning (D3, post-MVP) | framework-1.41.0 | Apache-2.0 | Yes | Licence + NOTICE | Post-MVP |
 | Opacus (pytorch/opacus) | Differential privacy (post-MVP) | v1.6.0 | Apache-2.0 | Yes | Licence + NOTICE | Post-MVP |
 | Adhan (batoulapps/adhan-kotlin) | Salah times (FR-21) | adhan2-v0.0.7 | MIT | Yes | Licence notice in app | The older `batoulapps/Adhan` repo has had no push since 2023-03; use adhan-kotlin |
+| BouncyCastle (`org.bouncycastle:bcprov-jdk18on`) | Ed25519 bundle verification in the app (ADR-0005) | 1.86 | MIT (bcgit/bc-java) | Yes | Licence notice in app | Added T-M5-006 |
+| kotlinx.serialization JSON (`org.jetbrains.kotlinx:kotlinx-serialization-json`) | Reading the catalogue bundle | 1.9.0 | Apache-2.0 | Yes | Licence + NOTICE | Added T-M5-006; JsonElement API only |
+| Adhan, Java edition (`com.batoulapps.adhan:adhan`) | Salah times | 1.2.1 | MIT (batoulapps/adhan-kotlin) | Yes | Licence notice in app | Replaces adhan2 for now (ARC-02 §7) |
 | SQLCipher for Android (sqlcipher/sqlcipher-android) | Encrypted local DB (PR-02) | v4.19.1 | BSD-3-Clause (LICENSE file text; GitHub reports NOASSERTION) | Yes (Community Edition) | Copyright notice in app docs | Commercial editions also exist; Community Edition is enough |
 
 No copyleft (GPL/AGPL) component is planned. Any new dependency is added to this table before it is merged (NFR-09).
