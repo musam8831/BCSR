@@ -38,7 +38,7 @@ def keygen(key_id, private_path, public_path):
     pathlib.Path(private_path).write_bytes(key.private_bytes(
         serialization.Encoding.PEM, serialization.PrivateFormat.PKCS8, serialization.NoEncryption()))
     pub = key.public_key().public_bytes(serialization.Encoding.Raw, serialization.PublicFormat.Raw)
-    pathlib.Path(public_path).write_text(f"{key_id} {base64.b64encode(pub).decode()}\n", encoding="utf-8")
+    pathlib.Path(public_path).write_text(f"{key_id} {base64.b64encode(pub).decode()}\n", encoding="utf-8", newline="\n")
 
 
 def load_public(public_path):
@@ -56,7 +56,7 @@ def sign(bundle, private_path):
     key = serialization.load_pem_private_key(pathlib.Path(private_path).read_bytes(), password=None)
     data = pathlib.Path(bundle).read_bytes()
     out = sig_path(bundle)
-    out.write_text(base64.b64encode(key.sign(data)).decode() + "\n", encoding="ascii")
+    out.write_text(base64.b64encode(key.sign(data)).decode() + "\n", encoding="ascii", newline="\n")
     return out
 
 

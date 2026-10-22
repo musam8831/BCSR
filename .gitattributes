@@ -3,3 +3,7 @@
 .githooks/* text eol=lf
 gradlew text eol=lf
 *.bat text eol=crlf
+# Signed catalogue bundles: signatures cover exact bytes, so Git must never rewrite line endings (ADR-0005 §5).
+app/android/core/content/src/test/resources/fixture/** -text
+app/android/app/src/main/assets/catalogue/** -text
+*.sig -text

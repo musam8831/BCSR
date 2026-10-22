@@ -61,7 +61,8 @@ def main(argv=None):
     out = pathlib.Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
     path = out / f"catalogue-{args.version}.json"
-    path.write_text(json.dumps(bundle, ensure_ascii=False, indent=1), encoding="utf-8")
+    # LF on every OS: the signature covers these exact bytes (ADR-0005 §5).
+    path.write_text(json.dumps(bundle, ensure_ascii=False, indent=1), encoding="utf-8", newline="\n")
     print(f"Wrote {path}: {len(report['included'])} approved item(s); "
           f"excluded (not approved): {', '.join(report['excluded_not_approved']) or 'none'}")
     print("Next: the Project Lead signs this file offline (ADR-0005, section 4).")
