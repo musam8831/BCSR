@@ -333,7 +333,11 @@ private fun About(go: (Screen) -> Unit) {
     Text(stringResource(R.string.tanzil_notice), style = MaterialTheme.typography.bodySmall) // RES-03 §3.2 copyright notice
     TextButton({
         // No browser (work profile, kiosk): the address stays visible as the button text.
-        runCatching { ctx.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://tanzil.net"))) }
+        try {
+            ctx.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://tanzil.net")))
+        } catch (e: android.content.ActivityNotFoundException) {
+            // nothing to open it with; the address is already on screen
+        }
     }) { Text("https://tanzil.net") }
     Title(stringResource(R.string.licences))
     LICENCES.forEach { Text(it, style = MaterialTheme.typography.bodySmall) }
