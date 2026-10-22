@@ -92,6 +92,21 @@ class AndroidGatesTest(unittest.TestCase):
         block = SRC.replace(body, body.replace("Text(stringResource(R.string.not_medical)", "/* Text(stringResource(R.string.not_medical) */ Text(\"x\""))
         self.assertTrue(g.ui_failures(EN, UR, block, CHK))  # AG-16 round 2: block comments
 
+    def test_tanzil_attribution_required(self):
+        body = g.composable_body(SRC, "About")
+        self.assertIsNotNone(body)
+        self.assertTrue(g.ui_failures(EN, UR, SRC.replace(body, body.replace("R.string.credit_tanzil", "R.string.app_name")), CHK))
+        self.assertTrue(g.ui_failures(dict(EN, credit_tanzil="Thanks"), UR, SRC, CHK))
+        # AG-16: copyright notice and licence are required, not just the name and link
+        self.assertTrue(any("copyright notice" in f for f in g.ui_failures(dict(EN, tanzil_notice="Tanzil Quran Text"), UR, SRC, CHK)))
+        no_notice = SRC.replace(body, body.replace("R.string.tanzil_notice", "R.string.app_name"))
+        self.assertTrue(any("copyright notice" in f for f in g.ui_failures(EN, UR, no_notice, CHK)))
+        # the link must be the real call, not just a label
+        no_link = SRC.replace(body, body.replace('Uri.parse("https://tanzil.net")', 'Uri.parse("https://example.org")'))
+        self.assertTrue(any("attribution and link" in f for f in g.ui_failures(EN, UR, no_link, CHK)))
+        # reachable from Home
+        self.assertTrue(any("reachable" in f for f in g.ui_failures(EN, UR, SRC.replace("go(Screen.About)", "go(Screen.Home)"), CHK)))
+
     def test_notification_rules(self):
         self.assertEqual(g.ui_failures(EN, UR, SRC, CHK), [])
         self.assertTrue(g.ui_failures(dict(EN, notif_text="Feeling stressed?"), UR, SRC, CHK))

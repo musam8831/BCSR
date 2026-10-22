@@ -5,7 +5,7 @@
 | raised_by | AG-14 (T-M5-013), on an AG-16 finding |
 | task_id | T-M5-013 |
 | routed | AG-00 → AG-02 → Project Lead |
-| status | Open |
+| status | Closed 2026-10-22: option (a) — About screen built (T-M5-024); AC-SR-02 unchanged. Closure accepted by AG-00 under the Project Lead's standing delegation to follow the expert recommendation (no requirement changed, so AG-02 had nothing to amend); gate: AG-16 on PR #26 |
 
 **Gap.** AC-SR-02 and SAF-01 §1 say the not-medical statement appears in onboarding, the safety screen and the **about** screen. The app has no About screen. The gate check (`scripts/check_android_gates.py`) uses the Privacy Center as a stand-in.
 

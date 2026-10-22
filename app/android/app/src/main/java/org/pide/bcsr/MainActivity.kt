@@ -69,6 +69,7 @@ sealed interface Screen {
     data object Library : Screen
     data object Safety : Screen
     data object Privacy : Screen
+    data object About : Screen
 }
 
 class MainActivity : ComponentActivity() {
@@ -93,6 +94,7 @@ private fun BcsrUi(c: AppContainer) {
             Screen.Library -> Library(c, go)
             Screen.Safety -> SafetyScreen(c, go)
             Screen.Privacy -> Privacy(c, go)
+            Screen.About -> About(go)
         }
     }
 }
@@ -145,6 +147,7 @@ private fun Home(go: (Screen) -> Unit) {
     Button({ go(Screen.Safety) }, Modifier.fillMaxWidth()) { Text(stringResource(R.string.need_help)) } // one tap (UX-04)
     OutlinedButton({ go(Screen.Library) }, Modifier.fillMaxWidth()) { Text(stringResource(R.string.library)) }
     OutlinedButton({ go(Screen.Privacy) }, Modifier.fillMaxWidth()) { Text(stringResource(R.string.privacy)) }
+    OutlinedButton({ go(Screen.About) }, Modifier.fillMaxWidth()) { Text(stringResource(R.string.about)) }
     Text(stringResource(R.string.not_medical), style = MaterialTheme.typography.bodySmall)
 }
 
@@ -307,3 +310,33 @@ private fun Privacy(c: AppContainer, go: (Screen) -> Unit) {
         )
     }
 }
+
+// ---------- About and credits (AC-SR-02, AC-CR-07, NFR-09) ----------
+/** Open-source components shipped in the app and their licences (RES-03 §3.1). */
+private val LICENCES = listOf(
+    "SQLCipher for Android — BSD-3-Clause (Zetetic LLC)",
+    "Bouncy Castle — MIT",
+    "kotlinx.serialization — Apache-2.0 (JetBrains)",
+    "Adhan — MIT (Batoul Apps)",
+    "AndroidX, Jetpack Compose, WorkManager — Apache-2.0 (Google)",
+)
+
+@Composable
+private fun About(go: (Screen) -> Unit) {
+    val ctx = LocalContext.current
+    Title(stringResource(R.string.about))
+    Text(stringResource(R.string.about_version, BuildConfig.VERSION_NAME))
+    Text(stringResource(R.string.not_medical))
+    Title(stringResource(R.string.credits))
+    // CR-07 / RES-03 §3.2: the Tanzil Project must be named and linked. Opens the browser; the app itself has no network access.
+    Text(stringResource(R.string.credit_tanzil))
+    Text(stringResource(R.string.tanzil_notice), style = MaterialTheme.typography.bodySmall) // RES-03 §3.2 copyright notice
+    TextButton({
+        // No browser (work profile, kiosk): the address stays visible as the button text.
+        runCatching { ctx.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://tanzil.net"))) }
+    }) { Text("https://tanzil.net") }
+    Title(stringResource(R.string.licences))
+    LICENCES.forEach { Text(it, style = MaterialTheme.typography.bodySmall) }
+    TextButton({ go(Screen.Home) }) { Text(stringResource(R.string.back)) }
+}
+
