@@ -1,4 +1,4 @@
-"""T-M5-013: each static gate fails on a bad input and passes on the real app."""
+"""T-M5-013: each static gate fails on a bad input and passes on the real app (incl. AG-16 round-1 findings)."""
 import pathlib
 import sys
 import tempfile
@@ -10,54 +10,91 @@ import check_android_gates as g  # noqa: E402
 
 GOOD = """<manifest xmlns:android="http://schemas.android.com/apk/res/android">
   <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
-  <application android:allowBackup="false"/>
+  <application android:allowBackup="false" android:dataExtractionRules="@xml/data_extraction_rules"/>
 </manifest>"""
-
-
-def manifest(text):
-    f = tempfile.NamedTemporaryFile("w", suffix=".xml", delete=False, encoding="utf-8")
-    f.write(text)
-    f.close()
-    return f.name
+SAF = g.SAF01.read_text(encoding="utf-8")
+EN = g.strings(g.APP / "res/values/strings.xml")
+UR = g.strings(g.APP / "res/values-ur/strings.xml")
+SRC = (g.APP / "java/org/pide/bcsr/MainActivity.kt").read_text(encoding="utf-8")
+CHK = (g.APP / "java/org/pide/bcsr/CheckIns.kt").read_text(encoding="utf-8")
 
 
 class AndroidGatesTest(unittest.TestCase):
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+
+    def tearDown(self):
+        self.tmp.cleanup()
+
+    def xml(self, text):
+        p = pathlib.Path(self.tmp.name) / f"m{len(list(pathlib.Path(self.tmp.name).iterdir()))}.xml"
+        p.write_text(text, encoding="utf-8")
+        return p
+
     def test_real_app_passes(self):
         self.assertEqual(g.main([]), 0)
 
     def test_good_manifest_passes(self):
-        self.assertEqual(g.manifest_failures(manifest(GOOD)), [])
+        self.assertEqual(g.manifest_failures(self.xml(GOOD)), [])
 
     def test_forbidden_permissions_fail(self):
         for perm in ("android.permission.INTERNET", "android.permission.ACCESS_FINE_LOCATION", "android.permission.READ_SMS"):
-            bad = GOOD.replace("POST_NOTIFICATIONS", perm.split(".")[-1])
-            self.assertTrue(any(perm in f for f in g.manifest_failures(manifest(bad))), perm)
+            bad = GOOD.replace("android.permission.POST_NOTIFICATIONS", perm)
+            self.assertTrue(any(perm in f for f in g.manifest_failures(self.xml(bad))), perm)
 
-    def test_accessibility_service_fails(self):
-        bad = GOOD.replace('<application android:allowBackup="false"/>',
-                           '<application android:allowBackup="false"><service android:name=".Spy" '
-                           'android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"/></application>')
-        self.assertTrue(any("BIND_ACCESSIBILITY_SERVICE" in f for f in g.manifest_failures(manifest(bad))))
+    def test_sdk23_permission_tag_is_scanned(self):
+        # AG-16 major 3
+        bad = GOOD.replace("<uses-permission ", '<uses-permission-sdk-23 android:name="android.permission.INTERNET"/>\n  <uses-permission ')
+        self.assertTrue(any("uses-permission-sdk-23" in f for f in g.manifest_failures(self.xml(bad))))
 
-    def test_backup_must_be_off(self):
-        self.assertTrue(g.manifest_failures(manifest(GOOD.replace('"false"', '"true"'))))
+    def test_forbidden_bindings_fail(self):
+        for binding in ("BIND_ACCESSIBILITY_SERVICE", "BIND_NOTIFICATION_LISTENER_SERVICE"):
+            bad = GOOD.replace("/>\n</manifest>", f'><service android:name=".X" android:permission="android.permission.{binding}"/></application>\n</manifest>')
+            self.assertTrue(any(binding in f for f in g.manifest_failures(self.xml(bad))), binding)
 
-    def test_safety_copy_drift_fails(self):
-        saf = (ROOT / "docs/06-security-privacy-safety/safety/safety-pathway.md").read_text(encoding="utf-8")
-        en = g.strings(g.APP / "res/values/strings.xml")
-        ur = g.strings(g.APP / "res/values-ur/strings.xml")
-        self.assertEqual(g.copy_failures(saf, en, ur), [])
-        en2 = dict(en, safety_heading="Just pray more.")
-        fails = g.copy_failures(saf, en2, ur)
+    def test_backup_and_extraction_rules(self):
+        self.assertTrue(g.manifest_failures(self.xml(GOOD.replace('allowBackup="false"', 'allowBackup="true"'))))
+        self.assertTrue(g.manifest_failures(self.xml(GOOD.replace(' android:dataExtractionRules="@xml/data_extraction_rules"', ""))))
+        self.assertEqual(g.extraction_failures(g.APP / "res/xml/data_extraction_rules.xml"), [])
+        weak = self.xml("<data-extraction-rules><cloud-backup><exclude domain='root'/></cloud-backup></data-extraction-rules>")
+        self.assertEqual(len(g.extraction_failures(weak)), 2)
+
+    def test_safety_copy_matches_signed_version(self):
+        self.assertEqual(g.copy_failures(SAF, EN, UR), [])
+
+    def test_string_drift_and_forbidden_wording_fail(self):
+        fails = g.copy_failures(SAF, dict(EN, safety_heading="Just pray more."), UR)
         self.assertTrue(any("safety_heading" in f and "differs" in f for f in fails))
         self.assertTrue(any("forbids" in f for f in fails))
+        self.assertTrue(any("ur:" in f and "forbids" in f for f in g.copy_failures(SAF, EN, dict(UR, safety_body="کمزور ایمان"))))
 
-    def test_notification_naming_a_feeling_fails(self):
-        self.assertTrue(g.ui_failures({"notif_text": "Feeling stressed?"}, "R.string.not_medical" * 3))
-        self.assertEqual(g.ui_failures({"notif_text": "A moment for yourself? How are you?"}, "R.string.not_medical" * 3), [])
+    def test_editing_saf01_without_resigning_fails(self):
+        # AG-16 major 1: doc and strings changed together must still fail until re-signed
+        edited = SAF.replace("I'm safe for now", "I am fine")
+        fails = g.copy_failures(edited, dict(EN, safe_for_now="I am fine"), UR)
+        self.assertTrue(any("re-sign" in f for f in fails))
 
-    def test_not_medical_on_three_screens(self):
-        self.assertTrue(g.ui_failures({"notif_text": "ok"}, "R.string.not_medical"))
+    def test_table_shape_change_cannot_silently_pass(self):
+        # AG-16 major 1: a reshaped table must not yield zero comparisons
+        reshaped = SAF.replace("| Element | English | Urdu |", "| Element | English | Urdu | Note |")
+        reshaped = "\n".join(l + " x |" if l.startswith("| ") and "Element" not in l and "---" not in l and "## 4" in reshaped.split(l)[0][-2000:] + "## 4" else l for l in reshaped.splitlines())
+        fails = g.copy_failures(reshaped, EN, UR, signed_hash=g.copy_hash(reshaped))
+        self.assertTrue(any("missing elements" in f for f in fails))
+
+    def test_not_medical_checked_per_screen(self):
+        # AG-16 major 2: removing it from the safety screen alone must fail, even if it stays elsewhere
+        body = g.composable_body(SRC, "SafetyScreen")
+        stripped = SRC.replace(body, body.replace("R.string.not_medical", "R.string.app_name"))
+        fails = g.ui_failures(EN, UR, stripped, CHK)
+        self.assertEqual(fails, ["screen SafetyScreen does not show not_medical (AC-SR-02)"])
+        commented = SRC.replace(body, body.replace("Text(stringResource(R.string.not_medical)", "// Text(stringResource(R.string.not_medical)"))
+        self.assertTrue(g.ui_failures(EN, UR, commented, CHK))
+
+    def test_notification_rules(self):
+        self.assertEqual(g.ui_failures(EN, UR, SRC, CHK), [])
+        self.assertTrue(g.ui_failures(dict(EN, notif_text="Feeling stressed?"), UR, SRC, CHK))
+        self.assertTrue(g.ui_failures(EN, dict(UR, notif_text="کیا آپ پریشان ہیں؟"), SRC, CHK))
+        self.assertTrue(g.ui_failures(EN, UR, SRC, CHK.replace("VISIBILITY_PRIVATE", "VISIBILITY_PUBLIC")))
 
 
 if __name__ == "__main__":

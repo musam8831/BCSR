@@ -60,9 +60,12 @@ jobs:
         uses: gradle/actions/wrapper-validation@48b5f213c81028ace310571dc5ec0fbbca0b2947 # v4
       - name: Product build — all module tests, debug APK, SBOM (T-M5-015)
         working-directory: app/android
-        run: bash ./gradlew --no-daemon test :app:assembleDebug cyclonedxBom
+        run: bash ./gradlew --no-daemon test :app:assembleDebug :app:processReleaseMainManifest cyclonedxBom
       - name: Privacy and safety gates on the merged manifest (T-M5-013)
-        run: python3 scripts/check_android_gates.py --merged app/android/app/build/intermediates/merged_manifest/debug/processDebugMainManifest/AndroidManifest.xml
+        run: >-
+          python3 scripts/check_android_gates.py --merged
+          app/android/app/build/intermediates/merged_manifest/debug/processDebugMainManifest/AndroidManifest.xml
+          app/android/app/build/intermediates/merged_manifest/release/processReleaseMainManifest/AndroidManifest.xml
       - name: Keep the SBOM with the run
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
