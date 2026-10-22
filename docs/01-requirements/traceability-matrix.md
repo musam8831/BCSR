@@ -35,7 +35,7 @@ Coverage: 57 requirements, 46 Must, all with stories and Must ACs.
 | FR-27 | C | US-12 | — | SRS §3 MOD-RS | T-M2-009 | — (from M2, T-M2-012) | Baseline |
 | FR-28 | M | US-06 | AC-FR-28 | SRS §3 MOD-ST | T-M2-009 | — (from M2, T-M2-012) | Baseline |
 | FR-29 | M | US-07 | AC-FR-29 | SRS §3 MOD-RE | T-M2-009 | `RecommenderTest` | Baseline |
-| NFR-01 | M | US-19 | AC-NFR-01 | ADR-0003, RES-03 | T-M2-005, T-M2-012 | — (from M2, T-M2-012) | Baseline |
+| NFR-01 | M | US-19 | AC-NFR-01 | ADR-0003, RES-03 | T-M2-005, T-M2-012 | `scripts/check_android_gates.py` (CI, merged manifest) (no INTERNET permission) | Baseline |
 | NFR-02 | M | US-19 | AC-NFR-02 | ADR-0003, RES-03 | T-M2-005, T-M2-012 | — (from M2, T-M2-012) | Baseline |
 | NFR-03 | S | US-19 | — | ADR-0003, RES-03 | T-M2-005, T-M2-012 | — (from M2, T-M2-012) | Baseline |
 | NFR-04 | M | US-19 | AC-NFR-04 | ADR-0003, RES-03 | T-M2-005, T-M2-012 | — (from M2, T-M2-012) | Baseline |
@@ -44,17 +44,17 @@ Coverage: 57 requirements, 46 Must, all with stories and Must ACs.
 | NFR-07 | S | US-19 | — | ADR-0003, RES-03 | T-M2-005, T-M2-012 | — (from M2, T-M2-012) | Baseline |
 | NFR-08 | M | US-04, US-25 | AC-NFR-08 | ADR-0003, RES-03 | T-M2-005, T-M2-012 | `RecommenderTest` (why string) | Baseline |
 | NFR-09 | M | US-24 | AC-NFR-09 | ADR-0003, RES-03 | T-M2-005, T-M2-012 | — (from M2, T-M2-012) | Baseline |
-| PR-01 | M | US-13 | AC-PR-01 | ADR-0002 | T-M2-007 | — (from M2, T-M2-012) | Baseline |
+| PR-01 | M | US-13 | AC-PR-01 | ADR-0002 | T-M2-007 | `scripts/check_android_gates.py` (CI, merged manifest) + manual code review | Baseline |
 | PR-02 | M | US-21 | AC-PR-02 | ADR-0002, threat-model, data-dictionary | T-M2-007 | `EncryptionTest` (instrumented, needs a device) | Baseline |
 | PR-03 | M | US-12 | AC-PR-03 | ADR-0002, threat-model, data-dictionary | T-M2-007 | — (from M2, T-M2-012) | Baseline |
-| PR-04 | M | US-13 | AC-PR-04 | ADR-0002, threat-model, data-dictionary | T-M2-007 | — (from M2, T-M2-012) | Baseline |
+| PR-04 | M | US-13 | AC-PR-04 | ADR-0002, threat-model, data-dictionary | T-M2-007 | `scripts/check_android_gates.py` (CI, merged manifest) | Baseline |
 | PR-05 | M | US-01 | AC-PR-05 | ADR-0002, threat-model, data-dictionary | T-M2-007 | — (from M2, T-M2-012) | Baseline |
 | PR-06 | M | US-21 | AC-PR-06 | ADR-0002, threat-model, data-dictionary | T-M2-007 | `RetentionTest` | Baseline |
 | PR-07 | M | US-12 | AC-PR-07 | ADR-0002, threat-model, data-dictionary | T-M2-007 | — (from M2, T-M2-012) | Baseline |
 | SR-01 | M | US-09 | AC-SR-01 | threat-model §Safety | T-M1-011 | `HelplinesTest` (verified only in release) | Baseline |
-| SR-02 | M | US-22 | AC-SR-02 | safety-pathway (SAF-01) | T-M1-011 | — (from M2, T-M2-012) | Baseline |
+| SR-02 | M | US-22 | AC-SR-02 | safety-pathway (SAF-01) | T-M1-011 | `check_android_gates.py` (≥ 3 screens) | Baseline |
 | SR-03 | M | US-22 | AC-SR-03 | safety-pathway (SAF-01) | T-M1-011 | — (from M2, T-M2-012) | Baseline |
-| SR-04 | M | US-22 | AC-SR-04 | safety-pathway (SAF-01) | T-M1-011 | — (from M2, T-M2-012) | Baseline |
+| SR-04 | M | US-22 | AC-SR-04 | safety-pathway (SAF-01) | T-M1-011 | `check_android_gates.py` (strings = SAF-01 §4) | Baseline |
 | SR-05 | M | US-22 | AC-SR-05 | safety-pathway (SAF-01) | T-M1-011 | `HelplinesTest` (90-day expiry) | Baseline |
 | CR-01 | M | US-05 | AC-CR-01 | source-policy, verification-workflow, ADR-0004 | T-M1-010, T-M3-005 | — (from M2, T-M2-012) | Baseline |
 | CR-02 | M | US-23 | AC-CR-02 | source-policy, verification-workflow, ADR-0004 | T-M1-010, T-M3-005 | — (from M2, T-M2-012) | Baseline |
