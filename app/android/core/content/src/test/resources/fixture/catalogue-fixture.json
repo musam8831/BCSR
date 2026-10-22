@@ -1,0 +1,36 @@
+{
+ "manifest": {
+  "version": "fixture",
+  "created": "2026-10-21T00:00:00Z",
+  "item_count": 2,
+  "items_sha256": "d82a579085ebe559b9823fb8b54a1f49f8d5d9a5c5d1e642ce1191ab411304a0",
+  "key_id": "test-fixture-key"
+ },
+ "items": [
+  {
+   "id": "DUA-9001",
+   "states": [
+    "CS-02"
+   ],
+   "title": {
+    "en": "Fixture A",
+    "ur": "آزمائش"
+   },
+   "verification": {
+    "status": "approved",
+    "record_id": "RR-9001"
+   }
+  },
+  {
+   "id": "DUA-9002",
+   "states": [
+    "CS-06"
+   ],
+   "note": "line\nbreak \"q\"  ",
+   "verification": {
+    "status": "approved",
+    "record_id": "RR-9002"
+   }
+  }
+ ]
+}

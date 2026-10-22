@@ -80,3 +80,14 @@ Every SRS module has an owning Gradle module; one owner per path (AGS-04).
 | ADR-0003 On-device open-source ML | Accepted | — (runtime choice LiteRT vs ONNX after SPK-05) |
 | ADR-0004 Curated verified content | Accepted | — |
 | ADR-0005 Signed approved-only catalogue | Proposed | AG-09 review of key handling |
+
+## 7. As built in M5 (T-M5-001, 2026-10-21) — deviations from §1–§2
+| Planned | Built | Why |
+|---|---|---|
+| Hilt for DI | Manual wiring (`AppContainer`) | Seven modules; a DI framework adds an annotation processor for no current benefit. Revisit when screens get ViewModels with scoped dependencies |
+| Room + SQLCipher | SQLCipher directly (`:core:data`, `BcsrStore`) | Ten simple tables; avoids a KSP/Room toolchain tied to the Kotlin version |
+| `:feature:*` modules | Feature packages inside `:app` (`MainActivity.kt` screens) | Six screens share little; split when a feature grows or gets its own owner |
+| `:core:policy` with a prayer-time library | `:core:policy` uses the Java edition of Adhan (`com.batoulapps.adhan:adhan:1.2.1`) | `adhan2` 0.0.7 needs Kotlin 2.4 and 0.0.6 needs Java 21 bytecode; the build is Kotlin 2.2 / JDK 17 |
+| Ed25519 via the platform | BouncyCastle `bcprov-jdk18on` | Android's Ed25519 needs API 33; min SDK is 28 |
+
+Modules: `:app`, `:core:data` (Android), and pure-Kotlin `:core:policy`, `:core:features`, `:core:inference`, `:core:recommender`, `:core:content`, `:core:safety` (JVM unit tests run in CI). `:core:sensing` follows G2 (T-M5-003).

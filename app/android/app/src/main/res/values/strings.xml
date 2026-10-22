@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- English UI copy from UX-01..UX-05 and SAF-01 §4. Final en/ur/ar microcopy comes from T-M5-020 (after interviews). -->
+<resources>
+    <string name="app_name">BCSR</string>
+    <string name="not_medical">BCSR is not a medical or counselling service.</string>
+
+    <!-- UX-01 onboarding -->
+    <string name="welcome_title">A moment of remembrance</string>
+    <string name="welcome_body">BCSR gently checks in with you and suggests verified du\'a and adhkar from the Qur\'an and Sahih Hadith.</string>
+    <string name="how_title">How it works</string>
+    <string name="how_body">BCSR asks how you are, never tells you how you feel. It never reads messages, what you type, or what is on your screen. Everything stays on your phone.</string>
+    <string name="notif_title">Gentle reminders</string>
+    <string name="notif_body">BCSR can send a short check-in now and then. It never sends one during quiet hours or around Salah times, and never names a feeling on the lock screen.</string>
+    <string name="allow">Allow</string>
+    <string name="not_now">Not now</string>
+    <string name="next">Next</string>
+    <string name="city_title">Your city (for Salah times)</string>
+    <string name="city_body">BCSR does not use your location. Pick the nearest city.</string>
+    <string name="asr_title">Asr time</string>
+    <string name="asr_standard">Standard</string>
+    <string name="asr_hanafi">Hanafi</string>
+    <string name="quiet_title">Quiet hours</string>
+    <string name="research_title">Research sharing</string>
+    <string name="research_body">Research sharing is not available in this version. Nothing leaves your phone.</string>
+    <string name="start">Start</string>
+
+    <!-- Home -->
+    <string name="how_am_i">How am I?</string>
+    <string name="need_help">I need help now</string>
+    <string name="library">Du\'a library</string>
+    <string name="privacy">Privacy</string>
+
+    <!-- UX-02 check-in -->
+    <string name="checkin_title">How are you?</string>
+    <string name="mood">Mood</string>
+    <string name="energy">Energy</string>
+    <string name="what_fits">What fits best? (optional)</string>
+    <string name="state_worry">Worried</string>
+    <string name="state_restless">Restless</string>
+    <string name="state_low">Low</string>
+    <string name="state_angry">Angry</string>
+    <string name="state_sleepless">Can\'t sleep</string>
+    <string name="state_lonely">Lonely</string>
+    <string name="state_tired">Tired</string>
+    <string name="state_grateful">Grateful</string>
+    <string name="state_not_safe">I\'m not safe</string>
+    <string name="save">Save</string>
+
+    <!-- UX-03 recommendation -->
+    <string name="no_item">No verified du\'a is available for this yet. The catalogue grows as each item is checked by a scholar.</string>
+    <string name="helpful">Helpful</string>
+    <string name="not_relevant">Not relevant</string>
+    <string name="why">Why am I seeing this?</string>
+    <string name="save_favourite">Save</string>
+    <string name="saved">Saved</string>
+    <string name="search">Search</string>
+    <string name="library_empty">No verified items yet.</string>
+    <string name="back">Back</string>
+
+    <!-- UX-04 / SAF-01 safety -->
+    <string name="safety_heading">You don\'t have to go through this alone.</string>
+    <string name="safety_body">If you might be in danger, please call for help now.</string>
+    <string name="call_emergency">Call emergency (%1$s)</string>
+    <string name="talk_to">Talk to someone: %1$s</string>
+    <string name="safe_for_now">I\'m safe for now</string>
+    <string name="offer_dua">Would you like a du\'a for distress?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+
+    <!-- UX-05 privacy -->
+    <string name="what_we_store">What we store</string>
+    <string name="kept_raw">kept 30 days</string>
+    <string name="kept_derived">kept 90 days</string>
+    <string name="kept_until">kept until you delete it</string>
+    <string name="pause">Pause sensing</string>
+    <string name="export">Export my data</string>
+    <string name="delete_all">Delete everything</string>
+    <string name="delete_confirm1">This deletes every record, setting and saved item on this phone. It cannot be undone.</string>
+    <string name="delete_confirm2">Type DELETE to confirm</string>
+    <string name="cancel">Cancel</string>
+    <string name="continue_">Continue</string>
+
+    <!-- Check-in notification (TH-06: neutral, no feeling named) -->
+    <string name="notif_channel">Check-ins</string>
+    <string name="notif_text">A moment for yourself? How are you?</string>
+</resources>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Urdu safety copy from SAF-01 §4 (signed by the Project Lead). Check with a native speaker before release.
+     Other strings fall back to English until T-M5-020 delivers reviewed Urdu copy. -->
+<resources>
+    <string name="not_medical">BCSR کوئی طبی یا کاؤنسلنگ سروس نہیں ہے۔</string>
+    <string name="safety_heading">آپ کو یہ اکیلے برداشت نہیں کرنا۔</string>
+    <string name="safety_body">اگر آپ کو خطرہ ہو سکتا ہے تو ابھی مدد کے لیے کال کریں۔</string>
+    <string name="call_emergency">ایمرجنسی کال کریں (%1$s)</string>
+    <string name="talk_to">کسی سے بات کریں: %1$s</string>
+    <string name="safe_for_now">میں ابھی محفوظ ہوں</string>
+    <string name="offer_dua">کیا آپ پریشانی کے لیے ایک دعا دیکھنا چاہیں گے؟</string>
+</resources>
