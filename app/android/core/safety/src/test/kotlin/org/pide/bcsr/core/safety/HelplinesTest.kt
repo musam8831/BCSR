@@ -25,8 +25,19 @@ class HelplinesTest {
     /** AC-SR-05: entries older than 90 days stop showing and block release. */
     @Test fun staleEntriesExpire() {
         val later = LocalDate.of(2027, 2, 1)
-        assertTrue(shownHelplines(later, devBuild = true).isEmpty())
+        // mental-health lines drop out; the emergency number stays as the floor (SAF-01 §3, HC-06 F-1)
+        assertEquals(listOf("1122"), shownHelplines(later, devBuild = true).map { it.number })
         assertTrue(releaseBlockers(later).contains("Rescue 1122 not reviewed in 90 days"))
+    }
+
+    /** HC-06 F-1: the emergency action is shown on every date, in every build. */
+    @Test fun emergencyIsNeverMissing() {
+        generateSequence(LocalDate.of(2026, 1, 1)) { it.plusDays(17) }.takeWhile { it.year < 2031 }.forEach { d ->
+            listOf(true, false).forEach { dev -> assertTrue("$d $dev", shownHelplines(d, dev).any { it.purpose == Purpose.EMERGENCY }) }
+        }
+        // a never-verified emergency entry is still never shown
+        val unverified = listOf(Helpline("X", "999", Purpose.EMERGENCY, Verification.NOT_VERIFIED, today))
+        assertTrue(shownHelplines(today, devBuild = true, directory = unverified).isEmpty())
     }
 
     @Test fun fullyVerifiedDirectoryUnblocks() {

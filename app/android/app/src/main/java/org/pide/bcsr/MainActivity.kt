@@ -281,7 +281,12 @@ private fun Locked(permanent: Boolean, startFresh: () -> Unit, tryAgain: () -> U
 private fun HelplineButtons() {
     val ctx = LocalContext.current
     val lines = shownHelplines(LocalDate.now(), devBuild = BuildConfig.DEBUG)
-    fun dial(number: String) = ctx.startActivity(Intent(Intent.ACTION_DIAL, Uri.parse("tel:$number")))
+    // no dialer (e.g. a Wi-Fi tablet) must not crash the crisis path; the number stays readable on the button (HC-06 F-2)
+    fun dial(number: String) = try {
+        ctx.startActivity(Intent(Intent.ACTION_DIAL, Uri.parse("tel:$number")))
+    } catch (e: android.content.ActivityNotFoundException) {
+        Unit
+    }
     lines.filter { it.purpose == Purpose.EMERGENCY }.forEach { h ->
         Button({ dial(h.number) }, Modifier.fillMaxWidth()) { Text(stringResource(R.string.call_emergency, h.number)) }
     }
