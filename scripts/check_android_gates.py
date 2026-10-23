@@ -52,7 +52,9 @@ NOT_MEDICAL_SCREENS = ("Onboarding", "SafetyScreen", "About")
 SAFETY_ENTRY = re.compile(r"^\s*(?:Outlined)?Button\(\{ go\(Screen\.Safety\) \}, Modifier\.fillMaxWidth\(\)\) "
                           r"\{ Text\(stringResource\(R\.string\.(need_help|state_not_safe)\)\) \}\s*$")
 SAFETY_DISPATCH = re.compile(r"^\s*Screen\.Safety -> SafetyScreen\(c, go\)\s*$")
-SAFETY_INTENT = re.compile(r'putExtra\(\s*"[^"]*safety|EXTRA_\w*SAFETY', re.I)
+SAFETY_DEF = re.compile(r"^private fun SafetyScreen\(")
+MAIN_ACTIVITY = "main/java/org/pide/bcsr/MainActivity.kt"  # the only file allowed to hold the dispatch
+SAFETY_INTENT =re.compile(r'putExtra\(\s*"[^"]*safety|EXTRA_\w*SAFETY', re.I)
 SCREEN_CAPTURE = re.compile(r"MediaProjection|createScreenCaptureIntent")
 TANZIL_NOTICE = ("Tanzil Quran Text", "Copyright (C) 2007-2021 Tanzil Project", "License: Creative Commons Attribution 3.0")
 
@@ -156,7 +158,7 @@ def without_comments(src):
 
 
 def source_failures(sources):
-    """AC-SR-03 and AC-PR-01 over every app source file: name → text."""
+    """AC-SR-03 and AC-PR-01 over every app source file: path relative to app/src → text."""
     fails, entries, dispatch = [], [], 0
     for name, src in sources.items():
         for line in without_comments(src).splitlines():
@@ -164,9 +166,11 @@ def source_failures(sources):
                 fails.append(f"{name}: screen-capture API (AC-PR-01): {line.strip()}")
             if SAFETY_INTENT.search(line):
                 fails.append(f"{name}: intent extra opens the safety pathway (AC-SR-03): {line.strip()}")
+            if "SafetyScreen(" in line and not SAFETY_DEF.match(line) and not SAFETY_DISPATCH.match(line):
+                fails.append(f"{name}: SafetyScreen called outside the dispatch (AC-SR-03): {line.strip()}")
             if "Screen.Safety" not in line:
                 continue
-            if name == "MainActivity.kt" and SAFETY_DISPATCH.match(line):
+            if name == MAIN_ACTIVITY and SAFETY_DISPATCH.match(line):
                 dispatch += 1
             elif m := SAFETY_ENTRY.match(line):
                 entries.append(m.group(1))
@@ -216,7 +220,9 @@ def main(argv=None):
     src = (APP / "java/org/pide/bcsr/MainActivity.kt").read_text(encoding="utf-8")
     chk = (APP / "java/org/pide/bcsr/CheckIns.kt").read_text(encoding="utf-8")
     fails = [f"{m.name}: {f}" for m in manifests for f in manifest_failures(m)]
-    kt = {f.name: f.read_text(encoding="utf-8") for f in sorted((APP / "java").rglob("*.kt"))}
+    # every source set (main, debug, release; java/ and kotlin/), keyed by path so same-named files both count
+    kt = {f.relative_to(APP.parent).as_posix(): f.read_text(encoding="utf-8") for f in sorted(APP.parent.rglob("*.kt"))
+          if f.relative_to(APP.parent).parts[0] not in ("test", "androidTest")}
     fails += extraction_failures(rules) + copy_failures(saf, en, ur) + ui_failures(en, ur, src, chk) + source_failures(kt)
     if fails:
         print("Android gate checks FAILED:\n" + "\n".join(fails))

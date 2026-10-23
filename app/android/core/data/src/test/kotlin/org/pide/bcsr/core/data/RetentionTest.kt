@@ -29,15 +29,18 @@ class RetentionTest {
     /** AC-PR-01 / AC-PR-04: no column named for message text or location. Opaque json/value columns need inspection (TC-PR-04b). */
     @Test fun noContentOrLocationColumns() {
         assertEquals(emptyList<String>(), SCHEMA.flatMap(::columns).filter(::forbidden))
-        assertTrue(listOf("home_lat", "Latitude", "gps", "notif_text", "msg_body", "coord_x").all(::forbidden))
+        assertTrue(listOf("home_lat", "Latitude", "gps", "notif_text", "msg_body", "coord_x", "homeLat", "notifText").all(::forbidden))
+        assertEquals(listOf("lat"), columns("CREATE TABLE t (\"lat\" REAL)"))
         assertTrue(listOf("ts", "ts_end", "package_hash", "category", "state_id", "json", "gap_flag", "valence").none(::forbidden))
         assertEquals(listOf("ts", "category", "count"), columns("CREATE TABLE IF NOT EXISTS notif_count (ts INTEGER NOT NULL, category TEXT, count INTEGER)"))
     }
 
-    private fun columns(ddl: String) = ddl.substringAfter("(").substringBeforeLast(")").split(",").map { it.trim().substringBefore(" ") }
+    // shortcut: covers SCHEMA only; when a migration adds ALTER TABLE columns, run them through this check too
+    private fun columns(ddl: String) =
+        ddl.substringAfter("(").substringBeforeLast(")").split(",").map { it.trim().substringBefore(" ").trim('"', '`', '[', ']') }
 
-    // whole snake_case parts only: catches home_lat, not "category"
-    private fun forbidden(column: String) = column.lowercase().split("_").any {
+    // whole snake_case / camelCase parts only: catches home_lat and homeLat, not "category"
+    private fun forbidden(column: String) = column.replace(Regex("([a-z0-9])([A-Z])"), "$1_$2").lowercase().split("_").any {
         it in setOf("lat", "lng", "lon", "latitude", "longitude", "location", "gps", "title", "text", "body", "content", "message", "msg") ||
             it.startsWith("coord")
     }

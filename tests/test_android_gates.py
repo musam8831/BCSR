@@ -110,8 +110,8 @@ class AndroidGatesTest(unittest.TestCase):
     def test_safety_opens_only_from_explicit_controls(self):
         # AC-SR-03 (AG-16 on PR #29: indirect refs, other files, intents, missing entries, label elsewhere)
         def fails(main=SRC, chk=CHK, **extra):
-            return [f for f in g.source_failures({"MainActivity.kt": main, "CheckIns.kt": chk, **extra}) if "AC-SR-03" in f]
-        self.assertEqual(g.source_failures({"MainActivity.kt": SRC, "CheckIns.kt": CHK}), [])
+            return [f for f in g.source_failures({g.MAIN_ACTIVITY: main, "main/java/org/pide/bcsr/CheckIns.kt": chk, **extra}) if "AC-SR-03" in f]
+        self.assertEqual(g.source_failures({g.MAIN_ACTIVITY: SRC, "main/java/org/pide/bcsr/CheckIns.kt": CHK}), [])
         disp = "Screen.Safety -> SafetyScreen(c, go)"
         need = "Button({ go(Screen.Safety) }, Modifier.fillMaxWidth()) { Text(stringResource(R.string.need_help)) }"
         self.assertTrue(fails(SRC.replace(disp, disp + "\n            else -> go(if (x) Screen.Safety else Screen.Home)")))
@@ -122,6 +122,9 @@ class AndroidGatesTest(unittest.TestCase):
         self.assertTrue(fails(SRC.replace(need, need.replace("need_help", "app_name"))))
         self.assertTrue(fails(SRC.replace(need, need.replace("R.string.need_help))", "R.string.app_name)); Text(stringResource(R.string.need_help))"))))
         self.assertTrue(fails(SRC.replace("Screen.Safety", "Screen.Help")))  # renamed: no entries found
+        # AG-16 round 2: a direct call to the composable, and the dispatch in a second MainActivity.kt
+        self.assertTrue(fails(SRC.replace(need, need + "\n    if (autoCrisis) SafetyScreen(c, go)")))
+        self.assertTrue(fails(**{"debug/java/x/MainActivity.kt": "            Screen.Safety -> SafetyScreen(c, go)"}))
         self.assertTrue(any("AC-PR-01" in f for f in g.source_failures({"X.kt": "val m = getSystemService(MediaProjectionManager::class.java)"})))
 
     def test_notification_rules(self):
