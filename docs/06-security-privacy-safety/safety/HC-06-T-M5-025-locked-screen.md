@@ -269,3 +269,16 @@ Options: **Approve / Approve with changes / Reject**. AG-10 has left every decis
 Project Lead (safety reviewer, D-011): Muhammad Usman, Project Lead (D-011), in chat: "approve all as recommended; SAF-01 v1.1; accept CR-REQ-0004"  Date: 2026-10-23
 
 Decision recorded in PR: #34 (T-M5-025-hc06-signed)
+
+## Appendix: the recommendation table the Project Lead answered
+
+The Project Lead's reply "approve all as recommended; SAF-01 v1.1; accept CR-REQ-0004" (chat, 2026-10-23) answered this table, given in chat by the coordinator. It is reproduced here so that "as recommended" can be audited.
+
+| Decision | Recommended |
+|---|---|
+| D-1 to D-10: Locked screen copy, layout, start fresh only when the data is truly unreadable | Approve; check the layout on a phone |
+| D-11: always show 1122, plus the AC-SR-01 exception (CR-REQ-0004) | Approve and accept |
+| D-12: the no-dialer fix (a tap does nothing; the number stays visible) | Approve |
+| D-13: how the signature is recorded | Amend SAF-01 to v1.1 so CI checks the new wording |
+| D-14: Urdu wording | Approve as a draft; name who does the native-speaker check before release |
+| Security review findings S-07, S-09, S-12 | Accept |

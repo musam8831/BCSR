@@ -40,7 +40,7 @@ flowchart TD
 - **After "I'm safe for now":** offer one approved du'a for distress (content from T-M1-010, scholar-approved). Never auto-play, never show before the helplines.
 - **No recommendation or notification** is sent for 24 h after the pathway opens, except the follow-up the user allowed.
 
-## 4. Copy (draft; Urdu must be checked by a native speaker before release)
+## 4. Copy (signed v1.1; Urdu native-speaker check open, required before release)
 | Element | English | Urdu |
 |---|---|---|
 | Heading | You don't have to go through this alone. | آپ کو یہ اکیلے برداشت نہیں کرنا۔ |
