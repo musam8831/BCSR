@@ -2,6 +2,7 @@ package org.pide.bcsr
 
 import android.app.Application
 import android.content.Context
+import android.util.Log
 import org.pide.bcsr.core.content.BundleVerifier
 import org.pide.bcsr.core.content.CatalogueRepository
 import org.pide.bcsr.core.data.BcsrStore
@@ -30,9 +31,11 @@ class BcsrApp : Application() {
         container = try {
             AppContainer(this)
         } catch (e: StoreUnavailable) {
+            Log.w("BcsrApp", "store unavailable, permanent=${e.permanent}", e) // logcat only; tells a bug from a Keystore failure
             lockedPermanently = e.permanent
             null
         } catch (e: Exception) {
+            Log.w("BcsrApp", "container failed", e)
             lockedPermanently = false // any other start-up failure: never crash past the helplines, never offer deletion
             null
         }

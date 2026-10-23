@@ -114,8 +114,8 @@ class BcsrStore private constructor(private val context: Context, private val db
             val f = context.getDatabasePath(DB_NAME)
             listOf(f, File(f.path + "-wal"), File(f.path + "-shm"), File(f.path + "-journal"), File(context.filesDir, WRAPPED_FILE))
                 .forEach { it.delete() }
+            context.cacheDir.listFiles()?.forEach { it.deleteRecursively() } // before the Keystore step, which can throw
             KeyStore.getInstance("AndroidKeyStore").apply { load(null) }.deleteEntry(KEY_ALIAS)
-            context.cacheDir.listFiles()?.forEach { it.deleteRecursively() }
         }
 
         private fun passphrase(context: Context): ByteArray {
