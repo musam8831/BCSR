@@ -166,8 +166,9 @@ def source_failures(sources):
                 fails.append(f"{name}: screen-capture API (AC-PR-01): {line.strip()}")
             if SAFETY_INTENT.search(line):
                 fails.append(f"{name}: intent extra opens the safety pathway (AC-SR-03): {line.strip()}")
-            if "SafetyScreen(" in line and not SAFETY_DEF.match(line) and not SAFETY_DISPATCH.match(line):
-                fails.append(f"{name}: SafetyScreen called outside the dispatch (AC-SR-03): {line.strip()}")
+            # any mention (call, spaced call, ::reference) other than its definition and the dispatch
+            if re.search(r"\bSafetyScreen\b", line) and not SAFETY_DEF.match(line) and not SAFETY_DISPATCH.match(line):
+                fails.append(f"{name}: SafetyScreen used outside the dispatch (AC-SR-03): {line.strip()}")
             if "Screen.Safety" not in line:
                 continue
             if name == MAIN_ACTIVITY and SAFETY_DISPATCH.match(line):

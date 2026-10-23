@@ -124,6 +124,8 @@ class AndroidGatesTest(unittest.TestCase):
         self.assertTrue(fails(SRC.replace("Screen.Safety", "Screen.Help")))  # renamed: no entries found
         # AG-16 round 2: a direct call to the composable, and the dispatch in a second MainActivity.kt
         self.assertTrue(fails(SRC.replace(need, need + "\n    if (autoCrisis) SafetyScreen(c, go)")))
+        self.assertTrue(fails(SRC.replace(need, need + "\n    if (autoCrisis) SafetyScreen (c, go)")))  # AG-16 round 3
+        self.assertTrue(fails(SRC.replace(need, need + "\n    val f = ::SafetyScreen")))
         self.assertTrue(fails(**{"debug/java/x/MainActivity.kt": "            Screen.Safety -> SafetyScreen(c, go)"}))
         self.assertTrue(any("AC-PR-01" in f for f in g.source_failures({"X.kt": "val m = getSystemService(MediaProjectionManager::class.java)"})))
 
