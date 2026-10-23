@@ -199,6 +199,9 @@ def ui_failures(en, ur, main_activity_src, checkins_src):
     for screen in ("SafetyScreen", "Locked"):
         if "HelplineButtons()" not in without_comments(composable_body(main_activity_src, screen) or ""):
             fails.append(f"screen {screen} must show HelplineButtons() (AC-SR-01)")
+    buttons = without_comments(composable_body(main_activity_src, "HelplineButtons") or "")
+    if not all(x in buttons for x in ("shownHelplines(", "Intent.ACTION_DIAL", "R.string.call_emergency", "R.string.talk_to")):
+        fails.append("HelplineButtons must dial the emergency and helpline numbers from shownHelplines (AC-SR-01)")
     # AC-CR-07: the About screen names and links the Tanzil Project (RES-03 §3.2).
     about = composable_body(main_activity_src, "About")
     code = without_comments(about or "")

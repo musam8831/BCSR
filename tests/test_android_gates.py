@@ -135,6 +135,10 @@ class AndroidGatesTest(unittest.TestCase):
             body = g.composable_body(SRC, screen)
             gone = SRC.replace(body, body.replace("HelplineButtons()", "Spacer(Modifier)"))
             self.assertIn(f"screen {screen} must show HelplineButtons() (AC-SR-01)", g.ui_failures(EN, UR, gone, CHK))
+        body = g.composable_body(SRC, "HelplineButtons")  # AG-16 on PR #31: an emptied helper must fail too
+        for part in ("R.string.call_emergency", "R.string.talk_to", "Intent.ACTION_DIAL"):
+            emptied = SRC.replace(body, body.replace(part, "R.string.app_name"))
+            self.assertTrue(any("HelplineButtons must dial" in f for f in g.ui_failures(EN, UR, emptied, CHK)), part)
 
     def test_notification_rules(self):
         self.assertEqual(g.ui_failures(EN, UR, SRC, CHK), [])

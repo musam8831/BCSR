@@ -95,20 +95,20 @@ class BcsrStore private constructor(private val context: Context, private val db
             val db = try {
                 SQLiteDatabase.openOrCreateDatabase(file, passphrase(context), null, null).also { d -> SCHEMA.forEach(d::execSQL) }
             } catch (e: Exception) {
-                throw StoreUnavailable(e) // lost or corrupt key, or a database the key cannot open (T-M5-025)
+                throw StoreUnavailable(e, permanent = isPermanentKeyFailure(e)) // T-M5-025
             }
             return BcsrStore(context, db)
         }
 
-        /**
-         * Delete-all (ARC-04 §3, AC-FR-25): close, delete the database and its journal files, the wrapped passphrase
-         * and the Keystore key. Callers also clear their own caches and return to onboarding.
-         */
         /** TH-10 (S-03): delete exports older than [maxAgeMs]; a fresh one may still be read by the app it was shared with. */
         fun purgeExports(dir: File, nowMs: Long, maxAgeMs: Long = 3_600_000L) =
             // a future time means the clock moved back: purge that too
             dir.listFiles()?.filter { nowMs - it.lastModified() > maxAgeMs || it.lastModified() > nowMs }?.forEach { it.delete() }
 
+        /**
+         * Delete-all (ARC-04 §3, AC-FR-25): close, delete the database and its journal files, the wrapped passphrase
+         * and the Keystore key. Callers also clear their own caches and return to onboarding.
+         */
         fun deleteEverything(context: Context, store: BcsrStore?) {
             store?.close()
             val f = context.getDatabasePath(DB_NAME)
@@ -123,6 +123,7 @@ class BcsrStore private constructor(private val context: Context, private val db
             val key = keystoreKey()
             if (wrapped.exists()) {
                 val bytes = wrapped.readBytes()
+                if (bytes.size < 12 + 16) throw javax.crypto.AEADBadTagException("key file too short") // IV + GCM tag
                 val cipher = Cipher.getInstance("AES/GCM/NoPadding")
                 cipher.init(Cipher.DECRYPT_MODE, key, GCMParameterSpec(128, bytes.copyOfRange(0, 12)))
                 return cipher.doFinal(bytes.copyOfRange(12, bytes.size))
@@ -152,8 +153,19 @@ class BcsrStore private constructor(private val context: Context, private val db
     }
 }
 
-/** The store exists but cannot be decrypted; the app offers "start fresh" instead of crashing (T-M5-019 S-06). */
-class StoreUnavailable(cause: Throwable) : Exception(cause)
+/**
+ * The store cannot be opened (T-M5-019 S-06). [permanent]: the key is gone or does not fit, so the data can never be read
+ * and "start fresh" is offered; otherwise (disk full, busy, a passing Keystore error) the app only offers "try again".
+ */
+class StoreUnavailable(cause: Throwable, val permanent: Boolean) : Exception(cause)
+
+private val PERMANENT_KEY_ERRORS = setOf("AEADBadTagException", "KeyPermanentlyInvalidatedException", "UnrecoverableKeyException")
+
+/** Lost or invalid key, a short key file, or SQLCipher's "file is not a database" (wrong key): anywhere in the cause chain. */
+internal fun isPermanentKeyFailure(e: Throwable): Boolean =
+    generateSequence(e) { it.cause }.take(10).any {
+        it.javaClass.simpleName in PERMANENT_KEY_ERRORS || it.message?.contains("file is not a database", ignoreCase = true) == true
+    }
 
 /** RFC 4180 field: quoted when it holds a comma, quote or line break, so free text cannot shift columns in the export. */
 internal fun csv(v: String?): String = when {

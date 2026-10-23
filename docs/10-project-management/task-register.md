@@ -90,7 +90,7 @@ Owner: AG-00. Status values: Backlog · Ready · In Progress · In Review · Don
 | T-M5-022 | Internal dogfooding D1: team members, consented, 2 weeks; data-quality report | AG-07 | SK-07 | P1 | 10 | T-M5-013;T-M5-011;T-M5-018 | docs/04-ai-ml/D1-report.md | Consent recorded; gap rate, EMA burden and battery reported | Project Lead | Backlog |
 | T-M5-023 | Pilot study D2: ≥ 30 participants, 4 weeks (RES-04) | AG-07 | SK-07 | P1 | 20 | T-M5-022;T-M1-012 | docs/04-ai-ml/D2-report.md | IRB approval before start; EP-001 data collected | Project Lead | Backlog |
 | T-M5-024 | About and credits screen: version, not-medical line, Tanzil attribution and link, licences | AG-11 | SK-11;SK-12 | P2 | 1 | T-M5-001 | app/android/app (About screen) | AC-SR-02 (about screen), AC-CR-07; gate check passes | AG-16 | Done |
-| T-M5-025 | Recover from an unreadable store: no crash at start, safety screen and helplines work without the store, offer start fresh | AG-11 | SK-11;SK-12 | P1 | 2 | T-M5-002 | app/android/app; app/android/core/data | S-06 closed; safety screen reachable with a corrupt key file; AC-SR-01 | AG-16 | In Review |
+| T-M5-025 | Recover from an unreadable store: no crash at start, safety screen and helplines work without the store, offer start fresh | AG-11 | SK-11;SK-12 | P1 | 2 | T-M5-002 | app/android/app; app/android/core/data | S-06 closed; no crash at start; helplines reachable on the Locked screen with a corrupt key file; AC-SR-01 | AG-16 | In Review |
 
 ## Effort summary (agent+human days, before parallelism)
 

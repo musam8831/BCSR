@@ -5,6 +5,7 @@ import androidx.test.platform.app.InstrumentationRegistry
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertThrows
+import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -26,7 +27,7 @@ class EncryptionTest {
     @Test fun corruptKeyIsUnavailableThenStartFreshWorks() {
         BcsrStore.open(ctx).close()
         java.io.File(ctx.filesDir, "bcsr-db.key").writeBytes(ByteArray(5))
-        assertThrows(StoreUnavailable::class.java) { BcsrStore.open(ctx) }
+        assertTrue(assertThrows(StoreUnavailable::class.java) { BcsrStore.open(ctx) }.permanent) // short key file: offer start fresh
         BcsrStore.deleteEverything(ctx, null)
         val fresh = BcsrStore.open(ctx)
         assertEquals(0L, fresh.counts().values.sum())

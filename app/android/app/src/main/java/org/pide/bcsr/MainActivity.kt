@@ -30,6 +30,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -78,13 +79,18 @@ class MainActivity : ComponentActivity() {
         val app = application as BcsrApp
         setContent {
             var c by remember { mutableStateOf(app.container) }
-            MaterialTheme { c?.let { BcsrUi(it) } ?: Locked { app.startFresh(); c = app.container } }
+            // delete-all builds a new container (store and recommender, AC-FR-25); key() resets screen state to onboarding
+            val fresh = { app.startFresh(); c = app.container }
+            MaterialTheme {
+                c?.let { key(it) { BcsrUi(it, fresh) } }
+                    ?: Locked(app.lockedPermanently, startFresh = fresh, tryAgain = { app.openContainer(); c = app.container })
+            }
         }
     }
 }
 
 @Composable
-private fun BcsrUi(c: AppContainer) {
+private fun BcsrUi(c: AppContainer, deleteAll: () -> Unit) {
     var screen by remember { mutableStateOf(if (c.settings().onboarded) Screen.Home else Screen.Onboarding) }
     val go: (Screen) -> Unit = { screen = it }
     BackHandler(enabled = screen != Screen.Home && screen != Screen.Onboarding) { screen = Screen.Home }
@@ -96,7 +102,7 @@ private fun BcsrUi(c: AppContainer) {
             is Screen.Recommend -> RecommendationScreen(c, s, go)
             Screen.Library -> Library(c, go)
             Screen.Safety -> SafetyScreen(c, go)
-            Screen.Privacy -> Privacy(c, go)
+            Screen.Privacy -> Privacy(c, go, deleteAll)
             Screen.About -> About(go)
         }
     }
@@ -249,15 +255,17 @@ private fun Library(c: AppContainer, go: (Screen) -> Unit) {
 
 // ---------- store cannot be decrypted (T-M5-025, T-M5-019 S-06) ----------
 @Composable
-private fun Locked(startFresh: () -> Unit) {
+private fun Locked(permanent: Boolean, startFresh: () -> Unit, tryAgain: () -> Unit) {
     Column(Modifier.fillMaxSize().padding(16.dp).verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(12.dp)) {
         var confirm by remember { mutableStateOf(false) }
         Title(stringResource(R.string.locked_title))
-        Text(stringResource(R.string.locked_body))
+        Text(stringResource(if (permanent) R.string.locked_body else R.string.locked_retry_body))
         // help stays one screen away even with no store (AC-SR-01)
         Text(stringResource(R.string.safety_body))
         HelplineButtons()
-        OutlinedButton({ confirm = true }, Modifier.fillMaxWidth()) { Text(stringResource(R.string.start_fresh)) }
+        // deletion only when the data can never be read; a passing error gets "try again" (AG-16 on PR #31)
+        if (permanent) OutlinedButton({ confirm = true }, Modifier.fillMaxWidth()) { Text(stringResource(R.string.start_fresh)) }
+        else OutlinedButton(tryAgain, Modifier.fillMaxWidth()) { Text(stringResource(R.string.try_again)) }
         Text(stringResource(R.string.not_medical), style = MaterialTheme.typography.bodySmall)
         if (confirm) AlertDialog(
             onDismissRequest = { confirm = false },
@@ -302,7 +310,7 @@ private fun SafetyScreen(c: AppContainer, go: (Screen) -> Unit) {
 
 // ---------- UX-05 Privacy Center ----------
 @Composable
-private fun Privacy(c: AppContainer, go: (Screen) -> Unit) {
+private fun Privacy(c: AppContainer, go: (Screen) -> Unit, deleteAll: () -> Unit) {
     val ctx = LocalContext.current
     val counts = remember { c.store.counts() }
     var paused by remember { mutableStateOf(c.settings().paused) }
@@ -335,7 +343,7 @@ private fun Privacy(c: AppContainer, go: (Screen) -> Unit) {
         AlertDialog(
             onDismissRequest = { confirm = 0 },
             text = { OutlinedTextField(typed, { typed = it }, label = { Text(stringResource(R.string.delete_confirm2)) }) },
-            confirmButton = { TextButton({ if (typed == "DELETE") { c.deleteEverything(); confirm = 0; go(Screen.Onboarding) } }) { Text(stringResource(R.string.delete_all)) } },
+            confirmButton = { TextButton({ if (typed == "DELETE") { confirm = 0; deleteAll() } }) { Text(stringResource(R.string.delete_all)) } },
             dismissButton = { TextButton({ confirm = 0 }) { Text(stringResource(R.string.cancel)) } },
         )
     }
