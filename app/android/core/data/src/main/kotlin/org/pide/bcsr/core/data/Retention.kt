@@ -16,6 +16,9 @@ object Retention {
     /** Every table, for counts, export and delete-all. */
     val ALL_TABLES = RAW_TABLES + DERIVED_TABLES + listOf("label", "favourite", "setting")
 
+    /** The daily job is due after 24 h, or at once if the clock went backwards. */
+    fun due(lastRunMs: Long, nowMs: Long) = nowMs - lastRunMs >= DAY_MS || nowMs < lastRunMs
+
     fun rawCutoff(nowMs: Long) = nowMs - RAW_DAYS * DAY_MS
     fun derivedCutoff(nowMs: Long) = nowMs - DERIVED_DAYS * DAY_MS
 

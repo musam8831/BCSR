@@ -13,6 +13,21 @@ class RetentionTest {
         assertEquals(10L * 86_400_000L, Retention.derivedCutoff(now))
     }
 
+    @Test fun exportFieldsAreQuoted() { // T-M5-019 S-04
+        assertEquals("", csv(null))
+        assertEquals("CS-02", csv("CS-02"))
+        assertEquals("\"a,b\"", csv("a,b"))
+        assertEquals("\"say \"\"hi\"\"\"", csv("say \"hi\""))
+        assertEquals("\"x\ny\"", csv("x\ny"))
+    }
+
+    @Test fun dueDaily() {
+        assertTrue(Retention.due(0L, now)) // never run
+        assertTrue(!Retention.due(now - 3_600_000L, now))
+        assertTrue(Retention.due(now - 86_400_000L, now))
+        assertTrue(Retention.due(now + 3_600_000L, now)) // clock moved back
+    }
+
     @Test fun statementsCoverRawAndDerivedButNotLabels() {
         val s = Retention.deleteStatements(now)
         assertEquals(Retention.RAW_TABLES.size + Retention.DERIVED_TABLES.size, s.size)

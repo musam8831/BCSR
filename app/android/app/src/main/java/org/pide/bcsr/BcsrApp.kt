@@ -9,6 +9,7 @@ import org.pide.bcsr.core.policy.AsrMethod
 import org.pide.bcsr.core.policy.City
 import org.pide.bcsr.core.recommender.Feedback
 import org.pide.bcsr.core.recommender.Recommender
+import java.io.File
 import java.time.LocalTime
 
 class BcsrApp : Application() {
@@ -23,6 +24,9 @@ class BcsrApp : Application() {
 
 /** Manual dependency wiring (ARC-02 §7: no DI framework until the module count needs one). */
 class AppContainer(private val context: Context) {
+    init {
+        File(context.cacheDir, "export").deleteRecursively() // TH-10: a plaintext export does not outlive the session that shared it
+    }
     var store: BcsrStore = BcsrStore.open(context)
         private set
     val catalogue: CatalogueRepository = loadCatalogue(context)
@@ -90,6 +94,9 @@ class AppSettings(private val store: BcsrStore) {
     var safetyCount: Int
         get() = store.setting("safety_count")?.toIntOrNull() ?: 0
         set(v) = store.putSetting("safety_count", v.toString())
+    var lastRetentionMs: Long
+        get() = store.setting("retention_at")?.toLongOrNull() ?: 0L
+        set(v) = store.putSetting("retention_at", v.toString())
     fun sentOn(day: String): Int = store.setting("sent_$day")?.toIntOrNull() ?: 0
     fun markSent(day: String) = store.putSetting("sent_$day", (sentOn(day) + 1).toString())
 }
