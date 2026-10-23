@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -29,11 +30,14 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -44,6 +48,11 @@ import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.FileProvider
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.NonCancellable
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.contentOrNull
 import kotlinx.serialization.json.jsonPrimitive
@@ -298,7 +307,13 @@ private fun HelplineButtons() {
 // ---------- UX-04 / SAF-01 safety ----------
 @Composable
 private fun SafetyScreen(c: AppContainer, go: (Screen) -> Unit) {
-    remember { c.settings().apply { safetyCount += 1; quietAfterSafetyUntil = System.currentTimeMillis() + 24 * 3_600_000L } }
+    // off the main thread so a running VACUUM never delays the helplines (S-11)
+    LaunchedEffect(Unit) {
+        // NonCancellable: leaving the screen at once must not skip the 24 h quiet (SAF-01 §3); a closed store must not crash it
+        withContext(NonCancellable + Dispatchers.IO) {
+            runCatching { c.settings().apply { safetyCount += 1; quietAfterSafetyUntil = System.currentTimeMillis() + 24 * 3_600_000L } }
+        }
+    }
     var safe by remember { mutableStateOf(false) }
     Title(stringResource(R.string.safety_heading))
     Text(stringResource(R.string.safety_body))
@@ -317,7 +332,9 @@ private fun SafetyScreen(c: AppContainer, go: (Screen) -> Unit) {
 @Composable
 private fun Privacy(c: AppContainer, go: (Screen) -> Unit, deleteAll: () -> Unit) {
     val ctx = LocalContext.current
-    val counts = remember { c.store.counts() }
+    // S-11: store reads and the export run off the main thread (the worker's VACUUM can hold the connection)
+    val counts by produceState(emptyMap<String, Long>(), c) { value = withContext(Dispatchers.IO) { runCatching { c.store.counts() }.getOrDefault(emptyMap()) } }
+    val scope = rememberCoroutineScope()
     var paused by remember { mutableStateOf(c.settings().paused) }
     var confirm by remember { mutableIntStateOf(0) }
     Title(stringResource(R.string.what_we_store))
@@ -329,9 +346,19 @@ private fun Privacy(c: AppContainer, go: (Screen) -> Unit, deleteAll: () -> Unit
         Text(stringResource(R.string.pause)); Switch(paused, { paused = it; c.settings().paused = it })
     }
     OutlinedButton({
-        val f = c.store.exportTo(File(ctx.cacheDir, "export").apply { mkdirs() }.resolve("bcsr-export-${System.currentTimeMillis()}.txt"))
-        val uri = FileProvider.getUriForFile(ctx, "${ctx.packageName}.export", f)
-        ctx.startActivity(Intent.createChooser(Intent(Intent.ACTION_SEND).setType("text/plain").putExtra(Intent.EXTRA_STREAM, uri).addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION), null))
+        scope.launch {
+            try {
+                val f = withContext(Dispatchers.IO) {
+                    c.store.exportTo(File(ctx.cacheDir, "export").apply { mkdirs() }.resolve("bcsr-export-${System.currentTimeMillis()}.txt"))
+                }
+                val uri = FileProvider.getUriForFile(ctx, "${ctx.packageName}.export", f)
+                ctx.startActivity(Intent.createChooser(Intent(Intent.ACTION_SEND).setType("text/plain").putExtra(Intent.EXTRA_STREAM, uri).addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION), null))
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: Exception) { // I/O error, or the store closed by a concurrent delete-all
+                Toast.makeText(ctx, R.string.export_failed, Toast.LENGTH_SHORT).show()
+            }
+        }
     }) { Text(stringResource(R.string.export)) }
     OutlinedButton({ confirm = 1 }) { Text(stringResource(R.string.delete_all)) }
     Text(stringResource(R.string.not_medical), style = MaterialTheme.typography.bodySmall)
