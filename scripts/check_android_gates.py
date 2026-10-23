@@ -47,6 +47,15 @@ SIGNED_COPY_SHA256 = "e01c11c8cf2ab269504cf8d4c062154fa6604b579c92669d54053de43a
 # AC-SR-02: screens that must state "not a medical service" (onboarding, safety, about).
 NOT_MEDICAL_SCREENS = ("Onboarding", "SafetyScreen", "About")
 # Tanzil notice lines (tanzil.net/docs/text_license, 2026-10-22) that must be shown verbatim (AC-CR-07, RES-03 §3.2).
+# AC-SR-03: the only allowed ways into the safety screen ("I need help now", check-in "not safe").
+# Each must be the button's own label; any other reference to Screen.Safety, in any app source file, fails.
+SAFETY_ENTRY = re.compile(r"^\s*(?:Outlined)?Button\(\{ go\(Screen\.Safety\) \}, Modifier\.fillMaxWidth\(\)\) "
+                          r"\{ Text\(stringResource\(R\.string\.(need_help|state_not_safe)\)\) \}\s*$")
+SAFETY_DISPATCH = re.compile(r"^\s*Screen\.Safety -> SafetyScreen\(c, go\)\s*$")
+SAFETY_DEF = re.compile(r"^private fun SafetyScreen\(")
+MAIN_ACTIVITY = "main/java/org/pide/bcsr/MainActivity.kt"  # the only file allowed to hold the dispatch
+SAFETY_INTENT =re.compile(r'putExtra\(\s*"[^"]*safety|EXTRA_\w*SAFETY', re.I)
+SCREEN_CAPTURE = re.compile(r"MediaProjection|createScreenCaptureIntent")
 TANZIL_NOTICE = ("Tanzil Quran Text", "Copyright (C) 2007-2021 Tanzil Project", "License: Creative Commons Attribution 3.0")
 
 
@@ -148,6 +157,31 @@ def without_comments(src):
     return re.sub(r"(?<!:)//.*", "", src)  # line comments, but not the // in a URL like https://
 
 
+def source_failures(sources):
+    """AC-SR-03 and AC-PR-01 over every app source file: path relative to app/src → text."""
+    fails, entries, dispatch = [], [], 0
+    for name, src in sources.items():
+        for line in without_comments(src).splitlines():
+            if SCREEN_CAPTURE.search(line):
+                fails.append(f"{name}: screen-capture API (AC-PR-01): {line.strip()}")
+            if SAFETY_INTENT.search(line):
+                fails.append(f"{name}: intent extra opens the safety pathway (AC-SR-03): {line.strip()}")
+            # any mention (call, spaced call, ::reference) other than its definition and the dispatch
+            if re.search(r"\bSafetyScreen\b", line) and not SAFETY_DEF.match(line) and not SAFETY_DISPATCH.match(line):
+                fails.append(f"{name}: SafetyScreen used outside the dispatch (AC-SR-03): {line.strip()}")
+            if "Screen.Safety" not in line:
+                continue
+            if name == MAIN_ACTIVITY and SAFETY_DISPATCH.match(line):
+                dispatch += 1
+            elif m := SAFETY_ENTRY.match(line):
+                entries.append(m.group(1))
+            else:
+                fails.append(f"{name}: safety pathway opened outside an explicit control (AC-SR-03): {line.strip()}")
+    if sorted(entries) != ["need_help", "state_not_safe"] or dispatch != 1:
+        fails.append(f"safety entries must be exactly need_help and state_not_safe plus one dispatch (AC-SR-03); found {sorted(entries)}, dispatch {dispatch}")
+    return fails
+
+
 def ui_failures(en, ur, main_activity_src, checkins_src):
     fails = []
     for lang, table in (("en", en), ("ur", ur)):
@@ -187,7 +221,10 @@ def main(argv=None):
     src = (APP / "java/org/pide/bcsr/MainActivity.kt").read_text(encoding="utf-8")
     chk = (APP / "java/org/pide/bcsr/CheckIns.kt").read_text(encoding="utf-8")
     fails = [f"{m.name}: {f}" for m in manifests for f in manifest_failures(m)]
-    fails += extraction_failures(rules) + copy_failures(saf, en, ur) + ui_failures(en, ur, src, chk)
+    # every source set (main, debug, release; java/ and kotlin/), keyed by path so same-named files both count
+    kt = {f.relative_to(APP.parent).as_posix(): f.read_text(encoding="utf-8") for f in sorted(APP.parent.rglob("*.kt"))
+          if f.relative_to(APP.parent).parts[0] not in ("test", "androidTest")}
+    fails += extraction_failures(rules) + copy_failures(saf, en, ur) + ui_failures(en, ur, src, chk) + source_failures(kt)
     if fails:
         print("Android gate checks FAILED:\n" + "\n".join(fails))
         return 1
