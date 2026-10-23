@@ -108,7 +108,7 @@ Given raw events older than 30 days and derived data older than 90 days (ARC-04 
 Given any model shipped in a release, when its model card and experiment-registry entry are inspected, then the training data lists only D1–D3 datasets collected with BCSR consent.
 
 ## Safety
-**AC-SR-01 (helplines and emergency)** — covered by AC-FR-24, plus [I]: every helpline shown has a verification date within the last 90 days in the helpline directory.
+**AC-SR-01 (helplines and emergency)** — covered by AC-FR-24, plus [I]: every helpline shown has a verification date within the last 90 days in the helpline directory, except the emergency number. The emergency number is always shown, using the most recently verified entry when none is within 90 days. An entry past 90 days blocks the release (AC-SR-05). Amended by CR-REQ-0004, 2026-10-23.
 
 **AC-SR-02 (not a medical service)** [I, D]
 Given onboarding, the safety screen and the about screen, when they are reviewed, then each states that BCSR is not a medical or therapeutic service.
