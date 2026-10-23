@@ -107,6 +107,15 @@ class AndroidGatesTest(unittest.TestCase):
         # reachable from Home
         self.assertTrue(any("reachable" in f for f in g.ui_failures(EN, UR, SRC.replace("go(Screen.About)", "go(Screen.Home)"), CHK)))
 
+    def test_safety_opens_only_from_explicit_controls(self):
+        # AC-SR-03
+        auto = SRC.replace("Screen.Safety -> SafetyScreen(c, go)", "Screen.Safety -> SafetyScreen(c, go)\n            else -> if (c.recommender == null) go(Screen.Safety)")
+        self.assertTrue(any("AC-SR-03" in f for f in g.ui_failures(EN, UR, auto, CHK)))
+        relabelled = SRC.replace("{ go(Screen.Safety) }, Modifier.fillMaxWidth()) { Text(stringResource(R.string.need_help))",
+                                 "{ go(Screen.Safety) }, Modifier.fillMaxWidth()) { Text(stringResource(R.string.app_name))")
+        self.assertTrue(any("AC-SR-03" in f for f in g.ui_failures(EN, UR, relabelled, CHK)))
+        self.assertTrue(any("AC-SR-03" in f for f in g.ui_failures(EN, UR, SRC, CHK + "\nfun x(go: (Screen) -> Unit) = go(Screen.Safety)\n")))
+
     def test_notification_rules(self):
         self.assertEqual(g.ui_failures(EN, UR, SRC, CHK), [])
         self.assertTrue(g.ui_failures(dict(EN, notif_text="Feeling stressed?"), UR, SRC, CHK))

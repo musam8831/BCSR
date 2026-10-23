@@ -47,6 +47,8 @@ SIGNED_COPY_SHA256 = "e01c11c8cf2ab269504cf8d4c062154fa6604b579c92669d54053de43a
 # AC-SR-02: screens that must state "not a medical service" (onboarding, safety, about).
 NOT_MEDICAL_SCREENS = ("Onboarding", "SafetyScreen", "About")
 # Tanzil notice lines (tanzil.net/docs/text_license, 2026-10-22) that must be shown verbatim (AC-CR-07, RES-03 §3.2).
+# AC-SR-03: the only allowed ways into the safety screen ("I need help now", check-in "not safe").
+SAFETY_ENTRY = re.compile(r"^\s*(Outlined)?Button\(\{ go\(Screen\.Safety\) \}.*R\.string\.(need_help|state_not_safe)\)")
 TANZIL_NOTICE = ("Tanzil Quran Text", "Copyright (C) 2007-2021 Tanzil Project", "License: Creative Commons Attribution 3.0")
 
 
@@ -161,6 +163,11 @@ def ui_failures(en, ur, main_activity_src, checkins_src):
             fails.append(f"screen {screen} not found (AC-SR-02)")
         elif "R.string.not_medical" not in without_comments(body):
             fails.append(f"screen {screen} does not show not_medical (AC-SR-02)")
+    # AC-SR-03: the safety pathway opens only from an explicit control, never from inference or a worker.
+    for src in (without_comments(main_activity_src), without_comments(checkins_src)):
+        for line in src.splitlines():
+            if "go(Screen.Safety)" in line and not SAFETY_ENTRY.search(line):
+                fails.append(f"safety pathway opened outside an explicit control (AC-SR-03): {line.strip()}")
     # AC-CR-07: the About screen names and links the Tanzil Project (RES-03 §3.2).
     about = composable_body(main_activity_src, "About")
     code = without_comments(about or "")

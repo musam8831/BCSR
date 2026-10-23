@@ -5,6 +5,7 @@ All notable changes follow [Keep a Changelog](https://keepachangelog.com/) conve
 ## [Unreleased]
 
 ### Changed
+- T-M5-013: Gate case sheet `docs/08-testing/cases/TC-PR-SR-CR.md` maps all 19 AC-PR/SR/CR to an automated or inspection case (`tests/test_gate_cases.py` fails on a gap); new gate: the safety screen opens only from the two explicit controls (AC-SR-03); schema test forbids location and message-text columns (AC-PR-01/04). Task stays In Progress: device runs, T-M5-003/012 and M4 cases pending.
 - T-M1-006: Context-state taxonomy v1 (GOV-02 §1) — evidence level (RES-02) and detection mode per state; CS-02 renamed Worry / stress; CS-05 and CS-07 EMA-only; content mappings unchanged pending scholar (CR-05); FR-10 change proposed to AG-02 (HC-07). Project Lead approved 2026-10-21 (PR #16); scholar sign-off pending, task stays In Review.
 - T-M1-013: Dataset strategy RES-04 v1.0-rc — instrument table with licence status (project-authored EMA items; PSS-10 + Urdu PSS-10 selected, two free permissions pending); no clinical screeners (D-011); public datasets checked (GLOBEM credentialed DUA, ExtraSensory citation-only, StudentLife unverified); shipped model trained only on BCSR-consented data; actions list. Approved by Tech Lead 2026-10-21 (PR #14; dual role, D-009).
 - T-M1-002: SRS REQ-01 v0.2 — §1 Introduction and §2 Overall description written (ISO/IEC/IEEE 29148 structure); §3 module table gains inputs → outputs and requirement IDs for all 13 modules. No new requirements. Approved by Project Lead 2026-10-21 (PR #12, in place of AG-16).

@@ -24,5 +24,8 @@ class RetentionTest {
     @Test fun schemaHasEveryTableAndNoPackageNames() {
         Retention.ALL_TABLES.forEach { t -> assertTrue(t, SCHEMA.any { it.contains("EXISTS $t ") }) }
         assertTrue(SCHEMA.none { it.contains("package_name") }) // TH-09: hash + category only
+        // column names are lower case, SQL types upper case, so these never match "TEXT"
+        assertTrue(SCHEMA.none { Regex("\\b(lat|lng|lon|latitude|longitude|coord\\w*|location|gps)\\b").containsMatchIn(it) }) // AC-PR-04
+        assertTrue(SCHEMA.none { Regex("\\b(title|text|body|content|message)\\b").containsMatchIn(it) }) // AC-PR-01
     }
 }
