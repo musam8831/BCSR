@@ -33,7 +33,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -56,6 +58,9 @@ import org.pide.bcsr.core.recommender.Feedback
 import org.pide.bcsr.core.safety.Purpose
 import org.pide.bcsr.core.safety.shownHelplines
 import java.io.File
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -317,7 +322,9 @@ private fun SafetyScreen(c: AppContainer, go: (Screen) -> Unit) {
 @Composable
 private fun Privacy(c: AppContainer, go: (Screen) -> Unit, deleteAll: () -> Unit) {
     val ctx = LocalContext.current
-    val counts = remember { c.store.counts() }
+    // S-11: store reads and the export run off the main thread (the worker's VACUUM can hold the connection)
+    val counts by produceState(emptyMap<String, Long>(), c) { value = withContext(Dispatchers.IO) { c.store.counts() } }
+    val scope = rememberCoroutineScope()
     var paused by remember { mutableStateOf(c.settings().paused) }
     var confirm by remember { mutableIntStateOf(0) }
     Title(stringResource(R.string.what_we_store))
@@ -329,9 +336,13 @@ private fun Privacy(c: AppContainer, go: (Screen) -> Unit, deleteAll: () -> Unit
         Text(stringResource(R.string.pause)); Switch(paused, { paused = it; c.settings().paused = it })
     }
     OutlinedButton({
-        val f = c.store.exportTo(File(ctx.cacheDir, "export").apply { mkdirs() }.resolve("bcsr-export-${System.currentTimeMillis()}.txt"))
-        val uri = FileProvider.getUriForFile(ctx, "${ctx.packageName}.export", f)
-        ctx.startActivity(Intent.createChooser(Intent(Intent.ACTION_SEND).setType("text/plain").putExtra(Intent.EXTRA_STREAM, uri).addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION), null))
+        scope.launch {
+            val f = withContext(Dispatchers.IO) {
+                c.store.exportTo(File(ctx.cacheDir, "export").apply { mkdirs() }.resolve("bcsr-export-${System.currentTimeMillis()}.txt"))
+            }
+            val uri = FileProvider.getUriForFile(ctx, "${ctx.packageName}.export", f)
+            ctx.startActivity(Intent.createChooser(Intent(Intent.ACTION_SEND).setType("text/plain").putExtra(Intent.EXTRA_STREAM, uri).addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION), null))
+        }
     }) { Text(stringResource(R.string.export)) }
     OutlinedButton({ confirm = 1 }) { Text(stringResource(R.string.delete_all)) }
     Text(stringResource(R.string.not_medical), style = MaterialTheme.typography.bodySmall)
