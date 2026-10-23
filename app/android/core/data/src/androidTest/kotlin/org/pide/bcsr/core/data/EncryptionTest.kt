@@ -4,6 +4,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
+import org.junit.Assert.assertThrows
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -19,6 +20,17 @@ class EncryptionTest {
         val header = ctx.getDatabasePath(BcsrStore.DB_NAME).readBytes().copyOfRange(0, 16).toString(Charsets.US_ASCII)
         assertFalse(header.startsWith("SQLite format 3"))
         BcsrStore.deleteEverything(ctx, null)
+    }
+
+    /** T-M5-025: a corrupt wrapped key gives StoreUnavailable (not a crash), and start fresh recovers. */
+    @Test fun corruptKeyIsUnavailableThenStartFreshWorks() {
+        BcsrStore.open(ctx).close()
+        java.io.File(ctx.filesDir, "bcsr-db.key").writeBytes(ByteArray(5))
+        assertThrows(StoreUnavailable::class.java) { BcsrStore.open(ctx) }
+        BcsrStore.deleteEverything(ctx, null)
+        val fresh = BcsrStore.open(ctx)
+        assertEquals(0L, fresh.counts().values.sum())
+        BcsrStore.deleteEverything(ctx, fresh)
     }
 
     @Test fun deleteEverythingEmptiesTheStore() {

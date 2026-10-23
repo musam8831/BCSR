@@ -129,6 +129,13 @@ class AndroidGatesTest(unittest.TestCase):
         self.assertTrue(fails(**{"debug/java/x/MainActivity.kt": "            Screen.Safety -> SafetyScreen(c, go)"}))
         self.assertTrue(any("AC-PR-01" in f for f in g.source_failures({"X.kt": "val m = getSystemService(MediaProjectionManager::class.java)"})))
 
+    def test_helplines_on_safety_and_locked_screens(self):
+        # T-M5-025: helplines stay reachable when the store cannot be opened
+        for screen in ("SafetyScreen", "Locked"):
+            body = g.composable_body(SRC, screen)
+            gone = SRC.replace(body, body.replace("HelplineButtons()", "Spacer(Modifier)"))
+            self.assertIn(f"screen {screen} must show HelplineButtons() (AC-SR-01)", g.ui_failures(EN, UR, gone, CHK))
+
     def test_notification_rules(self):
         self.assertEqual(g.ui_failures(EN, UR, SRC, CHK), [])
         self.assertTrue(g.ui_failures(dict(EN, notif_text="Feeling stressed?"), UR, SRC, CHK))

@@ -5,6 +5,7 @@ import android.content.Context
 import org.pide.bcsr.core.content.BundleVerifier
 import org.pide.bcsr.core.content.CatalogueRepository
 import org.pide.bcsr.core.data.BcsrStore
+import org.pide.bcsr.core.data.StoreUnavailable
 import org.pide.bcsr.core.policy.AsrMethod
 import org.pide.bcsr.core.policy.City
 import org.pide.bcsr.core.recommender.Feedback
@@ -13,12 +14,23 @@ import java.io.File
 import java.time.LocalTime
 
 class BcsrApp : Application() {
-    lateinit var container: AppContainer
+    /** Null when the store cannot be decrypted; the UI then shows the locked screen (T-M5-025). */
+    var container: AppContainer? = null
         private set
 
     override fun onCreate() {
         super.onCreate()
-        container = AppContainer(this)
+        openContainer()
+    }
+
+    fun openContainer() {
+        container = try { AppContainer(this) } catch (e: StoreUnavailable) { null }
+    }
+
+    /** "Start fresh" from the locked screen: the data is unreadable anyway, so delete it and open an empty store. */
+    fun startFresh() {
+        runCatching { BcsrStore.deleteEverything(this, null) } // a broken Keystore must not crash here either
+        openContainer()
     }
 }
 

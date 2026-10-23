@@ -92,8 +92,11 @@ class BcsrStore private constructor(private val context: Context, private val db
         fun open(context: Context): BcsrStore {
             System.loadLibrary("sqlcipher")
             val file = context.getDatabasePath(DB_NAME).apply { parentFile?.mkdirs() }
-            val db = SQLiteDatabase.openOrCreateDatabase(file, passphrase(context), null, null)
-            SCHEMA.forEach(db::execSQL)
+            val db = try {
+                SQLiteDatabase.openOrCreateDatabase(file, passphrase(context), null, null).also { d -> SCHEMA.forEach(d::execSQL) }
+            } catch (e: Exception) {
+                throw StoreUnavailable(e) // lost or corrupt key, or a database the key cannot open (T-M5-025)
+            }
             return BcsrStore(context, db)
         }
 
@@ -148,6 +151,9 @@ class BcsrStore private constructor(private val context: Context, private val db
         }
     }
 }
+
+/** The store exists but cannot be decrypted; the app offers "start fresh" instead of crashing (T-M5-019 S-06). */
+class StoreUnavailable(cause: Throwable) : Exception(cause)
 
 /** RFC 4180 field: quoted when it holds a comma, quote or line break, so free text cannot shift columns in the export. */
 internal fun csv(v: String?): String = when {

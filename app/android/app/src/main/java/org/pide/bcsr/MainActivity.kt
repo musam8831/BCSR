@@ -75,8 +75,11 @@ sealed interface Screen {
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val c = (application as BcsrApp).container
-        setContent { MaterialTheme { BcsrUi(c) } }
+        val app = application as BcsrApp
+        setContent {
+            var c by remember { mutableStateOf(app.container) }
+            MaterialTheme { c?.let { BcsrUi(it) } ?: Locked { app.startFresh(); c = app.container } }
+        }
     }
 }
 
@@ -244,22 +247,49 @@ private fun Library(c: AppContainer, go: (Screen) -> Unit) {
     TextButton({ go(Screen.Home) }) { Text(stringResource(R.string.back)) }
 }
 
-// ---------- UX-04 / SAF-01 safety ----------
+// ---------- store cannot be decrypted (T-M5-025, T-M5-019 S-06) ----------
 @Composable
-private fun SafetyScreen(c: AppContainer, go: (Screen) -> Unit) {
+private fun Locked(startFresh: () -> Unit) {
+    Column(Modifier.fillMaxSize().padding(16.dp).verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+        var confirm by remember { mutableStateOf(false) }
+        Title(stringResource(R.string.locked_title))
+        Text(stringResource(R.string.locked_body))
+        // help stays one screen away even with no store (AC-SR-01)
+        Text(stringResource(R.string.safety_body))
+        HelplineButtons()
+        OutlinedButton({ confirm = true }, Modifier.fillMaxWidth()) { Text(stringResource(R.string.start_fresh)) }
+        Text(stringResource(R.string.not_medical), style = MaterialTheme.typography.bodySmall)
+        if (confirm) AlertDialog(
+            onDismissRequest = { confirm = false },
+            text = { Text(stringResource(R.string.start_fresh_confirm)) },
+            confirmButton = { TextButton({ confirm = false; startFresh() }) { Text(stringResource(R.string.start_fresh)) } },
+            dismissButton = { TextButton({ confirm = false }) { Text(stringResource(R.string.cancel)) } },
+        )
+    }
+}
+
+/** Emergency and helpline buttons from the verified directory; opens the dialer, no CALL permission (SAF-01). */
+@Composable
+private fun HelplineButtons() {
     val ctx = LocalContext.current
-    remember { c.settings().apply { safetyCount += 1; quietAfterSafetyUntil = System.currentTimeMillis() + 24 * 3_600_000L } }
     val lines = shownHelplines(LocalDate.now(), devBuild = BuildConfig.DEBUG)
-    fun dial(number: String) = ctx.startActivity(Intent(Intent.ACTION_DIAL, Uri.parse("tel:$number"))) // dialer, no CALL permission
-    var safe by remember { mutableStateOf(false) }
-    Title(stringResource(R.string.safety_heading))
-    Text(stringResource(R.string.safety_body))
+    fun dial(number: String) = ctx.startActivity(Intent(Intent.ACTION_DIAL, Uri.parse("tel:$number")))
     lines.filter { it.purpose == Purpose.EMERGENCY }.forEach { h ->
         Button({ dial(h.number) }, Modifier.fillMaxWidth()) { Text(stringResource(R.string.call_emergency, h.number)) }
     }
     lines.filter { it.purpose == Purpose.MENTAL_HEALTH }.forEach { h ->
         Button({ dial(h.number) }, Modifier.fillMaxWidth()) { Text(stringResource(R.string.talk_to, "${h.name} ${h.number}")) }
     }
+}
+
+// ---------- UX-04 / SAF-01 safety ----------
+@Composable
+private fun SafetyScreen(c: AppContainer, go: (Screen) -> Unit) {
+    remember { c.settings().apply { safetyCount += 1; quietAfterSafetyUntil = System.currentTimeMillis() + 24 * 3_600_000L } }
+    var safe by remember { mutableStateOf(false) }
+    Title(stringResource(R.string.safety_heading))
+    Text(stringResource(R.string.safety_body))
+    HelplineButtons()
     if (!safe) OutlinedButton({ safe = true }, Modifier.fillMaxWidth()) { Text(stringResource(R.string.safe_for_now)) }
     else {
         // Only after help is offered, and only an approved item mapped to the crisis state (SAF-01 §3).
