@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -29,6 +30,7 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableIntStateOf
@@ -46,6 +48,10 @@ import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.FileProvider
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.contentOrNull
 import kotlinx.serialization.json.jsonPrimitive
@@ -58,9 +64,6 @@ import org.pide.bcsr.core.recommender.Feedback
 import org.pide.bcsr.core.safety.Purpose
 import org.pide.bcsr.core.safety.shownHelplines
 import java.io.File
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -303,7 +306,10 @@ private fun HelplineButtons() {
 // ---------- UX-04 / SAF-01 safety ----------
 @Composable
 private fun SafetyScreen(c: AppContainer, go: (Screen) -> Unit) {
-    remember { c.settings().apply { safetyCount += 1; quietAfterSafetyUntil = System.currentTimeMillis() + 24 * 3_600_000L } }
+    // off the main thread so a running VACUUM never delays the helplines (S-11)
+    LaunchedEffect(Unit) {
+        withContext(Dispatchers.IO) { c.settings().apply { safetyCount += 1; quietAfterSafetyUntil = System.currentTimeMillis() + 24 * 3_600_000L } }
+    }
     var safe by remember { mutableStateOf(false) }
     Title(stringResource(R.string.safety_heading))
     Text(stringResource(R.string.safety_body))
@@ -323,7 +329,7 @@ private fun SafetyScreen(c: AppContainer, go: (Screen) -> Unit) {
 private fun Privacy(c: AppContainer, go: (Screen) -> Unit, deleteAll: () -> Unit) {
     val ctx = LocalContext.current
     // S-11: store reads and the export run off the main thread (the worker's VACUUM can hold the connection)
-    val counts by produceState(emptyMap<String, Long>(), c) { value = withContext(Dispatchers.IO) { c.store.counts() } }
+    val counts by produceState(emptyMap<String, Long>(), c) { value = withContext(Dispatchers.IO) { runCatching { c.store.counts() }.getOrDefault(emptyMap()) } }
     val scope = rememberCoroutineScope()
     var paused by remember { mutableStateOf(c.settings().paused) }
     var confirm by remember { mutableIntStateOf(0) }
@@ -337,11 +343,17 @@ private fun Privacy(c: AppContainer, go: (Screen) -> Unit, deleteAll: () -> Unit
     }
     OutlinedButton({
         scope.launch {
-            val f = withContext(Dispatchers.IO) {
-                c.store.exportTo(File(ctx.cacheDir, "export").apply { mkdirs() }.resolve("bcsr-export-${System.currentTimeMillis()}.txt"))
+            try {
+                val f = withContext(Dispatchers.IO) {
+                    c.store.exportTo(File(ctx.cacheDir, "export").apply { mkdirs() }.resolve("bcsr-export-${System.currentTimeMillis()}.txt"))
+                }
+                val uri = FileProvider.getUriForFile(ctx, "${ctx.packageName}.export", f)
+                ctx.startActivity(Intent.createChooser(Intent(Intent.ACTION_SEND).setType("text/plain").putExtra(Intent.EXTRA_STREAM, uri).addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION), null))
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: Exception) { // I/O error, or the store closed by a concurrent delete-all
+                Toast.makeText(ctx, R.string.export_failed, Toast.LENGTH_SHORT).show()
             }
-            val uri = FileProvider.getUriForFile(ctx, "${ctx.packageName}.export", f)
-            ctx.startActivity(Intent.createChooser(Intent(Intent.ACTION_SEND).setType("text/plain").putExtra(Intent.EXTRA_STREAM, uri).addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION), null))
         }
     }) { Text(stringResource(R.string.export)) }
     OutlinedButton({ confirm = 1 }) { Text(stringResource(R.string.delete_all)) }
