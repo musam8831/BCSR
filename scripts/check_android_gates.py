@@ -39,11 +39,14 @@ FEELING_WORDS = re.compile(r"\b(stress\w*|anxi\w*|worr\w*|sad|depress\w*|lonel\w
 # SAF-01 §4 "not allowed" (English and Urdu).
 BANNED_SAFETY = re.compile(r"\b(you are depressed|pray more|weak iman|cure)\b|کمزور ایمان|زیادہ نماز|علاج", re.I)
 SAFETY_KEYS = {"Heading": "safety_heading", "Body": "safety_body", "Emergency button": "call_emergency",
-               "Safe option": "safe_for_now", "Disclaimer": "not_medical", "After safe": "offer_dua"}
+               "Safe option": "safe_for_now", "Disclaimer": "not_medical", "After safe": "offer_dua",
+               # v1.1 (T-M5-025): Locked screen
+               "Locked title": "locked_title", "Locked body": "locked_body", "Locked retry": "locked_retry_body",
+               "Try again": "try_again", "Start fresh": "start_fresh", "Start fresh confirm": "start_fresh_confirm"}
 EXPECTED_ELEMENTS = set(SAFETY_KEYS) | {"Helpline button"}
-# SHA-256 of the SAF-01 §4 copy table as signed in SAF-01 §6 (v1.0, Project Lead, PR #18).
+# SHA-256 of the SAF-01 §4 copy table as signed in SAF-01 §6 (v1.1, Project Lead, 2026-10-23; v1.0 was PR #18).
 # If §4 changes, the safety copy needs a new signature (SAF-01 §5): re-sign, then update this value.
-SIGNED_COPY_SHA256 = "e01c11c8cf2ab269504cf8d4c062154fa6604b579c92669d54053de43a1814c6"
+SIGNED_COPY_SHA256 = "af453e97d4884e315e01aadeb2b84e7cb6a45d8f6c7a578e783074ce3c851aa6"
 # AC-SR-02: screens that must state "not a medical service" (onboarding, safety, about).
 NOT_MEDICAL_SCREENS = ("Onboarding", "SafetyScreen", "About", "Locked")  # Locked: store unreadable (T-M5-025)
 # Tanzil notice lines (tanzil.net/docs/text_license, 2026-10-22) that must be shown verbatim (AC-CR-07, RES-03 §3.2).

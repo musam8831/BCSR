@@ -5,7 +5,7 @@
 | raised_by | AG-10 (HC-06 pack for T-M5-025, finding F-1), on an AG-16 finding (PR #32) |
 | task_id | T-M5-025 |
 | routed | AG-00 → AG-02 → Project Lead |
-| status | Open: Project Lead decision D-11 in `docs/06-security-privacy-safety/safety/HC-06-T-M5-025-locked-screen.md` |
+| status | Accepted 2026-10-23 by the Project Lead, proposed text, in chat: "approve all as recommended; SAF-01 v1.1; accept CR-REQ-0004" (HC-06 D-11). AC-SR-01 amended by AG-02 in the same PR |
 
 **Gap.** Two documents conflict:
 - AC-SR-01 says "every helpline shown has a verification date within the last 90 days".

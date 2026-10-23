@@ -249,23 +249,23 @@ Options: **Approve / Approve with changes / Reject**. AG-10 has left every decis
 
 | # | Item | Decision | Changes required / notes |
 |---|---|---|---|
-| D-1 | `locked_title` (en 91 / ur 13) | | |
-| D-2 | `locked_body` (en 92 / ur 14) | | |
-| D-3 | `locked_retry_body` (en 93 / ur 15) | | |
-| D-4 | `try_again` (en 94 / ur 16) | | |
-| D-5 | `start_fresh` (en 95 / ur 17) | | |
-| D-6 | `start_fresh_confirm` (en 96 / ur 18) | | |
-| D-7 | Reuse of `safety_body` on the Locked screen (en 62 / ur 7), Q2 | | |
-| D-8 | Reuse of `not_medical` on the Locked screen (en 5 / ur 5) | | |
-| D-9 | Locked screen layout and order (MainActivity.kt:258-277), Q3 | | |
-| D-10 | Temporary/permanent split: start fresh only when the data can never be read (BcsrApp.kt:30-48, BcsrStore.kt:92-102, 162-168) | | |
-| D-11 | F-1, Q4. Accept the PR #32 emergency floor (Helplines.kt:32-39), or choose another option. Accepting it also accepts: (a) the AC-SR-01 exception, under which the emergency number may be shown past 90 days (CR-REQ-0004); (b) `releaseBlockers` enforced only by the manual release checklist (release-checklist.md:15), not by CI. Other options: a CI gate on `releaseBlockers`, or a last-resort "dial your local emergency number" line (needs new signed copy) for a directory with no VERIFIED emergency entry | | |
-| D-12 | F-2, Q5. Accept the PR #32 `ActivityNotFoundException` catch (MainActivity.kt:284-289), where a tap with no dialer does nothing and the number stays on the label, or choose another option | | |
-| D-13 | F-3: this pack alone, or SAF-01 v1.1, Q1 | | |
-| D-14 | Urdu draft subject to the native-speaker check (§4.1), Q7 | | |
+| D-1 | `locked_title` (en 91 / ur 13) | Approve |  |
+| D-2 | `locked_body` (en 92 / ur 14) | Approve |  |
+| D-3 | `locked_retry_body` (en 93 / ur 15) | Approve |  |
+| D-4 | `try_again` (en 94 / ur 16) | Approve |  |
+| D-5 | `start_fresh` (en 95 / ur 17) | Approve |  |
+| D-6 | `start_fresh_confirm` (en 96 / ur 18) | Approve |  |
+| D-7 | Reuse of `safety_body` on the Locked screen (en 62 / ur 7), Q2 | Approve | Keep the signed SAF-01 Body line |
+| D-8 | Reuse of `not_medical` on the Locked screen (en 5 / ur 5) | Approve |  |
+| D-9 | Locked screen layout and order (MainActivity.kt:258-277), Q3 | Approve | Keep the current order; check the fold on the T-M5-014 device run (F-5) |
+| D-10 | Temporary/permanent split: start fresh only when the data can never be read (BcsrApp.kt:30-48, BcsrStore.kt:92-102, 162-168) | Approve |  |
+| D-11 | F-1, Q4. Accept the PR #32 emergency floor (Helplines.kt:32-39), or choose another option. Accepting it also accepts: (a) the AC-SR-01 exception, under which the emergency number may be shown past 90 days (CR-REQ-0004); (b) `releaseBlockers` enforced only by the manual release checklist (release-checklist.md:15), not by CI. Other options: a CI gate on `releaseBlockers`, or a last-resort "dial your local emergency number" line (needs new signed copy) for a directory with no VERIFIED emergency entry | Approve | Floor accepted; AC-SR-01 exception accepted (CR-REQ-0004). The CI gate and the last-resort line are not chosen now |
+| D-12 | F-2, Q5. Accept the PR #32 `ActivityNotFoundException` catch (MainActivity.kt:284-289), where a tap with no dialer does nothing and the number stays on the label, or choose another option | Approve | A copy-number option may come with T-M5-020 |
+| D-13 | F-3: this pack alone, or SAF-01 v1.1, Q1 | SAF-01 v1.1 | §2 Locked screen, §3 emergency floor, §4 Locked strings; signed below and in SAF-01 §6 |
+| D-14 | Urdu draft subject to the native-speaker check (§4.1), Q7 | Approve as draft | Native-speaker check required before release; checker to be named before release (SAF-01 §4) |
 
 ## 7. Sign-off
 
-Project Lead (safety reviewer, D-011): ______________________________  Date: ______________
+Project Lead (safety reviewer, D-011): Muhammad Usman, Project Lead (D-011), in chat: "approve all as recommended; SAF-01 v1.1; accept CR-REQ-0004"  Date: 2026-10-23
 
-Decision recorded in PR: ______________
+Decision recorded in PR: #34 (T-M5-025-hc06-signed)

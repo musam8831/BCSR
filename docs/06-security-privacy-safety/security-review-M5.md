@@ -59,5 +59,12 @@ The task closes when all three parts are reviewed and every finding is fixed or 
 - **Network:** no INTERNET permission in any merged manifest, so nothing leaves the device (gate check).
 - **Export sharing:** the FileProvider is not exported, is limited to `cache/export/`, and grants read access to the chosen app only.
 
-## Sign-off
-- [ ] Tech Lead: S-01 to S-05 and S-08 fixed (PR #30). S-06 is **not** for acceptance: it is scheduled as T-M5-025 before any tester build. S-07, S-09 and S-12 accepted; S-10 and S-11 scheduled with T-M5-003/T-M5-008.
+## Sign-off (part 1)
+| Item | Decision | By | Date | Record |
+|---|---|---|---|---|
+| S-01 to S-05, S-08 | Fixed | AG-09 (fix), AG-16 (review) | 2026-10-23 | PR #30 |
+| S-06 | Fixed in code (PR #31); Locked screen signed (HC-06, SAF-01 v1.1); device evidence pending (T-M5-014) | AG-11, AG-16; Muhammad Usman, Project Lead (D-011) | 2026-10-23 | PR #31, #32, #34 |
+| S-07, S-09, S-12 | **Accepted** as recommended above, with S-07's condition (a rollback check before any bundle arrives other than in the APK) | Muhammad Usman, Tech Lead (D-009) | 2026-10-23 | In chat: "approve all as recommended; SAF-01 v1.1; accept CR-REQ-0004", replying to a table that recommended accepting S-07, S-09 and S-12 |
+| S-10, S-11 (rest), S-13 | Scheduled with T-M5-003 / T-M5-008 / T-M5-020 | AG-09 | 2026-10-23 | this document |
+
+T-M5-019 stays In Progress until parts 2 (sensing, T-M5-003) and 3 (backend, T-M5-012) are reviewed.
