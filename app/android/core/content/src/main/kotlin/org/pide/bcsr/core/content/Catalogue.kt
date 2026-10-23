@@ -32,7 +32,13 @@ sealed interface LoadResult {
 class BundleVerifier(private val publicKeys: Map<String, ByteArray>) {
 
     /** ADR-0005 §5: signature over the exact bytes with the pinned key for the manifest's key_id, then count and hash. */
-    fun load(bundleBytes: ByteArray, signatureBase64: String): LoadResult {
+    fun load(bundleBytes: ByteArray, signatureBase64: String): LoadResult = try {
+        loadOrThrow(bundleBytes, signatureBase64)
+    } catch (e: Exception) {
+        LoadResult.Rejected("malformed bundle: ${e.javaClass.simpleName}") // a bad shape must reject, never crash the app (S-08)
+    }
+
+    private fun loadOrThrow(bundleBytes: ByteArray, signatureBase64: String): LoadResult {
         val root = try {
             Json.parseToJsonElement(bundleBytes.toString(Charsets.UTF_8)).jsonObject
         } catch (e: Exception) {

@@ -25,7 +25,7 @@ class BcsrApp : Application() {
 /** Manual dependency wiring (ARC-02 §7: no DI framework until the module count needs one). */
 class AppContainer(private val context: Context) {
     init {
-        File(context.cacheDir, "export").deleteRecursively() // TH-10: a plaintext export does not outlive the session that shared it
+        BcsrStore.purgeExports(File(context.cacheDir, "export"), System.currentTimeMillis())
     }
     var store: BcsrStore = BcsrStore.open(context)
         private set
@@ -54,9 +54,10 @@ class AppContainer(private val context: Context) {
          */
         private fun loadCatalogue(context: Context): CatalogueRepository {
             val assets = context.assets
-            val keys = assets.list("catalogue-keys").orEmpty().filter { it.endsWith(".pub") }.associate { name ->
-                BundleVerifier.parsePublicKey(assets.open("catalogue-keys/$name").bufferedReader().readText())
-            }
+            // a malformed key file is skipped, not fatal: bundles signed with it are then rejected
+            val keys = assets.list("catalogue-keys").orEmpty().filter { it.endsWith(".pub") }.mapNotNull { name ->
+                runCatching { BundleVerifier.parsePublicKey(assets.open("catalogue-keys/$name").bufferedReader().readText()) }.getOrNull()
+            }.toMap()
             val repo = CatalogueRepository(BundleVerifier(keys))
             val files = assets.list("catalogue").orEmpty()
             if ("catalogue.json" in files && "catalogue.sig" in files) {

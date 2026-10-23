@@ -42,6 +42,13 @@ class CatalogueTest {
         assertEquals(LoadResult.Rejected("unknown key_id $keyId"), BundleVerifier(emptyMap()).load(bundle, sig))
     }
 
+    /** T-M5-019 S-08: a bad shape before or after the signature check rejects; it never throws. */
+    @Test fun malformedShapesRejectWithoutThrowing() {
+        val v = BundleVerifier(mapOf(keyId to key))
+        listOf("""{"manifest":{"key_id":{}}}""", """{"manifest":[]}""", """[1]""", """{"manifest":{"key_id":["x"]},"items":7}""")
+            .forEach { assertTrue(it, v.load(it.toByteArray(), sig) is LoadResult.Rejected) }
+    }
+
     /** ADR-0005 §5: a rejected bundle never replaces the last good one. */
     @Test fun badBundleKeepsLastGood() {
         val repo = CatalogueRepository(BundleVerifier(mapOf(keyId to key)))

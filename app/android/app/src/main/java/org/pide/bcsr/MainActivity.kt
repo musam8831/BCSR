@@ -286,7 +286,7 @@ private fun Privacy(c: AppContainer, go: (Screen) -> Unit) {
         Text(stringResource(R.string.pause)); Switch(paused, { paused = it; c.settings().paused = it })
     }
     OutlinedButton({
-        val f = c.store.exportTo(File(ctx.cacheDir, "export").apply { mkdirs() }.resolve("bcsr-export.txt"))
+        val f = c.store.exportTo(File(ctx.cacheDir, "export").apply { mkdirs() }.resolve("bcsr-export-${System.currentTimeMillis()}.txt"))
         val uri = FileProvider.getUriForFile(ctx, "${ctx.packageName}.export", f)
         ctx.startActivity(Intent.createChooser(Intent(Intent.ACTION_SEND).setType("text/plain").putExtra(Intent.EXTRA_STREAM, uri).addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION), null))
     }) { Text(stringResource(R.string.export)) }

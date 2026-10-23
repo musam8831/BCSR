@@ -101,6 +101,10 @@ class BcsrStore private constructor(private val context: Context, private val db
          * Delete-all (ARC-04 §3, AC-FR-25): close, delete the database and its journal files, the wrapped passphrase
          * and the Keystore key. Callers also clear their own caches and return to onboarding.
          */
+        /** TH-10 (S-03): delete exports older than [maxAgeMs]; a fresh one may still be read by the app it was shared with. */
+        fun purgeExports(dir: File, nowMs: Long, maxAgeMs: Long = 3_600_000L) =
+            dir.listFiles()?.filter { nowMs - it.lastModified() > maxAgeMs }?.forEach { it.delete() }
+
         fun deleteEverything(context: Context, store: BcsrStore?) {
             store?.close()
             val f = context.getDatabasePath(DB_NAME)
@@ -123,7 +127,7 @@ class BcsrStore private constructor(private val context: Context, private val db
             val cipher = Cipher.getInstance("AES/GCM/NoPadding").apply { init(Cipher.ENCRYPT_MODE, key) }
             // write then rename, so a crash mid-write cannot leave a half key that locks the database for good
             val tmp = File(context.filesDir, "$WRAPPED_FILE.tmp")
-            tmp.writeBytes(cipher.iv + cipher.doFinal(pass))
+            java.io.FileOutputStream(tmp).use { it.write(cipher.iv + cipher.doFinal(pass)); it.fd.sync() } // on disk before the rename
             check(tmp.renameTo(wrapped)) { "could not store the database key" }
             return pass
         }

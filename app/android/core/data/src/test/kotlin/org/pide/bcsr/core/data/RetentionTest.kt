@@ -21,6 +21,16 @@ class RetentionTest {
         assertEquals("\"x\ny\"", csv("x\ny"))
     }
 
+    @Test fun oldExportsArePurgedFreshOnesKept() { // T-M5-019 S-03
+        val dir = kotlin.io.path.createTempDirectory("export").toFile()
+        val old = dir.resolve("bcsr-export-1.txt").apply { writeText("x"); setLastModified(now - 2 * 3_600_000L) }
+        val fresh = dir.resolve("bcsr-export-2.txt").apply { writeText("x"); setLastModified(now - 60_000L) }
+        BcsrStore.purgeExports(dir, now)
+        assertTrue(!old.exists() && fresh.exists())
+        BcsrStore.purgeExports(dir.resolve("missing"), now) // no directory yet: no crash
+        dir.deleteRecursively()
+    }
+
     @Test fun dueDaily() {
         assertTrue(Retention.due(0L, now)) // never run
         assertTrue(!Retention.due(now - 3_600_000L, now))
