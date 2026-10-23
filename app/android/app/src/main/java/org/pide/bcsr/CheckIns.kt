@@ -56,7 +56,7 @@ fun mayPostCheckIn(
 class CheckInWorker(ctx: Context, params: WorkerParameters) : CoroutineWorker(ctx, params) {
     override suspend fun doWork(): Result {
         // AC-PR-06: the daily retention job rides on this worker (T-M5-019 finding S-01)
-        val c = (applicationContext as BcsrApp).container
+        val c = (applicationContext as BcsrApp).container ?: return Result.success() // locked store: nothing to do
         val s = c.settings()
         val now = System.currentTimeMillis()
         BcsrStore.purgeExports(java.io.File(applicationContext.cacheDir, "export"), now) // before retention, so retry() cannot skip it

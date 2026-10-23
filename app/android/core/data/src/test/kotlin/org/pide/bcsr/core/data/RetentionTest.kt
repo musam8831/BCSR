@@ -32,6 +32,15 @@ class RetentionTest {
         dir.deleteRecursively()
     }
 
+    @Test fun onlyKeyFailuresArePermanent() { // T-M5-025: "start fresh" only when the data can never be read
+        assertTrue(isPermanentKeyFailure(javax.crypto.AEADBadTagException("tag mismatch")))
+        assertTrue(isPermanentKeyFailure(RuntimeException(java.security.UnrecoverableKeyException("gone"))))
+        assertTrue(isPermanentKeyFailure(RuntimeException("file is not a database: , while compiling: CREATE TABLE")))
+        assertTrue(!isPermanentKeyFailure(java.io.IOException("No space left on device")))
+        assertTrue(!isPermanentKeyFailure(IllegalStateException("database is locked")))
+        assertTrue(!isPermanentKeyFailure(java.security.ProviderException("Keystore operation failed")))
+    }
+
     @Test fun dueDaily() {
         assertTrue(Retention.due(0L, now)) // never run
         assertTrue(!Retention.due(now - 3_600_000L, now))

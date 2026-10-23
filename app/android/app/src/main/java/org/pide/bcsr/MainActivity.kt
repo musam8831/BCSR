@@ -30,6 +30,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -75,13 +76,21 @@ sealed interface Screen {
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val c = (application as BcsrApp).container
-        setContent { MaterialTheme { BcsrUi(c) } }
+        val app = application as BcsrApp
+        setContent {
+            var c by remember { mutableStateOf(app.container) }
+            // delete-all builds a new container (store and recommender, AC-FR-25); key() resets screen state to onboarding
+            val fresh = { app.startFresh(); c = app.container }
+            MaterialTheme {
+                c?.let { key(it) { BcsrUi(it, fresh) } }
+                    ?: Locked(app.lockedPermanently, startFresh = fresh, tryAgain = { app.openContainer(); c = app.container })
+            }
+        }
     }
 }
 
 @Composable
-private fun BcsrUi(c: AppContainer) {
+private fun BcsrUi(c: AppContainer, deleteAll: () -> Unit) {
     var screen by remember { mutableStateOf(if (c.settings().onboarded) Screen.Home else Screen.Onboarding) }
     val go: (Screen) -> Unit = { screen = it }
     BackHandler(enabled = screen != Screen.Home && screen != Screen.Onboarding) { screen = Screen.Home }
@@ -93,7 +102,7 @@ private fun BcsrUi(c: AppContainer) {
             is Screen.Recommend -> RecommendationScreen(c, s, go)
             Screen.Library -> Library(c, go)
             Screen.Safety -> SafetyScreen(c, go)
-            Screen.Privacy -> Privacy(c, go)
+            Screen.Privacy -> Privacy(c, go, deleteAll)
             Screen.About -> About(go)
         }
     }
@@ -244,22 +253,51 @@ private fun Library(c: AppContainer, go: (Screen) -> Unit) {
     TextButton({ go(Screen.Home) }) { Text(stringResource(R.string.back)) }
 }
 
-// ---------- UX-04 / SAF-01 safety ----------
+// ---------- store cannot be decrypted (T-M5-025, T-M5-019 S-06) ----------
 @Composable
-private fun SafetyScreen(c: AppContainer, go: (Screen) -> Unit) {
+private fun Locked(permanent: Boolean, startFresh: () -> Unit, tryAgain: () -> Unit) {
+    Column(Modifier.fillMaxSize().padding(16.dp).verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+        var confirm by remember { mutableStateOf(false) }
+        Title(stringResource(R.string.locked_title))
+        Text(stringResource(if (permanent) R.string.locked_body else R.string.locked_retry_body))
+        // help stays one screen away even with no store (AC-SR-01)
+        Text(stringResource(R.string.safety_body))
+        HelplineButtons()
+        // deletion only when the data can never be read; a passing error gets "try again" (AG-16 on PR #31)
+        if (permanent) OutlinedButton({ confirm = true }, Modifier.fillMaxWidth()) { Text(stringResource(R.string.start_fresh)) }
+        else OutlinedButton(tryAgain, Modifier.fillMaxWidth()) { Text(stringResource(R.string.try_again)) }
+        Text(stringResource(R.string.not_medical), style = MaterialTheme.typography.bodySmall)
+        if (confirm) AlertDialog(
+            onDismissRequest = { confirm = false },
+            text = { Text(stringResource(R.string.start_fresh_confirm)) },
+            confirmButton = { TextButton({ confirm = false; startFresh() }) { Text(stringResource(R.string.start_fresh)) } },
+            dismissButton = { TextButton({ confirm = false }) { Text(stringResource(R.string.cancel)) } },
+        )
+    }
+}
+
+/** Emergency and helpline buttons from the verified directory; opens the dialer, no CALL permission (SAF-01). */
+@Composable
+private fun HelplineButtons() {
     val ctx = LocalContext.current
-    remember { c.settings().apply { safetyCount += 1; quietAfterSafetyUntil = System.currentTimeMillis() + 24 * 3_600_000L } }
     val lines = shownHelplines(LocalDate.now(), devBuild = BuildConfig.DEBUG)
-    fun dial(number: String) = ctx.startActivity(Intent(Intent.ACTION_DIAL, Uri.parse("tel:$number"))) // dialer, no CALL permission
-    var safe by remember { mutableStateOf(false) }
-    Title(stringResource(R.string.safety_heading))
-    Text(stringResource(R.string.safety_body))
+    fun dial(number: String) = ctx.startActivity(Intent(Intent.ACTION_DIAL, Uri.parse("tel:$number")))
     lines.filter { it.purpose == Purpose.EMERGENCY }.forEach { h ->
         Button({ dial(h.number) }, Modifier.fillMaxWidth()) { Text(stringResource(R.string.call_emergency, h.number)) }
     }
     lines.filter { it.purpose == Purpose.MENTAL_HEALTH }.forEach { h ->
         Button({ dial(h.number) }, Modifier.fillMaxWidth()) { Text(stringResource(R.string.talk_to, "${h.name} ${h.number}")) }
     }
+}
+
+// ---------- UX-04 / SAF-01 safety ----------
+@Composable
+private fun SafetyScreen(c: AppContainer, go: (Screen) -> Unit) {
+    remember { c.settings().apply { safetyCount += 1; quietAfterSafetyUntil = System.currentTimeMillis() + 24 * 3_600_000L } }
+    var safe by remember { mutableStateOf(false) }
+    Title(stringResource(R.string.safety_heading))
+    Text(stringResource(R.string.safety_body))
+    HelplineButtons()
     if (!safe) OutlinedButton({ safe = true }, Modifier.fillMaxWidth()) { Text(stringResource(R.string.safe_for_now)) }
     else {
         // Only after help is offered, and only an approved item mapped to the crisis state (SAF-01 §3).
@@ -272,7 +310,7 @@ private fun SafetyScreen(c: AppContainer, go: (Screen) -> Unit) {
 
 // ---------- UX-05 Privacy Center ----------
 @Composable
-private fun Privacy(c: AppContainer, go: (Screen) -> Unit) {
+private fun Privacy(c: AppContainer, go: (Screen) -> Unit, deleteAll: () -> Unit) {
     val ctx = LocalContext.current
     val counts = remember { c.store.counts() }
     var paused by remember { mutableStateOf(c.settings().paused) }
@@ -305,7 +343,7 @@ private fun Privacy(c: AppContainer, go: (Screen) -> Unit) {
         AlertDialog(
             onDismissRequest = { confirm = 0 },
             text = { OutlinedTextField(typed, { typed = it }, label = { Text(stringResource(R.string.delete_confirm2)) }) },
-            confirmButton = { TextButton({ if (typed == "DELETE") { c.deleteEverything(); confirm = 0; go(Screen.Onboarding) } }) { Text(stringResource(R.string.delete_all)) } },
+            confirmButton = { TextButton({ if (typed == "DELETE") { confirm = 0; deleteAll() } }) { Text(stringResource(R.string.delete_all)) } },
             dismissButton = { TextButton({ confirm = 0 }) { Text(stringResource(R.string.cancel)) } },
         )
     }

@@ -9,4 +9,12 @@
     <string name="talk_to">کسی سے بات کریں: %1$s</string>
     <string name="safe_for_now">میں ابھی محفوظ ہوں</string>
     <string name="offer_dua">کیا آپ پریشانی کے لیے ایک دعا دیکھنا چاہیں گے؟</string>
+    <!-- T-M5-025 draft: native-speaker check before release (with AG-12 / T-M5-020) -->
+    <string name="locked_title">آپ کا محفوظ ڈیٹا نہیں کھل سکا</string>
+    <string name="locked_body">یہ فون اب BCSR کا محفوظ کیا ہوا ڈیٹا نہیں کھول سکتا، اس لیے اسے کوئی نہیں پڑھ سکتا، آپ بھی نہیں۔ آپ نئے سرے سے شروع کر سکتے ہیں: BCSR یہ ڈیٹا حذف کر کے دوبارہ ترتیب دے گا۔</string>
+    <string name="locked_retry_body">BCSR ابھی آپ کا محفوظ ڈیٹا نہیں کھول سکا۔ کچھ بھی حذف نہیں ہوا۔ براہِ کرم تھوڑی دیر بعد دوبارہ کوشش کریں۔</string>
+    <string name="try_again">دوبارہ کوشش کریں</string>
+    <string name="start_fresh">نئے سرے سے شروع کریں</string>
+    <string name="start_fresh_confirm">اس سے یہ ڈیٹا حذف ہو جائے گا اور BCSR شروع سے دوبارہ کھلے گا۔ یہ واپس نہیں ہو سکتا۔</string>
+    <string name="cancel">منسوخ کریں</string>
 </resources>

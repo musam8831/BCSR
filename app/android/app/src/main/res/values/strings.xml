@@ -87,6 +87,13 @@
     <string name="delete_confirm1">This deletes every record, setting and saved item on this phone. It cannot be undone.</string>
     <string name="delete_confirm2">Type DELETE to confirm</string>
     <string name="cancel">Cancel</string>
+    <!-- T-M5-025: draft copy for AG-12 review; no feeling named, no blame -->
+    <string name="locked_title">Your saved data can\'t be opened</string>
+    <string name="locked_body">This phone can no longer unlock what BCSR saved, so it cannot be read by anyone, including you. You can start fresh: BCSR will delete the unreadable data and set up again.</string>
+    <string name="locked_retry_body">BCSR could not open your saved data just now. Nothing has been deleted. Please try again in a moment.</string>
+    <string name="try_again">Try again</string>
+    <string name="start_fresh">Start fresh</string>
+    <string name="start_fresh_confirm">This deletes the unreadable data and starts BCSR again from the beginning. It cannot be undone.</string>
     <string name="continue_">Continue</string>
 
     <!-- Check-in notification (TH-06: neutral, no feeling named) -->

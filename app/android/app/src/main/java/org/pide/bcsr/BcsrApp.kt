@@ -2,9 +2,11 @@ package org.pide.bcsr
 
 import android.app.Application
 import android.content.Context
+import android.util.Log
 import org.pide.bcsr.core.content.BundleVerifier
 import org.pide.bcsr.core.content.CatalogueRepository
 import org.pide.bcsr.core.data.BcsrStore
+import org.pide.bcsr.core.data.StoreUnavailable
 import org.pide.bcsr.core.policy.AsrMethod
 import org.pide.bcsr.core.policy.City
 import org.pide.bcsr.core.recommender.Feedback
@@ -13,12 +15,36 @@ import java.io.File
 import java.time.LocalTime
 
 class BcsrApp : Application() {
-    lateinit var container: AppContainer
+    /** Null when the store cannot be opened; the UI then shows the locked screen (T-M5-025). */
+    var container: AppContainer? = null
+        private set
+    /** Why [container] is null: true = the data can never be read (offer start fresh), false = try again. */
+    var lockedPermanently = false
         private set
 
     override fun onCreate() {
         super.onCreate()
-        container = AppContainer(this)
+        openContainer()
+    }
+
+    fun openContainer() {
+        container = try {
+            AppContainer(this)
+        } catch (e: StoreUnavailable) {
+            Log.w("BcsrApp", "store unavailable, permanent=${e.permanent}", e) // logcat only; tells a bug from a Keystore failure
+            lockedPermanently = e.permanent
+            null
+        } catch (e: Exception) {
+            Log.w("BcsrApp", "container failed", e)
+            lockedPermanently = false // any other start-up failure: never crash past the helplines, never offer deletion
+            null
+        }
+    }
+
+    /** Delete-all from the Privacy Center or "start fresh" from the locked screen, then an empty store (or Locked). */
+    fun startFresh() {
+        runCatching { BcsrStore.deleteEverything(this, container?.store) } // a broken Keystore must not crash here either
+        openContainer()
     }
 }
 
@@ -27,24 +53,18 @@ class AppContainer(private val context: Context) {
     init {
         BcsrStore.purgeExports(File(context.cacheDir, "export"), System.currentTimeMillis())
     }
-    var store: BcsrStore = BcsrStore.open(context)
-        private set
+    val store: BcsrStore = BcsrStore.open(context)
     val catalogue: CatalogueRepository = loadCatalogue(context)
-    var recommender: Recommender = rebuildRecommender()
-        private set
+    val recommender: Recommender = rebuildRecommender()
 
     fun settings() = AppSettings(store)
 
     /** Replays stored feedback so the bandit survives restarts (FR-16) without storing its state separately. */
     private fun rebuildRecommender(): Recommender = Recommender().also { r ->
-        store.recommendations().forEach { row -> row.feedback?.let { f -> r.feedback(row.stateId, row.itemId, Feedback.valueOf(f)) } }
-    }
-
-    /** Delete-all (FR-25, ARC-04 §3), then a fresh empty store for onboarding. */
-    fun deleteEverything() {
-        BcsrStore.deleteEverything(context, store)
-        store = BcsrStore.open(context)
-        recommender = Recommender() // learned preferences are personal data too (AC-FR-25)
+        store.recommendations().forEach { row ->
+            // an unknown value (old enum name, bad row) is skipped, never a crash at start
+            row.feedback?.let { f -> runCatching { Feedback.valueOf(f) }.getOrNull() }?.let { r.feedback(row.stateId, row.itemId, it) }
+        }
     }
 
     companion object {
