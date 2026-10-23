@@ -24,8 +24,21 @@ class RetentionTest {
     @Test fun schemaHasEveryTableAndNoPackageNames() {
         Retention.ALL_TABLES.forEach { t -> assertTrue(t, SCHEMA.any { it.contains("EXISTS $t ") }) }
         assertTrue(SCHEMA.none { it.contains("package_name") }) // TH-09: hash + category only
-        // column names are lower case, SQL types upper case, so these never match "TEXT"
-        assertTrue(SCHEMA.none { Regex("\\b(lat|lng|lon|latitude|longitude|coord\\w*|location|gps)\\b").containsMatchIn(it) }) // AC-PR-04
-        assertTrue(SCHEMA.none { Regex("\\b(title|text|body|content|message)\\b").containsMatchIn(it) }) // AC-PR-01
+    }
+
+    /** AC-PR-01 / AC-PR-04: no column named for message text or location. Opaque json/value columns need inspection (TC-PR-04b). */
+    @Test fun noContentOrLocationColumns() {
+        assertEquals(emptyList<String>(), SCHEMA.flatMap(::columns).filter(::forbidden))
+        assertTrue(listOf("home_lat", "Latitude", "gps", "notif_text", "msg_body", "coord_x").all(::forbidden))
+        assertTrue(listOf("ts", "ts_end", "package_hash", "category", "state_id", "json", "gap_flag", "valence").none(::forbidden))
+        assertEquals(listOf("ts", "category", "count"), columns("CREATE TABLE IF NOT EXISTS notif_count (ts INTEGER NOT NULL, category TEXT, count INTEGER)"))
+    }
+
+    private fun columns(ddl: String) = ddl.substringAfter("(").substringBeforeLast(")").split(",").map { it.trim().substringBefore(" ") }
+
+    // whole snake_case parts only: catches home_lat, not "category"
+    private fun forbidden(column: String) = column.lowercase().split("_").any {
+        it in setOf("lat", "lng", "lon", "latitude", "longitude", "location", "gps", "title", "text", "body", "content", "message", "msg") ||
+            it.startsWith("coord")
     }
 }

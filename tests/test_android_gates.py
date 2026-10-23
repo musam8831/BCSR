@@ -108,13 +108,21 @@ class AndroidGatesTest(unittest.TestCase):
         self.assertTrue(any("reachable" in f for f in g.ui_failures(EN, UR, SRC.replace("go(Screen.About)", "go(Screen.Home)"), CHK)))
 
     def test_safety_opens_only_from_explicit_controls(self):
-        # AC-SR-03
-        auto = SRC.replace("Screen.Safety -> SafetyScreen(c, go)", "Screen.Safety -> SafetyScreen(c, go)\n            else -> if (c.recommender == null) go(Screen.Safety)")
-        self.assertTrue(any("AC-SR-03" in f for f in g.ui_failures(EN, UR, auto, CHK)))
-        relabelled = SRC.replace("{ go(Screen.Safety) }, Modifier.fillMaxWidth()) { Text(stringResource(R.string.need_help))",
-                                 "{ go(Screen.Safety) }, Modifier.fillMaxWidth()) { Text(stringResource(R.string.app_name))")
-        self.assertTrue(any("AC-SR-03" in f for f in g.ui_failures(EN, UR, relabelled, CHK)))
-        self.assertTrue(any("AC-SR-03" in f for f in g.ui_failures(EN, UR, SRC, CHK + "\nfun x(go: (Screen) -> Unit) = go(Screen.Safety)\n")))
+        # AC-SR-03 (AG-16 on PR #29: indirect refs, other files, intents, missing entries, label elsewhere)
+        def fails(main=SRC, chk=CHK, **extra):
+            return [f for f in g.source_failures({"MainActivity.kt": main, "CheckIns.kt": chk, **extra}) if "AC-SR-03" in f]
+        self.assertEqual(g.source_failures({"MainActivity.kt": SRC, "CheckIns.kt": CHK}), [])
+        disp = "Screen.Safety -> SafetyScreen(c, go)"
+        need = "Button({ go(Screen.Safety) }, Modifier.fillMaxWidth()) { Text(stringResource(R.string.need_help)) }"
+        self.assertTrue(fails(SRC.replace(disp, disp + "\n            else -> go(if (x) Screen.Safety else Screen.Home)")))
+        self.assertTrue(fails(SRC.replace(disp, disp + "\n            else -> { val s = Screen.Safety; go(s) }")))
+        self.assertTrue(fails(**{"Other.kt": "fun f(go: (Screen) -> Unit) = go(Screen.Safety)"}))
+        self.assertTrue(fails(chk=CHK + '\nval i = Intent().putExtra("open_safety", true)'))
+        self.assertTrue(fails(SRC.replace(need, "")))  # an entry removed
+        self.assertTrue(fails(SRC.replace(need, need.replace("need_help", "app_name"))))
+        self.assertTrue(fails(SRC.replace(need, need.replace("R.string.need_help))", "R.string.app_name)); Text(stringResource(R.string.need_help))"))))
+        self.assertTrue(fails(SRC.replace("Screen.Safety", "Screen.Help")))  # renamed: no entries found
+        self.assertTrue(any("AC-PR-01" in f for f in g.source_failures({"X.kt": "val m = getSystemService(MediaProjectionManager::class.java)"})))
 
     def test_notification_rules(self):
         self.assertEqual(g.ui_failures(EN, UR, SRC, CHK), [])
