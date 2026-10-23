@@ -50,6 +50,7 @@ import androidx.compose.ui.unit.sp
 import androidx.core.content.FileProvider
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.JsonObject
@@ -308,7 +309,10 @@ private fun HelplineButtons() {
 private fun SafetyScreen(c: AppContainer, go: (Screen) -> Unit) {
     // off the main thread so a running VACUUM never delays the helplines (S-11)
     LaunchedEffect(Unit) {
-        withContext(Dispatchers.IO) { c.settings().apply { safetyCount += 1; quietAfterSafetyUntil = System.currentTimeMillis() + 24 * 3_600_000L } }
+        // NonCancellable: leaving the screen at once must not skip the 24 h quiet (SAF-01 §3); a closed store must not crash it
+        withContext(NonCancellable + Dispatchers.IO) {
+            runCatching { c.settings().apply { safetyCount += 1; quietAfterSafetyUntil = System.currentTimeMillis() + 24 * 3_600_000L } }
+        }
     }
     var safe by remember { mutableStateOf(false) }
     Title(stringResource(R.string.safety_heading))
