@@ -59,6 +59,7 @@ class CheckInWorker(ctx: Context, params: WorkerParameters) : CoroutineWorker(ct
         val c = (applicationContext as BcsrApp).container
         val s = c.settings()
         val now = System.currentTimeMillis()
+        BcsrStore.purgeExports(java.io.File(applicationContext.cacheDir, "export"), now) // before retention, so retry() cannot skip it
         try {
             if (Retention.due(s.lastRetentionMs, now)) {
                 c.store.runRetention(now)
@@ -67,7 +68,6 @@ class CheckInWorker(ctx: Context, params: WorkerParameters) : CoroutineWorker(ct
         } catch (e: IllegalStateException) {
             return Result.retry() // store closed by a delete-all during this run
         }
-        BcsrStore.purgeExports(java.io.File(applicationContext.cacheDir, "export"), now)
         return Result.success() // feature windows arrive with T-M5-003
     }
 

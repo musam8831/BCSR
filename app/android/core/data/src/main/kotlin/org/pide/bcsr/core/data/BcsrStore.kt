@@ -103,7 +103,8 @@ class BcsrStore private constructor(private val context: Context, private val db
          */
         /** TH-10 (S-03): delete exports older than [maxAgeMs]; a fresh one may still be read by the app it was shared with. */
         fun purgeExports(dir: File, nowMs: Long, maxAgeMs: Long = 3_600_000L) =
-            dir.listFiles()?.filter { nowMs - it.lastModified() > maxAgeMs }?.forEach { it.delete() }
+            // a future time means the clock moved back: purge that too
+            dir.listFiles()?.filter { nowMs - it.lastModified() > maxAgeMs || it.lastModified() > nowMs }?.forEach { it.delete() }
 
         fun deleteEverything(context: Context, store: BcsrStore?) {
             store?.close()

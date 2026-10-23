@@ -25,8 +25,9 @@ class RetentionTest {
         val dir = kotlin.io.path.createTempDirectory("export").toFile()
         val old = dir.resolve("bcsr-export-1.txt").apply { writeText("x"); setLastModified(now - 2 * 3_600_000L) }
         val fresh = dir.resolve("bcsr-export-2.txt").apply { writeText("x"); setLastModified(now - 60_000L) }
+        val future = dir.resolve("bcsr-export-3.txt").apply { writeText("x"); setLastModified(now + 3_600_000L) }
         BcsrStore.purgeExports(dir, now)
-        assertTrue(!old.exists() && fresh.exists())
+        assertTrue(!old.exists() && fresh.exists() && !future.exists())
         BcsrStore.purgeExports(dir.resolve("missing"), now) // no directory yet: no crash
         dir.deleteRecursively()
     }
