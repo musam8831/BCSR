@@ -20,6 +20,7 @@ class BcsrStore private constructor(private val context: Context, private val db
 
     fun record(table: String, columns: List<String>, values: List<Any?>) {
         require(table in Retention.ALL_TABLES) { "unknown table $table" }
+        require(columns.all { COLUMN.matches(it) } && columns.size == values.size) { "bad columns $columns" } // names go into SQL
         val sql = "INSERT INTO $table (${columns.joinToString()}) VALUES (${columns.joinToString { "?" }})"
         db.execSQL(sql, values.toTypedArray())
     }
@@ -73,7 +74,7 @@ class BcsrStore private constructor(private val context: Context, private val db
                 w.write("## $t\n")
                 db.rawQuery("SELECT * FROM $t", arrayOf<String>()).use { c ->
                     w.write(c.columnNames.joinToString(",") + "\n")
-                    while (c.moveToNext()) w.write((0 until c.columnCount).joinToString(",") { c.getString(it) ?: "" } + "\n")
+                    while (c.moveToNext()) w.write((0 until c.columnCount).joinToString(",") { csv(c.getString(it)) } + "\n")
                 }
             }
         }
@@ -86,6 +87,7 @@ class BcsrStore private constructor(private val context: Context, private val db
         const val DB_NAME = "bcsr.db"
         private const val KEY_ALIAS = "bcsr-db-key"
         private const val WRAPPED_FILE = "bcsr-db.key"
+        private val COLUMN = Regex("[a-z_]+")
 
         fun open(context: Context): BcsrStore {
             System.loadLibrary("sqlcipher")
@@ -99,6 +101,11 @@ class BcsrStore private constructor(private val context: Context, private val db
          * Delete-all (ARC-04 §3, AC-FR-25): close, delete the database and its journal files, the wrapped passphrase
          * and the Keystore key. Callers also clear their own caches and return to onboarding.
          */
+        /** TH-10 (S-03): delete exports older than [maxAgeMs]; a fresh one may still be read by the app it was shared with. */
+        fun purgeExports(dir: File, nowMs: Long, maxAgeMs: Long = 3_600_000L) =
+            // a future time means the clock moved back: purge that too
+            dir.listFiles()?.filter { nowMs - it.lastModified() > maxAgeMs || it.lastModified() > nowMs }?.forEach { it.delete() }
+
         fun deleteEverything(context: Context, store: BcsrStore?) {
             store?.close()
             val f = context.getDatabasePath(DB_NAME)
@@ -119,7 +126,10 @@ class BcsrStore private constructor(private val context: Context, private val db
             }
             val pass = ByteArray(32).also { SecureRandom().nextBytes(it) }
             val cipher = Cipher.getInstance("AES/GCM/NoPadding").apply { init(Cipher.ENCRYPT_MODE, key) }
-            wrapped.writeBytes(cipher.iv + cipher.doFinal(pass))
+            // write then rename, so a crash mid-write cannot leave a half key that locks the database for good
+            val tmp = File(context.filesDir, "$WRAPPED_FILE.tmp")
+            java.io.FileOutputStream(tmp).use { it.write(cipher.iv + cipher.doFinal(pass)); it.fd.sync() } // on disk before the rename
+            check(tmp.renameTo(wrapped)) { "could not store the database key" }
             return pass
         }
 
@@ -137,6 +147,13 @@ class BcsrStore private constructor(private val context: Context, private val db
             }.generateKey()
         }
     }
+}
+
+/** RFC 4180 field: quoted when it holds a comma, quote or line break, so free text cannot shift columns in the export. */
+internal fun csv(v: String?): String = when {
+    v == null -> ""
+    v.any { it == ',' || it == '"' || it == '\n' || it == '\r' } -> "\"" + v.replace("\"", "\"\"") + "\""
+    else -> v
 }
 
 data class RecommendationRow(val ts: Long, val itemId: String, val stateId: String, val feedback: String?)

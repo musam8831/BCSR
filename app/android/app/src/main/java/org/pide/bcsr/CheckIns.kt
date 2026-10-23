@@ -14,6 +14,8 @@ import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
+import org.pide.bcsr.core.data.BcsrStore
+import org.pide.bcsr.core.data.Retention
 import org.pide.bcsr.core.inference.ContextState
 import org.pide.bcsr.core.inference.StateEstimate
 import org.pide.bcsr.core.policy.Decision
@@ -52,7 +54,22 @@ fun mayPostCheckIn(
  * Until :core:sensing exists (T-M5-003, after G2) there are no feature windows, so this posts nothing.
  */
 class CheckInWorker(ctx: Context, params: WorkerParameters) : CoroutineWorker(ctx, params) {
-    override suspend fun doWork(): Result = Result.success() // feature windows arrive with T-M5-003
+    override suspend fun doWork(): Result {
+        // AC-PR-06: the daily retention job rides on this worker (T-M5-019 finding S-01)
+        val c = (applicationContext as BcsrApp).container
+        val s = c.settings()
+        val now = System.currentTimeMillis()
+        BcsrStore.purgeExports(java.io.File(applicationContext.cacheDir, "export"), now) // before retention, so retry() cannot skip it
+        try {
+            if (Retention.due(s.lastRetentionMs, now)) {
+                c.store.runRetention(now)
+                s.lastRetentionMs = now
+            }
+        } catch (e: IllegalStateException) {
+            return Result.retry() // store closed by a delete-all during this run
+        }
+        return Result.success() // feature windows arrive with T-M5-003
+    }
 
     companion object {
         fun schedule(context: Context) = WorkManager.getInstance(context).enqueueUniquePeriodicWork(

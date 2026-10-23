@@ -13,6 +13,32 @@ class RetentionTest {
         assertEquals(10L * 86_400_000L, Retention.derivedCutoff(now))
     }
 
+    @Test fun exportFieldsAreQuoted() { // T-M5-019 S-04
+        assertEquals("", csv(null))
+        assertEquals("CS-02", csv("CS-02"))
+        assertEquals("\"a,b\"", csv("a,b"))
+        assertEquals("\"say \"\"hi\"\"\"", csv("say \"hi\""))
+        assertEquals("\"x\ny\"", csv("x\ny"))
+    }
+
+    @Test fun oldExportsArePurgedFreshOnesKept() { // T-M5-019 S-03
+        val dir = kotlin.io.path.createTempDirectory("export").toFile()
+        val old = dir.resolve("bcsr-export-1.txt").apply { writeText("x"); setLastModified(now - 2 * 3_600_000L) }
+        val fresh = dir.resolve("bcsr-export-2.txt").apply { writeText("x"); setLastModified(now - 60_000L) }
+        val future = dir.resolve("bcsr-export-3.txt").apply { writeText("x"); setLastModified(now + 3_600_000L) }
+        BcsrStore.purgeExports(dir, now)
+        assertTrue(!old.exists() && fresh.exists() && !future.exists())
+        BcsrStore.purgeExports(dir.resolve("missing"), now) // no directory yet: no crash
+        dir.deleteRecursively()
+    }
+
+    @Test fun dueDaily() {
+        assertTrue(Retention.due(0L, now)) // never run
+        assertTrue(!Retention.due(now - 3_600_000L, now))
+        assertTrue(Retention.due(now - 86_400_000L, now))
+        assertTrue(Retention.due(now + 3_600_000L, now)) // clock moved back
+    }
+
     @Test fun statementsCoverRawAndDerivedButNotLabels() {
         val s = Retention.deleteStatements(now)
         assertEquals(Retention.RAW_TABLES.size + Retention.DERIVED_TABLES.size, s.size)
