@@ -47,6 +47,11 @@ class HelplinesTest {
         assertTrue(shownHelplines(today, devBuild = true, directory = unverified).isEmpty())
     }
 
+    @Test fun futureCheckDateIsNotFresh() { // AG-10 R-12
+        val future = listOf(Helpline("M", "1166", Purpose.MENTAL_HEALTH, Verification.VERIFIED, today.plusDays(10)))
+        assertTrue(shownHelplines(today, devBuild = true, directory = future).isEmpty())
+    }
+
     @Test fun fullyVerifiedDirectoryUnblocks() {
         val good = listOf(
             Helpline("E", "1122", Purpose.EMERGENCY, Verification.VERIFIED, today),
