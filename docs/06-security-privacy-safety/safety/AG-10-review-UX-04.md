@@ -158,8 +158,8 @@ At default font size this fits on any phone. At the largest system font on a sma
 
 | Finding | Status |
 |---|---|
-| R-1 | Implemented. Screen state is `rememberSaveable` and `Screen` is `Serializable`. The composition key is a saved delete-all generation, not the container, so state survives both rotation/configuration changes and process death (e.g. while in the dialer). There is no automated test; the device check comes with T-M5-014. **The Project Lead accepts (Q7).** |
-| R-3 | Implemented. The du'a appears only after the user taps the signed `offer_dua` text, which serves as the button label; there is no separate Yes/No. **The Project Lead accepts (Q2).** |
+| R-1 | Implemented. Screen state is `rememberSaveable` and `Screen` is `Serializable`. The composition key is a saved delete-all generation, not the container, so state survives both rotation/configuration changes and process death (e.g. while in the dialer). There is no automated test; the device check comes with T-M5-014. **Awaiting the Project Lead's acceptance (Q7).** |
+| R-3 | Implemented. The du'a appears only after the user taps the signed `offer_dua` text, which serves as the button label; there is no separate Yes/No. **Awaiting the Project Lead's acceptance (Q2).** |
 | R-9 | Fixed: UX-04 now points to this review. |
 | R-12 | Implemented. The build fails if any directory check date is in the future (`directoryHasNoFutureCheckDates`). The runtime stays lenient, so a phone with a wrong clock does not hide a verified line. |
 | R-2, R-4, R-5, R-7, R-8, R-6, R-10, R-11, R-13 | Open, as above (Project Lead questions Q1, Q3–Q6; device checks with T-M5-014) |
