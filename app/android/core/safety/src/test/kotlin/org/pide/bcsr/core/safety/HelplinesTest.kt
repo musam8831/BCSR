@@ -47,6 +47,11 @@ class HelplinesTest {
         assertTrue(shownHelplines(today, devBuild = true, directory = unverified).isEmpty())
     }
 
+    /** AG-10 R-12: a check date in the future is a data typo; fail the build instead of hiding lines at runtime. */
+    @Test fun directoryHasNoFutureCheckDates() {
+        assertTrue(PAKISTAN.filter { it.checkedOn.isAfter(LocalDate.now()) }.toString(), PAKISTAN.none { it.checkedOn.isAfter(LocalDate.now()) })
+    }
+
     @Test fun fullyVerifiedDirectoryUnblocks() {
         val good = listOf(
             Helpline("E", "1122", Purpose.EMERGENCY, Verification.VERIFIED, today),

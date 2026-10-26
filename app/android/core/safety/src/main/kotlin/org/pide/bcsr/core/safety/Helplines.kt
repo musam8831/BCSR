@@ -23,6 +23,7 @@ val PAKISTAN: List<Helpline> = listOf(
 
 const val MAX_AGE_DAYS = 90L // SR-05 / AC-SR-05: reviewed at least every 3 months
 
+// lenient on a future date: a wrong phone clock must not hide a verified line; typos are caught at build time (HelplinesTest, AG-10 R-12)
 private fun fresh(h: Helpline, today: LocalDate) = ChronoUnit.DAYS.between(h.checkedOn, today) <= MAX_AGE_DAYS
 
 /**

@@ -37,6 +37,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -71,7 +72,7 @@ import java.time.LocalTime
 import java.time.ZoneId
 
 /** Screens as plain Compose state (no navigation library needed for six screens). */
-sealed interface Screen {
+sealed interface Screen : java.io.Serializable { // saveable: rotation must not drop the user off the safety screen (AG-10 R-1)
     data object Onboarding : Screen
     data object Home : Screen
     data object CheckIn : Screen
@@ -88,11 +89,15 @@ class MainActivity : ComponentActivity() {
         val app = application as BcsrApp
         setContent {
             var c by remember { mutableStateOf(app.container) }
-            // delete-all builds a new container (store and recommender, AC-FR-25); key() resets screen state to onboarding
-            val fresh = { app.startFresh(); c = app.container }
+            // Compose state, so a retry that turns out permanent switches Try again to Start fresh at once (AG-12)
+            var permanent by remember { mutableStateOf(app.lockedPermanently) }
+            // delete-all builds a new container (AC-FR-25) and bumps the generation, so key() resets screen state to onboarding.
+            // A saveable number, not the container, so screen state also survives process death (AG-16 on PR #35, R-1).
+            var generation by rememberSaveable { mutableIntStateOf(0) }
+            val fresh = { app.startFresh(); c = app.container; permanent = app.lockedPermanently; generation += 1 }
             MaterialTheme {
-                c?.let { key(it) { BcsrUi(it, fresh) } }
-                    ?: Locked(app.lockedPermanently, startFresh = fresh, tryAgain = { app.openContainer(); c = app.container })
+                c?.let { key(generation) { BcsrUi(it, fresh) } }
+                    ?: Locked(permanent, startFresh = fresh, tryAgain = { app.openContainer(); c = app.container; permanent = app.lockedPermanently })
             }
         }
     }
@@ -100,7 +105,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 private fun BcsrUi(c: AppContainer, deleteAll: () -> Unit) {
-    var screen by remember { mutableStateOf(if (c.settings().onboarded) Screen.Home else Screen.Onboarding) }
+    var screen by rememberSaveable { mutableStateOf(if (c.settings().onboarded) Screen.Home else Screen.Onboarding) }
     val go: (Screen) -> Unit = { screen = it }
     BackHandler(enabled = screen != Screen.Home && screen != Screen.Onboarding) { screen = Screen.Home }
     Column(Modifier.fillMaxSize().padding(16.dp).verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(12.dp)) {
@@ -308,13 +313,17 @@ private fun HelplineButtons() {
 @Composable
 private fun SafetyScreen(c: AppContainer, go: (Screen) -> Unit) {
     // off the main thread so a running VACUUM never delays the helplines (S-11)
+    var counted by rememberSaveable { mutableStateOf(false) } // once per opening, not again after a rotation
     LaunchedEffect(Unit) {
+        if (counted) return@LaunchedEffect
+        counted = true
         // NonCancellable: leaving the screen at once must not skip the 24 h quiet (SAF-01 §3); a closed store must not crash it
         withContext(NonCancellable + Dispatchers.IO) {
             runCatching { c.settings().apply { safetyCount += 1; quietAfterSafetyUntil = System.currentTimeMillis() + 24 * 3_600_000L } }
         }
     }
-    var safe by remember { mutableStateOf(false) }
+    var safe by rememberSaveable { mutableStateOf(false) }
+    var showDua by rememberSaveable { mutableStateOf(false) }
     Title(stringResource(R.string.safety_heading))
     Text(stringResource(R.string.safety_body))
     HelplineButtons()
@@ -322,7 +331,11 @@ private fun SafetyScreen(c: AppContainer, go: (Screen) -> Unit) {
     else {
         // Only after help is offered, and only an approved item mapped to the crisis state (SAF-01 §3).
         val dua = c.catalogue.approvedItemsFor("CS-10").firstOrNull()
-        if (dua != null) { Text(stringResource(R.string.offer_dua)); ItemCard(c, dua) }
+        // the du'a is shown only if the user says yes to the signed offer (SAF-01 §3-§4, AG-10 R-3)
+        if (dua != null) {
+            if (!showDua) OutlinedButton({ showDua = true }, Modifier.fillMaxWidth()) { Text(stringResource(R.string.offer_dua)) }
+            else ItemCard(c, dua)
+        }
         TextButton({ go(Screen.Home) }) { Text(stringResource(R.string.back)) }
     }
     Text(stringResource(R.string.not_medical), style = MaterialTheme.typography.bodySmall)
