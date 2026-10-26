@@ -47,9 +47,9 @@ class HelplinesTest {
         assertTrue(shownHelplines(today, devBuild = true, directory = unverified).isEmpty())
     }
 
-    @Test fun futureCheckDateIsNotFresh() { // AG-10 R-12
-        val future = listOf(Helpline("M", "1166", Purpose.MENTAL_HEALTH, Verification.VERIFIED, today.plusDays(10)))
-        assertTrue(shownHelplines(today, devBuild = true, directory = future).isEmpty())
+    /** AG-10 R-12: a check date in the future is a data typo; fail the build instead of hiding lines at runtime. */
+    @Test fun directoryHasNoFutureCheckDates() {
+        assertTrue(PAKISTAN.filter { it.checkedOn.isAfter(LocalDate.now()) }.toString(), PAKISTAN.none { it.checkedOn.isAfter(LocalDate.now()) })
     }
 
     @Test fun fullyVerifiedDirectoryUnblocks() {

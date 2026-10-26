@@ -91,10 +91,12 @@ class MainActivity : ComponentActivity() {
             var c by remember { mutableStateOf(app.container) }
             // Compose state, so a retry that turns out permanent switches Try again to Start fresh at once (AG-12)
             var permanent by remember { mutableStateOf(app.lockedPermanently) }
-            // delete-all builds a new container (store and recommender, AC-FR-25); key() resets screen state to onboarding
-            val fresh = { app.startFresh(); c = app.container; permanent = app.lockedPermanently }
+            // delete-all builds a new container (AC-FR-25) and bumps the generation, so key() resets screen state to onboarding.
+            // A saveable number, not the container, so screen state also survives process death (AG-16 on PR #35, R-1).
+            var generation by rememberSaveable { mutableIntStateOf(0) }
+            val fresh = { app.startFresh(); c = app.container; permanent = app.lockedPermanently; generation += 1 }
             MaterialTheme {
-                c?.let { key(it) { BcsrUi(it, fresh) } }
+                c?.let { key(generation) { BcsrUi(it, fresh) } }
                     ?: Locked(permanent, startFresh = fresh, tryAgain = { app.openContainer(); c = app.container; permanent = app.lockedPermanently })
             }
         }

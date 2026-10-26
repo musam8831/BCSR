@@ -153,3 +153,15 @@ At default font size this fits on any phone. At the largest system font on a sma
 
 ---
 *AG-10 does not approve its own review and signs nothing. Decisions on R-1..R-13 and Q1..Q7 belong to the Project Lead (D-011).*
+
+## Status after PR #35 (added by the coordinator; AG-10's findings above are unchanged)
+
+| Finding | Status |
+|---|---|
+| R-1 | Implemented. Screen state is `rememberSaveable` and `Screen` is `Serializable`. The composition key is a saved delete-all generation, not the container, so state survives both rotation/configuration changes and process death (e.g. while in the dialer). There is no automated test; the device check comes with T-M5-014. **The Project Lead accepts (Q7).** |
+| R-3 | Implemented. The du'a appears only after the user taps the signed `offer_dua` text, which serves as the button label; there is no separate Yes/No. **The Project Lead accepts (Q2).** |
+| R-9 | Fixed: UX-04 now points to this review. |
+| R-12 | Implemented. The build fails if any directory check date is in the future (`directoryHasNoFutureCheckDates`). The runtime stays lenient, so a phone with a wrong clock does not hide a verified line. |
+| R-2, R-4, R-5, R-7, R-8, R-6, R-10, R-11, R-13 | Open, as above (Project Lead questions Q1, Q3–Q6; device checks with T-M5-014) |
+
+Line numbers above refer to the code before PR #35.

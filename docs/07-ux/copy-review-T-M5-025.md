@@ -53,3 +53,7 @@ Help comes before the destructive or retry action, as in UX-04. That order is ri
 **Approve the English copy as signed in SAF-01 v1.1. No change is required before release.** One optional change, to `locked_body` (shorter sentences, a clearer "it"), is suggested for the T-M5-020 microcopy pass. Making it would need a new SAF-01 §4 signature and a matching update to the Urdu draft. `export_failed` is approved and needs no signature. The two observations in §2 go to AG-11. They are about behaviour, not copy.
 
 AG-12 does not approve its own work. This review goes to AG-16 under HC-03.
+
+## Status after PR #35 (added by the coordinator)
+- Behaviour finding 1 is half fixed. A retry that turns out permanent now switches Try again to Start fresh at once. A retry that fails again temporarily still gives no visible feedback; that needs new signed copy (T-M5-020).
+- Line references above are to the code before PR #35. `Locked` is now at MainActivity.kt ~:270, `Title` at ~:123, and the export Toast at ~:370.
