@@ -43,7 +43,7 @@
     <string name="state_lonely">Lonely</string>
     <string name="state_tired">Tired</string>
     <string name="state_grateful">Grateful</string>
-    <string name="state_not_safe">I\'m not safe</string>
+    <string name="state_not_safe">I\'m not safe / I might hurt myself</string>
     <string name="save">Save</string>
 
     <!-- UX-03 recommendation -->

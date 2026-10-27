@@ -109,6 +109,9 @@ private fun BcsrUi(c: AppContainer, deleteAll: () -> Unit) {
     val go: (Screen) -> Unit = { screen = it }
     BackHandler(enabled = screen != Screen.Home && screen != Screen.Onboarding) { screen = Screen.Home }
     Column(Modifier.fillMaxSize().padding(16.dp).verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+        // E2: "I need help now" one tap from every screen, onboarding included (AG-10 R-2, Project Lead 2026-10-27)
+        if (screen != Screen.Safety)
+            Button({ go(Screen.Safety) }, Modifier.fillMaxWidth()) { Text(stringResource(R.string.need_help)) }
         when (val s = screen) {
             Screen.Onboarding -> Onboarding(c) { go(Screen.Home) }
             Screen.Home -> Home(go)
@@ -167,7 +170,6 @@ private fun Onboarding(c: AppContainer, done: () -> Unit) {
 private fun Home(go: (Screen) -> Unit) {
     Title(stringResource(R.string.app_name))
     Button({ go(Screen.CheckIn) }, Modifier.fillMaxWidth()) { Text(stringResource(R.string.how_am_i)) }
-    Button({ go(Screen.Safety) }, Modifier.fillMaxWidth()) { Text(stringResource(R.string.need_help)) } // one tap (UX-04)
     OutlinedButton({ go(Screen.Library) }, Modifier.fillMaxWidth()) { Text(stringResource(R.string.library)) }
     OutlinedButton({ go(Screen.Privacy) }, Modifier.fillMaxWidth()) { Text(stringResource(R.string.privacy)) }
     OutlinedButton({ go(Screen.About) }, Modifier.fillMaxWidth()) { Text(stringResource(R.string.about)) }
@@ -209,9 +211,12 @@ private fun CheckIn(c: AppContainer, go: (Screen) -> Unit) {
 private fun RecommendationScreen(c: AppContainer, s: Screen.Recommend, go: (Screen) -> Unit) {
     val now = remember(s) { LocalDateTime.now() }
     val nowMs = remember(s) { System.currentTimeMillis() } // same ts for the stored row and its feedback
+    val quiet = remember(s) { nowMs < c.settings().quietAfterSafetyUntil } // no recommendation for 24 h after the safety screen (SAF-01 §3)
+    if (quiet) { // signed copy only (SAF-01 §4 Body); the reason is not "no du'a" (AG-10 R-4)
+        Text(stringResource(R.string.safety_body)); HelplineButtons(); TextButton({ go(Screen.Home) }) { Text(stringResource(R.string.back)) }; return
+    }
     val rec = remember(s) {
-        if (nowMs < c.settings().quietAfterSafetyUntil) null // no recommendation for 24 h after the safety screen (SAF-01 §3)
-        else {
+        run {
             val shown = c.store.recommendations().associate { it.itemId to LocalDateTime.ofInstant(java.time.Instant.ofEpochMilli(it.ts), ZoneId.systemDefault()) }
             val items = c.catalogue.approvedItemsFor(s.stateId).map { Candidate(it.id, it.states, it.approved) }
             c.recommender.recommend(s.stateId, s.words, now, items, shown)?.also {

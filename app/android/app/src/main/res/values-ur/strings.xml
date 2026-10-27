@@ -16,6 +16,9 @@
     <string name="try_again">دوبارہ کوشش کریں</string>
     <string name="start_fresh">نئے سرے سے شروع کریں</string>
     <string name="start_fresh_confirm">اس سے یہ ڈیٹا حذف ہو جائے گا اور BCSR شروع سے دوبارہ کھلے گا۔ یہ واپس نہیں ہو سکتا۔</string>
+    <!-- AG-10 R-7 draft: native-speaker check before release; gender-neutral wording -->
+    <string name="need_help">مجھے ابھی مدد چاہیے</string>
+    <string name="state_not_safe">میں محفوظ نہیں / مجھے خود کو نقصان پہنچانے کا خطرہ ہے</string>
     <string name="export_failed">ایکسپورٹ مکمل نہیں ہوا۔ براہِ کرم دوبارہ کوشش کریں۔</string>
     <string name="cancel">منسوخ کریں</string>
 </resources>

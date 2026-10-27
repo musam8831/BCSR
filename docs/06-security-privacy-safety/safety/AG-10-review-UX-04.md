@@ -166,3 +166,21 @@ At default font size this fits on any phone. At the largest system font on a sma
 | R-2, R-4, R-5, R-7, R-8, R-6, R-10, R-11 | Open, as above (Project Lead questions Q1, Q3–Q6; device checks with T-M5-014) |
 
 Line numbers above refer to the code before PR #35.
+
+## Project Lead decisions (2026-10-27)
+
+In chat, the Project Lead replied **"go with that"** to this recommendation from the coordinator, quoted verbatim:
+
+> accept R-1 and R-3; R-2 yes, add help to every screen; R-4 fix the check-in wording; R-5 exclude safety visits from the export; R-7 add Urdu labels; R-8 drop the follow-up for now
+
+| Finding | Decision | Implemented |
+|---|---|---|
+| R-1 (Q7) | Accepted | PR #35 |
+| R-3 (Q2) | Accepted | PR #35 |
+| R-2 | "I need help now" on every screen | PR #37: one persistent control above every screen except the safety screen; the Home-only button was removed, so there are still exactly two entries (gate-checked) |
+| R-4 | Fix the check-in during the 24 h quiet | PR #37: the screen shows the signed Body line and the helpline buttons instead of "no du'a available". No new copy. Adding the helpline buttons interprets "fix the check-in wording" (AG-10's Q3 suggestion); signed in SAF-01 v1.2 |
+| R-5 | Leave safety use out of the export | PR #37: `safety_count` and `safety_until` are skipped in the export |
+| R-7 | Urdu labels | PR #37: draft Urdu for `need_help` and `state_not_safe` (native-speaker check open, tracked with T-M5-020). The English check-in label now follows the already-signed SAF-01 §2 E1 wording; Q5 was not separately answered |
+| R-8 | Drop the next-day follow-up for now | Nothing to remove in code (it was never built) |
+
+R-2, R-4, R-5 and R-8 change what SAF-01 describes. They are written up in `SAF-01-v1.2-proposal.md`, which the Project Lead signed 2026-10-27 (in chat: "sign SAF-01 v1.2"); SAF-01 is now v1.2.

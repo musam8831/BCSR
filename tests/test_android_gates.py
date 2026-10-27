@@ -122,6 +122,8 @@ class AndroidGatesTest(unittest.TestCase):
         self.assertTrue(fails(SRC.replace(need, need.replace("need_help", "app_name"))))
         self.assertTrue(fails(SRC.replace(need, need.replace("R.string.need_help))", "R.string.app_name)); Text(stringResource(R.string.need_help))"))))
         self.assertTrue(fails(SRC.replace("Screen.Safety", "Screen.Help")))  # renamed: no entries found
+        # R-2 guard is allowed only as the exact hide-on-safety line, never as a way in
+        self.assertTrue(fails(SRC.replace("if (screen != Screen.Safety)", "if (screen == Screen.Safety)")))
         # AG-16 round 2: a direct call to the composable, and the dispatch in a second MainActivity.kt
         self.assertTrue(fails(SRC.replace(need, need + "\n    if (autoCrisis) SafetyScreen(c, go)")))
         self.assertTrue(fails(SRC.replace(need, need + "\n    if (autoCrisis) SafetyScreen (c, go)")))  # AG-16 round 3

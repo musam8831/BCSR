@@ -41,6 +41,11 @@ class RetentionTest {
         assertTrue(!isPermanentKeyFailure(java.security.ProviderException("Keystore operation failed")))
     }
 
+    @Test fun exportLeavesOutSafetyUse() { // AG-10 R-5, SAF-01 v1.2 §1.5
+        assertTrue(!exported("setting", "safety_count") && !exported("setting", "safety_until"))
+        assertTrue(exported("setting", "city") && exported("label", "safety_count")) // only setting keys are filtered
+    }
+
     @Test fun dueDaily() {
         assertTrue(Retention.due(0L, now)) // never run
         assertTrue(!Retention.due(now - 3_600_000L, now))
