@@ -55,6 +55,8 @@ NOT_MEDICAL_SCREENS = ("Onboarding", "SafetyScreen", "About", "Locked")  # Locke
 SAFETY_ENTRY = re.compile(r"^\s*(?:Outlined)?Button\(\{ go\(Screen\.Safety\) \}, Modifier\.fillMaxWidth\(\)\) "
                           r"\{ Text\(stringResource\(R\.string\.(need_help|state_not_safe)\)\) \}\s*$")
 SAFETY_DISPATCH = re.compile(r"^\s*Screen\.Safety -> SafetyScreen\(c, go\)\s*$")
+# R-2: the persistent help control is hidden only on the safety screen itself; this guard never opens the pathway
+SAFETY_GUARD = re.compile(r"^\s*if \(screen != Screen\.Safety\)\s*$")
 SAFETY_DEF = re.compile(r"^private fun SafetyScreen\(")
 MAIN_ACTIVITY = "main/java/org/pide/bcsr/MainActivity.kt"  # the only file allowed to hold the dispatch
 SAFETY_INTENT =re.compile(r'putExtra\(\s*"[^"]*safety|EXTRA_\w*SAFETY', re.I)
@@ -173,6 +175,8 @@ def source_failures(sources):
             if re.search(r"\bSafetyScreen\b", line) and not SAFETY_DEF.match(line) and not SAFETY_DISPATCH.match(line):
                 fails.append(f"{name}: SafetyScreen used outside the dispatch (AC-SR-03): {line.strip()}")
             if "Screen.Safety" not in line:
+                continue
+            if name == MAIN_ACTIVITY and SAFETY_GUARD.match(line):
                 continue
             if name == MAIN_ACTIVITY and SAFETY_DISPATCH.match(line):
                 dispatch += 1

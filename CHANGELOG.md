@@ -5,6 +5,7 @@ All notable changes follow [Keep a Changelog](https://keepachangelog.com/) conve
 ## [Unreleased]
 
 ### Changed
+- UX-04 decisions (Project Lead, 2026-10-27, "go with that"): "I need help now" on every screen (R-2); a check-in during the 24 h quiet shows the signed Body line and the helplines (R-4); safety use is left out of the export (R-5); Urdu drafts for the entry labels, and the check-in label matches SAF-01 E1 (R-7); no follow-up (R-8). The SAF-01 v1.2 proposal awaits signature.
 - UX-04 R-13: gate check that the safety screen shows the helplines before "I'm safe for now" and before any du'a (SAF-01 §3).
 - T-M5-025 / UX-04: AG-12 copy review (approved; one optional rewording deferred to T-M5-020) and the independent AG-10 review of UX-04 (pass with findings). Implemented: a retry that turns permanent shows Start fresh at once; screen state survives rotation, config changes and process death, so the safety screen no longer drops back to Home (R-1); the du'a is shown only after the user taps the signed offer (R-3); the build fails on a future helpline check date (R-12). R-1 and R-3 await the Project Lead's acceptance (Q7, Q2). Open: R-2, R-4, R-5, R-7, R-8 (Q1, Q3-Q6).
 - T-M5-025 HC-06: the Project Lead approved the Locked screen as recommended (D-1 to D-14), SAF-01 v1.1 (Locked screen, emergency floor, 6 new §4 strings, gate hash updated) and CR-REQ-0004 (AC-SR-01 amended: the emergency number is always shown). The Tech Lead accepted S-07, S-09 and S-12. Open: device evidence, Urdu native check.
