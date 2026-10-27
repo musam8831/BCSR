@@ -40,7 +40,7 @@ flowchart TD
 - **No recommendation or notification** is sent for 24 h after the pathway opens. A check-in during those 24 h shows the Body line and the helpline buttons instead of a recommendation (v1.2).
 - **No follow-up check-in** in the MVP (v1.2). It may return in a later version with its own copy and signature.
 
-## 4. Copy (signed v1.1; Urdu native-speaker check open, required before release)
+## 4. Copy (signed v1.1, unchanged in v1.2; Urdu native-speaker check open, required before release)
 | Element | English | Urdu |
 |---|---|---|
 | Heading | You don't have to go through this alone. | آپ کو یہ اکیلے برداشت نہیں کرنا۔ |
@@ -68,4 +68,4 @@ Not allowed in any safety copy: diagnosis ("you are depressed"), religious blame
 |---|---|---|---|
 | 1.0 | 2026-10-21 | Muhammad Usman, Project Lead (D-011) | Approved via PR #18 |
 | 1.1 | 2026-10-23 | Muhammad Usman, Project Lead (D-011) | Approved via the HC-06 pack `HC-06-T-M5-025-locked-screen.md` (AG-10), in chat: "approve all as recommended; SAF-01 v1.1; accept CR-REQ-0004". The Urdu native-speaker check stays open (§4) |
-| 1.2 | 2026-10-27 | Muhammad Usman, Project Lead (D-011) | Approved `SAF-01-v1.2-proposal.md` (UX-04 decisions R-2, R-4, R-5, R-7, R-8), in chat: "sign SAF-01 v1.2". §4 copy unchanged; the Urdu native-speaker check stays open |
+| 1.2 | 2026-10-27 | Muhammad Usman, Project Lead (D-011) | Approved `SAF-01-v1.2-proposal.md` (UX-04 decisions R-2, R-4, R-5, R-7, R-8), in chat: "sign SAF-01 v1.2" (PR #37). §4 copy unchanged; the Urdu native-speaker check stays open |
