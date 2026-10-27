@@ -148,6 +148,15 @@ class AndroidGatesTest(unittest.TestCase):
         self.assertNotEqual(moved, SRC)
         self.assertTrue(any("before safe_for_now" in f for f in g.ui_failures(EN, UR, moved, CHK)))
         self.assertFalse(any("before safe_for_now" in f for f in g.ui_failures(EN, UR, SRC, CHK)))
+        # AG-16 on PR #36: a conditional call, or no signed "safe for now" control, fails too
+        cond = SRC.replace(body, body.replace("    HelplineButtons()\n", "    if (safe) HelplineButtons()\n", 1))
+        self.assertTrue(any("before safe_for_now" in f for f in g.ui_failures(EN, UR, cond, CHK)))
+        nosafe = SRC.replace(body, body.replace("R.string.safe_for_now", "R.string.back"))
+        self.assertTrue(any("before safe_for_now" in f for f in g.ui_failures(EN, UR, nosafe, CHK)))
+        # emergency before mental-health inside HelplineButtons
+        hb = g.composable_body(SRC, "HelplineButtons")
+        swapped = SRC.replace(hb, hb.replace("Purpose.EMERGENCY", "Purpose.TMP").replace("Purpose.MENTAL_HEALTH", "Purpose.EMERGENCY").replace("Purpose.TMP", "Purpose.MENTAL_HEALTH"))
+        self.assertTrue(any("emergency number before" in f for f in g.ui_failures(EN, UR, swapped, CHK)))
 
     def test_notification_rules(self):
         self.assertEqual(g.ui_failures(EN, UR, SRC, CHK), [])
