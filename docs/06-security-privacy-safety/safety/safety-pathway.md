@@ -1,21 +1,21 @@
-# Safety Pathway — SAF-01 v1.1
+# Safety Pathway — SAF-01 v1.2
 
 Task: T-M1-011 · Owner: AG-10 (SK-10) · Approver: Project Lead (D-011, in place of a mental-health advisor) · Requirements: FR-24, SR-01..SR-05, AGENTS.md §4.
 
-**Status: v1.0 signed by the Project Lead 2026-10-21 (PR #18); v1.1 (Locked screen and emergency floor, T-M5-025) signed 2026-10-23, see §6.** No mental-health professional has reviewed this pathway (D-011, risk R-05 accepted at 15).
+**Status: v1.0 signed by the Project Lead 2026-10-21 (PR #18); v1.1 (Locked screen and emergency floor, T-M5-025) signed 2026-10-23; v1.2 (UX-04 decisions: help on every screen, quiet check-in, export, no follow-up) signed 2026-10-27, see §6.** No mental-health professional has reviewed this pathway (D-011, risk R-05 accepted at 15).
 
 ## 1. Principles
 1. **Human help first.** In a crisis the app shows helplines and an emergency action before anything else. A du'a is offered only after, and never instead (AGENTS.md §4).
 2. **Explicit input only.** The pathway opens only when the user says so: a crisis answer in a check-in, or the "I need help now" control. Phone signals never open it (SR-03).
 3. **Not a medical service.** The app says so in onboarding, on the safety screen and on the about screen (SR-02).
 4. **No judgement, no guilt.** Copy never suggests weak faith, punishment or blame; negative religious framing is linked to worse outcomes (RES-02 S21, S22).
-5. **Minimal logging.** Only a local counter of how often the screen was opened. Nothing is uploaded, even with research consent (AC-FR-24).
+5. **Minimal logging.** Only a local counter of how often the screen was opened. Nothing is uploaded, even with research consent (AC-FR-24). The counter and the 24 h quiet time are left out of the user's data export, so a shared export does not reveal safety-screen use (v1.2).
 
 ## 2. Entry points
 | Entry | Where | Trigger |
 |---|---|---|
 | E1 | Check-in | The user picks the crisis option, worded as "I'm not safe / I might hurt myself" |
-| E2 | Persistent control | "I need help now" on the home screen and in the menu, one tap |
+| E2 | Persistent control | "I need help now" at the top of every screen except the safety screen itself, onboarding included, one tap (v1.2) |
 | E3 | (Not in MVP) | Free-text detection: excluded, because the MVP has no free-text check-in (RES-03 §1) |
 
 **Locked screen (v1.1, T-M5-025).** It is not an entry point. It appears only when the app cannot open its encrypted store. It shows:
@@ -32,13 +32,13 @@ flowchart TD
   B --> D[Call mental-health helpline]
   B --> E[I'm safe for now]
   E --> F[Optional: calming du'a from the approved catalogue]
-  F --> G[Gentle follow-up check-in next day, if the user allows]
 ```
 - **Safety screen (one screen, no scrolling needed):** a short heading, the emergency action, the helplines for the user's region from the directory (SAF-02), and "I'm safe for now".
 - **Region:** Pakistan only in the MVP. If the user's region has no verified helpline, the safety screen still shows the emergency action, and that locale is blocked from release (SK-10 step 4).
 - **Emergency floor (v1.1):** when no emergency entry is within its 90-day review, the screen still shows the most recently verified emergency number (1122). Only mental-health lines drop out. A stale directory still blocks the release (§5, CR-REQ-0004).
 - **After "I'm safe for now":** offer one approved du'a for distress (content from T-M1-010, scholar-approved). Never auto-play, never show before the helplines.
-- **No recommendation or notification** is sent for 24 h after the pathway opens, except the follow-up the user allowed.
+- **No recommendation or notification** is sent for 24 h after the pathway opens. A check-in during those 24 h shows the Body line and the helpline buttons instead of a recommendation (v1.2).
+- **No follow-up check-in** in the MVP (v1.2). It may return in a later version with its own copy and signature.
 
 ## 4. Copy (signed v1.1; Urdu native-speaker check open, required before release)
 | Element | English | Urdu |
@@ -68,3 +68,4 @@ Not allowed in any safety copy: diagnosis ("you are depressed"), religious blame
 |---|---|---|---|
 | 1.0 | 2026-10-21 | Muhammad Usman, Project Lead (D-011) | Approved via PR #18 |
 | 1.1 | 2026-10-23 | Muhammad Usman, Project Lead (D-011) | Approved via the HC-06 pack `HC-06-T-M5-025-locked-screen.md` (AG-10), in chat: "approve all as recommended; SAF-01 v1.1; accept CR-REQ-0004". The Urdu native-speaker check stays open (§4) |
+| 1.2 | 2026-10-27 | Muhammad Usman, Project Lead (D-011) | Approved `SAF-01-v1.2-proposal.md` (UX-04 decisions R-2, R-4, R-5, R-7, R-8), in chat: "sign SAF-01 v1.2". §4 copy unchanged; the Urdu native-speaker check stays open |

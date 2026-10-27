@@ -1,6 +1,6 @@
 # SAF-01 v1.2 proposal: changes from the UX-04 decisions
 
-**Status: draft, awaiting the Project Lead's signature (SAF-01 §5: any change to the pathway's flow or copy needs it).** Until it is signed, SAF-01 v1.1 stays the signed baseline. The app already behaves as described below (PR "UX-04 decisions"). Signing this proposal brings the signed document in line with the app; declining it means reverting those app changes.
+**Status: signed by the Project Lead 2026-10-27, in chat: "sign SAF-01 v1.2". Applied to SAF-01 as v1.2.** (SAF-01 §5: any change to the pathway's flow or copy needs the Project Lead's signature.) The app already behaves as described below (PR "UX-04 decisions"). Signing this proposal brings the signed document in line with the app; declining it means reverting those app changes.
 
 Source: the Project Lead's decisions on the AG-10 UX-04 review, 2026-10-27 (`AG-10-review-UX-04.md`, "Project Lead decisions").
 
@@ -18,4 +18,4 @@ Source: the Project Lead's decisions on the AG-10 UX-04 review, 2026-10-27 (`AG-
 ## Sign-off
 | Version | Date | Approver | Decision |
 |---|---|---|---|
-| 1.2 | | Muhammad Usman, Project Lead (D-011) | |
+| 1.2 | 2026-10-27 | Muhammad Usman, Project Lead (D-011) | Approved, in chat: "sign SAF-01 v1.2" |

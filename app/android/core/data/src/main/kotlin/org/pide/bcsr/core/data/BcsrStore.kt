@@ -75,7 +75,7 @@ class BcsrStore private constructor(private val context: Context, private val db
                 db.rawQuery("SELECT * FROM $t", arrayOf<String>()).use { c ->
                     w.write(c.columnNames.joinToString(",") + "\n")
                     while (c.moveToNext()) {
-                        if (t == "setting" && c.getString(0) in EXPORT_EXCLUDED_SETTINGS) continue
+                        if (!exported(t, c.getString(0))) continue
                         w.write((0 until c.columnCount).joinToString(",") { csv(c.getString(it)) } + "\n")
                     }
                 }
@@ -172,6 +172,9 @@ internal fun isPermanentKeyFailure(e: Throwable): Boolean =
 
 /** Settings left out of the user's export: a shared file must not reveal that or when the safety screen was opened (AG-10 R-5). */
 internal val EXPORT_EXCLUDED_SETTINGS = setOf("safety_count", "safety_until")
+
+/** Whether an export row is written; [firstColumn] is the `setting` key for that table. */
+internal fun exported(table: String, firstColumn: String?) = !(table == "setting" && firstColumn in EXPORT_EXCLUDED_SETTINGS)
 
 /** RFC 4180 field: quoted when it holds a comma, quote or line break, so free text cannot shift columns in the export. */
 internal fun csv(v: String?): String = when {
