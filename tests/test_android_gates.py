@@ -140,6 +140,15 @@ class AndroidGatesTest(unittest.TestCase):
             emptied = SRC.replace(body, body.replace(part, "R.string.app_name"))
             self.assertTrue(any("HelplineButtons must dial" in f for f in g.ui_failures(EN, UR, emptied, CHK)), part)
 
+    def test_help_comes_before_safe_and_dua(self):
+        # AG-10 R-13: moving the du'a or "safe for now" above the helplines fails
+        body = g.composable_body(SRC, "SafetyScreen")
+        moved = SRC.replace(body, body.replace("    HelplineButtons()\n", "", 1).replace(
+            "    Text(stringResource(R.string.not_medical)", "    HelplineButtons()\n    Text(stringResource(R.string.not_medical)", 1))
+        self.assertNotEqual(moved, SRC)
+        self.assertTrue(any("before safe_for_now" in f for f in g.ui_failures(EN, UR, moved, CHK)))
+        self.assertFalse(any("before safe_for_now" in f for f in g.ui_failures(EN, UR, SRC, CHK)))
+
     def test_notification_rules(self):
         self.assertEqual(g.ui_failures(EN, UR, SRC, CHK), [])
         self.assertTrue(g.ui_failures(dict(EN, notif_text="Feeling stressed?"), UR, SRC, CHK))

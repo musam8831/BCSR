@@ -5,6 +5,7 @@ All notable changes follow [Keep a Changelog](https://keepachangelog.com/) conve
 ## [Unreleased]
 
 ### Changed
+- UX-04 R-13: gate check that the safety screen shows the helplines before "I'm safe for now" and before any du'a (SAF-01 §3).
 - T-M5-025 / UX-04: AG-12 copy review (approved; one optional rewording deferred to T-M5-020) and the independent AG-10 review of UX-04 (pass with findings). Implemented: a retry that turns permanent shows Start fresh at once; screen state survives rotation, config changes and process death, so the safety screen no longer drops back to Home (R-1); the du'a is shown only after the user taps the signed offer (R-3); the build fails on a future helpline check date (R-12). R-1 and R-3 await the Project Lead's acceptance (Q7, Q2). Open: R-2, R-4, R-5, R-7, R-8 (Q1, Q3-Q6).
 - T-M5-025 HC-06: the Project Lead approved the Locked screen as recommended (D-1 to D-14), SAF-01 v1.1 (Locked screen, emergency floor, 6 new §4 strings, gate hash updated) and CR-REQ-0004 (AC-SR-01 amended: the emergency number is always shown). The Tech Lead accepted S-07, S-09 and S-12. Open: device evidence, Urdu native check.
 - T-M5-019 S-11 (partly fixed): the Privacy Center counts and export, and the safety screen's counter write, run off the main thread, so a worker VACUUM cannot stall them; a failed export shows a message. Other screens' store calls move with T-M5-003.
