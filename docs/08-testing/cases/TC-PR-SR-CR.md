@@ -11,13 +11,14 @@ Task T-M5-013 · Owner: AG-14 (SK-14) · Strategy: TST-01 §2. These are **gate 
 - **Pass**: the named check runs in CI and CI is green on `main`. This sheet and every check it adds merge only on green CI.
 - **In review (T-x)**: the evidence exists, and its review in task T-x is still open.
 - **Pending X**: the case is written but cannot run until X exists.
+- **Pass (emulator)**: an instrumented test passes on the CI emulator, `android-instrumented` (T-M5-026); the real-device matrix (T-M5-014) still has to repeat it on OEM devices.
 
 | TC | AC | Type | Case | Automated in / checked by | Status |
 |---|---|---|---|---|---|
 | TC-PR-01a | AC-PR-01 | A | The merged debug and release manifests have no BIND_ACCESSIBILITY_SERVICE, BIND_INPUT_METHOD, READ_SMS, READ_CALL_LOG or FOREGROUND_SERVICE_MEDIA_PROJECTION. Both `uses-permission` tags are scanned. No app source file uses `MediaProjection` or `createScreenCaptureIntent`. | `scripts/check_android_gates.py` (CI `kotlin-tests`), `tests/test_android_gates.py` | Pass |
 | TC-PR-01b | AC-PR-01 | A | The store schema has no package-name or message-text columns: hash and category only. The check covers column names, with whole snake_case parts, so `notif_text` fails. | `:core:data` `RetentionTest.schemaHasEveryTableAndNoPackageNames` (package names), `noContentOrLocationColumns` (message text) | Pass |
 | TC-PR-01c | AC-PR-01 | I | The notification-listener code stores only package hash, category and timestamp. | AG-09, when T-M5-003 lands | Pending T-M5-003 |
-| TC-PR-02a | AC-PR-02 | A-dev | Copy the database file. It does not open as plain SQLite, and its key is in the Android Keystore. | `:core:data` `EncryptionTest.databaseFileIsNotPlainSqlite` (androidTest) | Pending device run (T-M5-014) |
+| TC-PR-02a | AC-PR-02 | A-dev | Copy the database file. It does not open as plain SQLite, and its key is in the Android Keystore. | `:core:data` `EncryptionTest.databaseFileIsNotPlainSqlite` (androidTest) | Pass (emulator); real devices pending (T-M5-014) |
 | TC-PR-02b | AC-PR-02 | I | The key comes from the Keystore (AES-GCM, not exportable), with no key in code or prefs. | AG-09 review of `BcsrStore.kt` | In review (T-M5-002) |
 | TC-PR-03a | AC-PR-03 | A | Nothing can be uploaded: no INTERNET permission in any merged manifest. | `check_android_gates.py` | Pass |
 | TC-PR-03b | AC-PR-03 | A + D | Opt-in shows each data type separately. Withdrawing stops uploads at once. | to be written with the upload module | Pending T-M5-012 (needs ethics T-M1-012) |
@@ -26,11 +27,11 @@ Task T-M5-013 · Owner: AG-14 (SK-14) · Strategy: TST-01 §2. These are **gate 
 | TC-PR-04c | AC-PR-04 | I | The opaque columns (`feature_window.json`, `state_estimate.json`, `setting.value`) hold no coordinates. The city is stored as a name, and its fixed centre lives in code. | AG-09, with T-M5-003 (sensing writes these) | Pending T-M5-003 |
 | TC-PR-05 | AC-PR-05 | I | Onboarding shows the prominent disclosure before the Usage Access request, with every element the Play policy requires (T-M2-002). | AG-09 + Project Lead with the Data safety form (T-M5-017) | Pending T-M5-003 (Usage Access not requested yet) |
 | TC-PR-06a | AC-PR-06 | A | Cut-offs are 30 days for raw data and 90 days for derived data. Labels, favourites and settings are kept. | `RetentionTest.cutoffs`, `statementsCoverRawAndDerivedButNotLabels` | Pass |
-| TC-PR-06b | AC-PR-06 | A-dev | The daily job deletes old rows, and the store stays ≤ 50 MB. | device matrix | Pending T-M5-014 |
+| TC-PR-06b | AC-PR-06 | A-dev | The daily job deletes old rows, and the store stays ≤ 50 MB. | `EncryptionTest.retentionDeletesOldRows` (age limits); 50 MB cap and the worker schedule on the device matrix | Pass (emulator, age limits); 50 MB cap and worker pending T-M5-014 |
 | TC-PR-07 | AC-PR-07 | I | The model card and experiment registry list only D1–D3 consented data. The cold-start model is rules, with no training data. | Tech Lead, `docs/04-ai-ml/model-cards/MC-coldstart-0.1.md` | In review (T-M5-021) |
 | TC-SR-01a | AC-SR-01 | A | A release shows only helplines verified within 90 days. Unverified ones are never shown, and stale entries block a release. | `:core:safety` `HelplinesTest` | Pass |
-| TC-SR-01b | AC-SR-01 | A-dev | One tap from Home reaches the safety screen, and the call buttons dial. | device matrix (AC-FR-24) | Pending T-M5-014 |
-| TC-SR-01c | AC-SR-01 | A + A-dev | With an unreadable store, the app opens a Locked screen that shows the helplines and "start fresh" (T-M5-025). | `check_android_gates.py` (helplines on SafetyScreen and Locked); `:core:data` androidTest `corruptKeyIsUnavailableThenStartFreshWorks` | Pass (gate); pending T-M5-014 (device) |
+| TC-SR-01b | AC-SR-01 | A-dev | One tap from every screen reaches the safety screen (SAF-01 v1.2 E2), help renders above "safe for now", the screen survives recreation, and the call buttons dial. | `:app` `SafetyUiTest` (one tap, order, recreation, quiet check-in); dialing on the device matrix (AC-FR-24) | Pass (emulator, all but dialing); dialing and system process death pending T-M5-014 |
+| TC-SR-01c | AC-SR-01 | A + A-dev | With an unreadable store, the app opens a Locked screen that shows the helplines and "start fresh" (T-M5-025). | `check_android_gates.py` (helplines on SafetyScreen and Locked); `:core:data` `corruptKeyIsUnavailableThenStartFreshWorks`; `:app` `SafetyUiTest.corruptKeyShowsLockedWithHelplines` | Pass (gate, emulator); real devices pending (T-M5-014) |
 | TC-SR-02 | AC-SR-02 | A | Onboarding, the safety screen, About and the Locked screen each show `not_medical`. This is checked per screen, so commented-out code does not count. | `check_android_gates.py` | Pass |
 | TC-SR-03a | AC-SR-03 | A | Inference outputs only passive states, so it never outputs a safety state. This alone does not prove the pathway is never triggered; TC-SR-03b covers that. | `:core:inference` `ColdStartRulesTest.outputsOnlyPassiveStatesSummingToOne` (1,000 random windows) | Pass |
 | TC-SR-03b | AC-SR-03 | A | Every `Screen.Safety` reference in every app source file is either the one `when` dispatch or one of exactly two buttons labelled `need_help` and `state_not_safe`. No intent extra opens the safety pathway. | `check_android_gates.py` `source_failures` (all non-test source sets; also no direct `SafetyScreen(` call outside the dispatch) | Pass |
@@ -46,6 +47,6 @@ Task T-M5-013 · Owner: AG-14 (SK-14) · Strategy: TST-01 §2. These are **gate 
 | TC-CR-07 | AC-CR-07 | A | About shows the Tanzil credit, its copyright notice, CC BY 3.0 and a tanzil.net link, and Home links to About. | `check_android_gates.py` | Pass. Re-check against the imported file header in T-M4-002 |
 
 ## Still open for T-M5-013
-- **Pending device runs:** the androidTest and A-dev cases run on the device matrix (T-M5-014).
+- **Device runs:** the androidTest cases run on every PR on the CI emulator, `android-instrumented` (T-M5-026). The device matrix (T-M5-014) repeats them on real OEM devices and adds dialing, battery and system process death.
 - **Waiting on other tasks:** TC-PR-01c, TC-PR-04c and TC-PR-05 need T-M5-003, and TC-PR-03b needs T-M5-012.
 - **Waiting on the scholar:** the content inspections TC-CR-03 to TC-CR-06 need the M4 scholar review.

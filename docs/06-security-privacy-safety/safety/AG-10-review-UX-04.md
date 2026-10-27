@@ -167,6 +167,8 @@ At default font size this fits on any phone. At the largest system font on a sma
 
 Line numbers above refer to the code before PR #35.
 
+**Emulator evidence (T-M5-026):** `SafetyUiTest` checks R-1 (activity recreation and a single count), R-4 (quiet check-in), R-13 (rendered order) and E2 on every screen in CI. `EncryptionTest.exportOmitsSafetySettings` checks R-5. System process death and real dialers stay with T-M5-014.
+
 ## Project Lead decisions (2026-10-27)
 
 In chat, the Project Lead replied **"go with that"** to this recommendation from the coordinator, quoted verbatim:
