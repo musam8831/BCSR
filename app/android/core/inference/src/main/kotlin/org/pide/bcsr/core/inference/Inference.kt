@@ -12,7 +12,6 @@ enum class ContextState(val id: String, val passive: Boolean) {
 
     companion object {
         val PASSIVE: List<ContextState> = entries.filter { it.passive }
-        fun byId(id: String): ContextState = entries.first { it.id == id }
     }
 }
 

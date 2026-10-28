@@ -92,13 +92,17 @@ class BundleVerifier(private val publicKeys: Map<String, ByteArray>) {
  * never replaces the current one, and a non-approved item is dropped even inside a valid bundle (defence in depth).
  */
 class CatalogueRepository(private val verifier: BundleVerifier) {
+    private var approved: List<CatalogueItem> = emptyList() // filtered once per load, not on every call
     var current: LoadResult.Loaded? = null
-        private set
+        private set(v) {
+            field = v
+            approved = v?.items.orEmpty().filter { it.approved }
+        }
 
     fun offer(bundleBytes: ByteArray, signatureBase64: String): LoadResult =
         verifier.load(bundleBytes, signatureBase64).also { if (it is LoadResult.Loaded) current = it }
 
-    fun approvedItems(): List<CatalogueItem> = current?.items.orEmpty().filter { it.approved }
+    fun approvedItems(): List<CatalogueItem> = approved
 
     fun approvedItemsFor(stateId: String): List<CatalogueItem> = approvedItems().filter { stateId in it.states }
 
