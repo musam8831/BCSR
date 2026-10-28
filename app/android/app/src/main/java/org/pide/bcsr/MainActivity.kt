@@ -266,7 +266,7 @@ private fun Library(c: AppContainer, go: (Screen) -> Unit) {
     var q by remember { mutableStateOf("") }
     Title(stringResource(R.string.library))
     OutlinedTextField(q, { q = it }, label = { Text(stringResource(R.string.search)) }, modifier = Modifier.fillMaxWidth())
-    val items = remember(q) { c.catalogue.search(q) }
+    val items = remember(c, q) { c.catalogue.search(q) }
     if (items.isEmpty()) Text(stringResource(R.string.library_empty))
     items.forEach { ItemCard(c, it) }
     TextButton({ go(Screen.Home) }) { Text(stringResource(R.string.back)) }
