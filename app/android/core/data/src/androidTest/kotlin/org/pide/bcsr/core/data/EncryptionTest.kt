@@ -22,6 +22,12 @@ class EncryptionTest {
         store.close()
         val header = ctx.getDatabasePath(BcsrStore.DB_NAME).readBytes().copyOfRange(0, 16).toString(Charsets.US_ASCII)
         assertFalse(header.startsWith("SQLite format 3"))
+        // AC-PR-02: the key is held in the Android Keystore, and a copy cannot be opened with any other key
+        assertTrue(java.security.KeyStore.getInstance("AndroidKeyStore").apply { load(null) }.containsAlias("bcsr-db-key"))
+        assertThrows(Exception::class.java) {
+            net.zetetic.database.sqlcipher.SQLiteDatabase.openOrCreateDatabase(ctx.getDatabasePath(BcsrStore.DB_NAME), ByteArray(32), null, null)
+                .use { db -> db.rawQuery("SELECT count(*) FROM sqlite_master", arrayOf<String>()).use { it.moveToFirst() } }
+        }
         BcsrStore.deleteEverything(ctx, null)
     }
 

@@ -3,8 +3,9 @@ package org.pide.bcsr
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.getUnclippedBoundsInRoot
 import androidx.compose.ui.test.junit4.createEmptyComposeRule
-import androidx.compose.ui.test.onAllNodesWithText
-import androidx.compose.ui.test.onLast
+import androidx.compose.ui.test.hasAnyAncestor
+import androidx.compose.ui.test.hasText
+import androidx.compose.ui.test.isDialog
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
@@ -23,6 +24,7 @@ import java.io.File
 
 /**
  * Safety UI on an emulator (T-M5-026; TST-01 instrumented level). Covers TC-SR-01b/01c and AG-10 R-1, R-4, R-13.
+ * E2 is checked on onboarding, Home, check-in, recommendation, Library, Privacy and About (every screen but Safety).
  * Real-device and OEM behaviour (dialer, battery, process death by the system) stay with T-M5-014.
  */
 @RunWith(AndroidJUnit4::class)
@@ -49,10 +51,25 @@ class SafetyUiTest {
                 compose.onNodeWithText(s(R.string.need_help)).assertExists()
                 sc.onActivity { it.onBackPressedDispatcher.onBackPressed() }
             }
+            // check-in, then the recommendation screen it leads to
+            compose.onNodeWithText(s(R.string.how_am_i)).performClick()
+            compose.onNodeWithText(s(R.string.need_help)).assertExists()
+            compose.onNodeWithText(s(R.string.save)).performScrollTo().performClick()
+            compose.onNodeWithText(s(R.string.need_help)).assertExists()
             compose.onNodeWithText(s(R.string.need_help)).performClick()
             compose.onNodeWithText(s(R.string.safety_heading)).assertIsDisplayed()
             compose.onNodeWithText(emergency).assertExists()
             compose.onNodeWithText(s(R.string.need_help)).assertDoesNotExist()
+        }
+    }
+
+    /** E2 also on onboarding, before the user has finished setting up. */
+    @Test fun helpIsOnOnboarding() {
+        app.container!!.settings().onboarded = false
+        launch().use {
+            compose.onNodeWithText(s(R.string.welcome_title)).assertIsDisplayed()
+            compose.onNodeWithText(s(R.string.need_help)).performClick()
+            compose.onNodeWithText(s(R.string.safety_heading)).assertIsDisplayed()
         }
     }
 
@@ -105,7 +122,7 @@ class SafetyUiTest {
             compose.onNodeWithText(s(R.string.locked_title)).assertIsDisplayed()
             compose.onNodeWithText(emergency).assertExists()
             compose.onNodeWithText(s(R.string.start_fresh)).performClick()
-            compose.onAllNodesWithText(s(R.string.start_fresh)).onLast().performClick() // the confirm dialog's button
+            compose.onNode(hasText(s(R.string.start_fresh)) and hasAnyAncestor(isDialog())).performClick() // the confirm dialog's button
             compose.onNodeWithText(s(R.string.welcome_title)).assertIsDisplayed()
         }
     }

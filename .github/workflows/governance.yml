@@ -100,11 +100,13 @@ jobs:
           target: google_apis
           disable-animations: true
           working-directory: app/android
-          # one retry for emulator start-up flakiness; a test that fails twice fails the job
-          script: bash ./gradlew --no-daemon :core:data:connectedDebugAndroidTest :app:connectedDebugAndroidTest || bash ./gradlew --no-daemon :core:data:connectedDebugAndroidTest :app:connectedDebugAndroidTest
+          # one retry for emulator start-up flakiness, flagged as a warning so a flaky pass is visible; failing twice fails the job
+          script: bash ./gradlew --no-daemon :core:data:connectedDebugAndroidTest :app:connectedDebugAndroidTest || (echo "::warning::instrumented tests needed a retry; check the first attempt in the log" && bash ./gradlew --no-daemon :core:data:connectedDebugAndroidTest :app:connectedDebugAndroidTest)
       - name: Keep the instrumented test reports (TST-01 §4 evidence)
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: android-instrumented-reports
-          path: app/android/**/build/reports/androidTests/
+          path: |
+            app/android/**/build/reports/androidTests/
+            app/android/**/build/outputs/androidTest-results/
