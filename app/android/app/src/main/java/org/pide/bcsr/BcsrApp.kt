@@ -118,6 +118,4 @@ class AppSettings(private val store: BcsrStore) {
     var lastRetentionMs: Long
         get() = store.setting("retention_at")?.toLongOrNull() ?: 0L
         set(v) = store.putSetting("retention_at", v.toString())
-    fun sentOn(day: String): Int = store.setting("sent_$day")?.toIntOrNull() ?: 0
-    fun markSent(day: String) = store.putSetting("sent_$day", (sentOn(day) + 1).toString())
 }

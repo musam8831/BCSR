@@ -5,6 +5,7 @@ All notable changes follow [Keep a Changelog](https://keepachangelog.com/) conve
 ## [Unreleased]
 
 ### Changed
+- Cleanup (no behaviour change): the unused `sentOn/markSent` (closes S-10) and `ContextState.byId` are deleted. Favourites use a one-row lookup per card instead of reading the whole table. Library search is remembered per query. Approved catalogue items are filtered once per load. `ts` indexes are added on the tables that retention cleans.
 - T-M5-026: new CI job `android-instrumented` runs the androidTest suites on an API 34 emulator. It covers store encryption, delete-all, corrupt-key recovery, retention, the export without safety use, and the safety UI: one tap from every screen, help above "safe for now", survives recreation, quiet check-in, Locked screen. Test-only dependencies. Real devices stay with T-M5-014.
 - UX-04 decisions (Project Lead, 2026-10-27, "go with that"): "I need help now" on every screen (R-2); a check-in during the 24 h quiet shows the signed Body line and the helplines (R-4); safety use is left out of the export (R-5); Urdu drafts for the entry labels, and the check-in label matches SAF-01 E1 (R-7); no follow-up (R-8). SAF-01 v1.2 signed by the Project Lead 2026-10-27 ("sign SAF-01 v1.2").
 - UX-04 R-13: gate check that the safety screen shows the helplines before "I'm safe for now" and before any du'a (SAF-01 §3).

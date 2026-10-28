@@ -40,4 +40,6 @@ internal val SCHEMA = listOf(
     "CREATE TABLE IF NOT EXISTS recommendation (ts INTEGER NOT NULL, item_id TEXT, state_id TEXT, policy_version TEXT, feedback TEXT)",
     "CREATE TABLE IF NOT EXISTS favourite (item_id TEXT PRIMARY KEY)",
     "CREATE TABLE IF NOT EXISTS setting (key TEXT PRIMARY KEY, value TEXT)",
-)
+) + (Retention.RAW_TABLES + Retention.DERIVED_TABLES).map {
+    "CREATE INDEX IF NOT EXISTS ix_${it}_ts ON $it (ts)" // retention deletes by ts; recommendations sort by ts
+}

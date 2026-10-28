@@ -240,7 +240,7 @@ private fun RecommendationScreen(c: AppContainer, s: Screen.Recommend, go: (Scre
 /** CON-01 §4: Arabic first, then transliteration (an aid), translation and the full reference; text exactly as in the catalogue. */
 @Composable
 private fun ItemCard(c: AppContainer, item: CatalogueItem) {
-    var fav by remember(item.id) { mutableStateOf(item.id in c.store.favourites()) }
+    var fav by remember(item.id) { mutableStateOf(c.store.isFavourite(item.id)) }
     Card(Modifier.fillMaxWidth()) {
         Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
             item.text("title", "en")?.let { Title(it) }
@@ -266,7 +266,7 @@ private fun Library(c: AppContainer, go: (Screen) -> Unit) {
     var q by remember { mutableStateOf("") }
     Title(stringResource(R.string.library))
     OutlinedTextField(q, { q = it }, label = { Text(stringResource(R.string.search)) }, modifier = Modifier.fillMaxWidth())
-    val items = c.catalogue.search(q)
+    val items = remember(q) { c.catalogue.search(q) }
     if (items.isEmpty()) Text(stringResource(R.string.library_empty))
     items.forEach { ItemCard(c, it) }
     TextButton({ go(Screen.Home) }) { Text(stringResource(R.string.back)) }

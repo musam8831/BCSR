@@ -31,8 +31,8 @@ class BcsrStore private constructor(private val context: Context, private val db
     fun putSetting(key: String, value: String) =
         db.execSQL("INSERT OR REPLACE INTO setting (key, value) VALUES (?, ?)", arrayOf<Any?>(key, value))
 
-    fun favourites(): Set<String> =
-        db.rawQuery("SELECT item_id FROM favourite", arrayOf<String>()).use { c -> buildSet { while (c.moveToNext()) add(c.getString(0)) } }
+    fun isFavourite(itemId: String): Boolean =
+        db.rawQuery("SELECT 1 FROM favourite WHERE item_id = ?", arrayOf(itemId)).use { it.moveToFirst() }
 
     fun setFavourite(itemId: String, on: Boolean) = if (on) {
         db.execSQL("INSERT OR IGNORE INTO favourite (item_id) VALUES (?)", arrayOf<Any?>(itemId))

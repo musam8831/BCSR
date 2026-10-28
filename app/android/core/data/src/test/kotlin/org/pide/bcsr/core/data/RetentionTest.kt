@@ -64,6 +64,7 @@ class RetentionTest {
     @Test fun schemaHasEveryTableAndNoPackageNames() {
         Retention.ALL_TABLES.forEach { t -> assertTrue(t, SCHEMA.any { it.contains("EXISTS $t ") }) }
         assertTrue(SCHEMA.none { it.contains("package_name") }) // TH-09: hash + category only
+        (Retention.RAW_TABLES + Retention.DERIVED_TABLES).forEach { t -> assertTrue(t, SCHEMA.any { it.contains("ON $t (ts)") }) } // retention by ts is indexed
     }
 
     /** AC-PR-01 / AC-PR-04: no column named for message text or location. Opaque json/value columns need inspection (TC-PR-04b). */
