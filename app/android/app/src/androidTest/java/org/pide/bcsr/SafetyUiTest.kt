@@ -7,6 +7,7 @@ import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onLast
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performScrollTo
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -86,7 +87,7 @@ class SafetyUiTest {
         app.container!!.settings().quietAfterSafetyUntil = System.currentTimeMillis() + 3_600_000L
         launch().use {
             compose.onNodeWithText(s(R.string.how_am_i)).performClick()
-            compose.onNodeWithText(s(R.string.save)).performClick()
+            compose.onNodeWithText(s(R.string.save)).performScrollTo().performClick() // below the fold on the check-in
             compose.onNodeWithText(s(R.string.safety_body)).assertIsDisplayed()
             compose.onNodeWithText(emergency).assertExists()
             compose.onNodeWithText(s(R.string.no_item)).assertDoesNotExist()
